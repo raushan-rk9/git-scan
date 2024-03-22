@@ -1,0 +1,586 @@
+<h1>New Review</h1>
+<%= simple_form_for( [@review.item, @review], validate: true, html: { class: 'form-horizontal' }) do |f| %>
+  <%= f.error_notification %>
+  <% if @review.present? && @review.errors.present? && @review.errors.messages.present? %>
+    <% @review.errors.messages.each do |field, messages| %>
+      <h4 style="color: red;">
+        <%= field.to_s.titleize %>:
+        <% messages.each do |message| %>
+          <%= message %>&nbsp;
+        <% end %>
+        <br>
+      </h4>
+    <% end %>
+  <% end %>
+
+  <div class="form-inputs">
+    <p>
+      <% if current_user.fulladmin %>
+        <%= f.input :reviewid, required: true %>
+      <% else %>
+        <%= f.input :reviewid, required: true, :as => :hidden %>
+      <% end %>
+
+      <%= f.input :title, required: true %>
+      <%= f.input :description, as: :summernote %>
+
+      <%= f.input :review_type, collection: ['Transition Review', 'Peer Review', 'Other'] , include_blank: true %>
+
+      <% if    @item.itemtype == '1' %>
+        <%= f.input :reviewtype, label: 'Specific Review', collection: TemplateChecklist.where(organization: current_user.organization, checklist_class: 'DO-178').order(:description), :label_method => :name, :value_method => :title, include_blank: true %>
+      <% elsif @item.itemtype == '2' %>
+        <%= f.input :reviewtype, label: 'Specific Review', collection: TemplateChecklist.where(organization: current_user.organization, checklist_class: 'DO-256').order(:description), :label_method => :name, :value_method => :title, include_blank: true %>
+      <% else %>
+        <%= f.input :reviewtype, label: 'Specific Review', collection: TemplateChecklist.where(organization: current_user.organization).order(:description), :label_method => :name, :value_method => :title, include_blank: true %>
+      <% end %>
+
+      <%= f.input :problem_reports_addressed, collection: @problem_reports, :label_method => :fullpr_with_title, :value_method => :id, input_html: { multiple: true }, include_blank: true %>
+      <h5>File Under Review</h5>
+      <%= f.input :link_type, :as => :hidden, input_html: { value: 'PACT' } %> 
+      <label class="control-label select optional" id="label" ></label>
+      <%= f.input :link_link, label: false %>
+      <%= f.file_field :file %>
+      <%= f.input :pact_file, collection: @pact_files, include_blank: true, label: false %> 
+      <%= f.input :link_description, :as => :hidden %>
+
+      <div style='width: 640px'>
+        <h5>Additional Reference Material</h5>
+
+        <table id="additional_attachments" name="additional_attachments" width="100%">
+          <thead>
+            <tr>
+              <th class="th-sm" width='20%'>Type</th>
+              <th class="th-sm" width='74%'>File/URL</th>
+              <th class="th-sm" width='5%'>&nbsp;</th>
+              <th style='display: none !important;' width='1%'></th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+
+        <input id='new_attachment' name='new_attachment' value='New File' type='button' onclick='new_attachment_file();' class='btn' />
+
+        <div id='attachment_div' style='display: none !important;'>
+
+          <label title='File Type'>File Type</label>
+          <select id="attachment_type" onchange="attachment_selected();">
+            <option value=""></option>
+            <option value="EXTERNAL">External URL</option>
+            <option value="PACT">PACT Documents</option>
+            <option value="ATTACHMENT">File Upload</option>
+          </select>
+          <br>
+
+          <div id='url_div' style='display: none !important;'>
+            <label title='URL'>URL</label>
+            <input id='attachment_url' name='attachment_url' type='text' />
+          </div>
+
+          <div id='file_div' style='display: none !important;'>
+            <input type="file" id="attachment_file" name="attachment_file">
+          </div>
+
+          <div id='pact_div' style='display: none !important;'>
+            <select id="pact_attachment">
+              <option value=""></option>
+            </select>
+          </div>
+          <br>
+
+          <input id='add_attachment' name='add_attachment' value='Add File' type='button' onclick='add_attachment_file();' class='btn' />
+        </div>
+      </div>
+
+      <table width='35%' style='border: none;' >
+        <tr>
+          <td width='48%' >
+            <%=
+                f.input :unassigned_users,
+                        label:         'Unassigned Users',
+                        collection:     @review.unassigned_users,
+                        label_method:  :fullname,
+                        value_method:  :email,
+                        input_html:    { multiple: true },
+                        include_blank: false
+            %>
+          </td>
+          <td width='4%' >
+            <button id='unassigned_to_assigned' type="button" onclick='assign_evaluator();' disabled>></button>
+            <br>
+            <button id='assigned_to_unassigned' type="button" onclick='unassign_evaluator();' disabled ><</button>
+          </td>
+          <td width=48%' >
+            <%=
+                f.input :evaluators,
+                        label:         'Evaluators',
+                        collection:     @review.evaluators,
+                        label_method:  :fullname,
+                        value_method:  :email,
+                        input_html:    { multiple: true },
+                        include_blank: false
+            %>
+          </td>
+        </tr>
+      </table>
+
+      <%= f.input :evaldate, label: 'Review Date', as: :date, html5: true  %>
+      <%= f.input :version, :as => :hidden %>
+
+      <% if current_user.fulladmin && @project.present? %>
+        <%= f.association :item, collection: Item.where(project_id: @project.id) %>
+      <% end %>
+    </p>
+  </div>
+
+  <div class="form-actions">
+    <input id='new_review_create_review' name='new_review_create_review' value='Create Review' type="button" onclick='validate();' class="btn btn-default" />
+    <%= link_to 'Back', 'javascript:null', class: "btn", onclick: 'validateBack(1)' %>
+
+    <% if @undo_path.present? && !session[:archives_visible].present? %>
+      <%= link_to 'Undo', @undo_path, class: 'btn btn-default', title: @undo_message %>
+    <% end %>
+
+    <% if @redo_path.present? && !session[:archives_visible].present? %>
+      <%= link_to 'Redo', @redo_path, class: 'btn btn-default', title: @redo_message %>
+    <% end %>
+  </div>
+<% end %>
+
+<script>
+  var model                    = "review";
+  var parent                   = "item";
+  var table                     = model  + 's';
+  var parent_table             = parent + 's';
+  var prefix                   = model  + "_";
+  var parent_prefix            = parent + "_";
+  var link_type                = model + "_link_type";
+  var link_description         = model + "_link_description";
+  var link_link                = model + "_link_link";
+  var pact_file                = model + "_pact_file";
+  var file                     = model + "_file";
+  var review_type              = model + "_review_type";
+  var evaluators               = model + '_evaluators';
+  var unassigned_users         = model + '_unassigned_users';
+  var link_type_select         = "#" + link_type;
+  var pact_file_select         = "#" + pact_file;
+  var review_type_select       = "#" + review_type;
+  var evaulators_select        = '#' + evaluators;
+  var unassigned_users_select  = '#' + unassigned_users;
+
+  function assign_evaluator()
+  {
+    var unassigned_users_field = document.getElementById(unassigned_users);
+    var evaluators_field       = document.getElementById(evaluators);
+
+    for (var i = 0, len = unassigned_users_field.options.length; i < len; i++)
+    {
+      var unassigned_user = unassigned_users_field.options[i];
+
+      if (unassigned_user && unassigned_user.selected === true)
+      {
+        var option   = document.createElement("option");
+
+        option.text  = unassigned_user.text;
+        option.value = unassigned_user.value;
+
+        evaluators_field.add(option);
+        unassigned_users_field.remove(i);
+      }
+    }
+  }
+
+  function unassign_evaluator()
+  {
+    var unassigned_users_field = document.getElementById(unassigned_users);
+    var evaluators_field       = document.getElementById(evaluators);
+
+    for (var i = 0, len = evaluators_field.options.length; i < len; i++)
+    {
+      var evaluator = evaluators_field.options[i];
+
+      if (evaluator.selected === true)
+      {
+        var option   = document.createElement("option");
+
+        option.text  = evaluator.text;
+        option.value = evaluator.value;
+
+        unassigned_users_field.add(option);
+        evaluators_field.remove(i);
+      }
+    }
+  }
+
+  function evaluators_changed()
+  {
+    var unassigned_to_assigned_button = document.getElementById('unassigned_to_assigned');
+    var assigned_to_unassigned_button = document.getElementById('assigned_to_unassigned');
+    var unassigned_users_field        = document.getElementById(unassigned_users);
+    var evaluators_field              = document.getElementById(evaluators);
+
+    unassigned_to_assigned_button.disabled = true;
+    assigned_to_unassigned_button.disabled = false;
+
+    for (var i = 0, len = evaluators_field.options.length; i < len; i++)
+    {
+        evaluator = evaluators_field.options[i];
+
+        if (evaluator.selected === true)
+        {
+            for (var j = 0, length = unassigned_users_field.options.length; j < length; j++)
+            {
+                unassigned_user = unassigned_users_field.options[j];
+
+                if (unassigned_user.value == evaluator.value)
+                  assigned_to_unassigned_button.disabled = true;
+            }
+        }
+    }
+  }
+
+  function unassigned_users_changed()
+  {
+    var unassigned_to_assigned_button = document.getElementById('unassigned_to_assigned');
+    var assigned_to_unassigned_button = document.getElementById('assigned_to_unassigned');
+    var unassigned_users_field        = document.getElementById(unassigned_users);
+    var evaluators_field              = document.getElementById(evaluators);
+
+    unassigned_to_assigned_button.disabled = false;
+    assigned_to_unassigned_button.disabled = true;
+
+    for (var i = 0, len = unassigned_users_field.options.length; i < len; i++)
+    {
+        unassigned_user = unassigned_users_field.options[i];
+
+        if (unassigned_user.selected === true)
+        {
+            for (var j = 0, length = evaluators_field.options.length; j < length; j++)
+            {
+                evaluator = evaluators_field.options[j];
+
+                if (evaluator.value == unassigned_user.value)
+                  unassigned_to_assigned_button.disabled = true;
+            }
+        }
+    }
+  }
+
+  function pact_file_changed()
+  {
+      var link_description_field   = document.getElementById(link_description);
+      var pact_file_field          = document.getElementById(pact_file);
+      var label                    = pact_file_field.options[pact_file_field.selectedIndex].label;
+
+      link_description_field.value = label;
+  }
+
+  function link_type_changed()
+  {
+      var link_description_field = document.getElementById(link_description);
+      var link_link_field        = document.getElementById(link_link);
+      var label_field            = document.getElementById("label");
+      var pact_file_field        = document.getElementById(pact_file);
+      var file_field             = document.getElementById(file);
+      var link_type_value        = document.getElementById(link_type).value;
+
+      if (link_type_value === "EXTERNAL")
+      {
+          label_field.innerHTML           = "External URL";
+          link_link_field.style.display   = "block";
+          label_field.style.display       = "block";
+          pact_file_field.style.display   = "none";
+          file_field.style.display        = "none";
+      }
+      else if (link_type_value === "PACT")
+      {
+          label_field.innerHTML           = "PACT Documents";
+          link_link_field.style.display   = "none";
+          label_field.style.display       = "block";
+          pact_file_field.style.display   = "block";
+          file_field.style.display        = "none";
+      }
+      else if (link_type_value === "ATTACHMENT")
+      {
+          label_field.innerHTML           = "Attach File";
+          link_link_field.style.display   = "none";
+          label_field.style.display       = "block";
+          pact_file_field.style.display   = "none";
+          file_field.style.display        = "block";
+      }
+      else if (link_type_value === "")
+      {
+          label_field.innerHTML           = "";
+          link_link_field.style.display   = "none";
+          label_field.style.display       = "none";
+          pact_file_field.style.display   = "none";
+          file_field.style.display        = "none";
+      }
+  }
+
+  link_type_changed();
+
+  $(evaulators_select).change(function()
+  {
+    evaluators_changed();
+  });
+
+  $(unassigned_users_select).change(function()
+  {
+    unassigned_users_changed();
+  });
+
+  $(pact_file_select).change(function()
+  {
+    pact_file_changed();
+  });
+
+  $(link_type_select).change(function()
+  {
+    link_type_changed();
+  });
+
+  $(review_type_select).change(function()
+  {
+    var current_url       = window.location.href;
+    var reviews_position  = current_url.indexOf('reviews');
+    var prefix            = current_url.substring(0, reviews_position);
+    var review_type_value = document.getElementById(review_type).value;
+    var url               = "";
+
+    if (review_type_value === "Transition Review")
+      url = prefix + 'template_checklists/transition.json';
+    else
+      url = prefix + 'template_checklists/peer.json';
+
+    $('#review_reviewtype').empty();
+    $('#review_reviewtype').append('<option value=""></option>');
+    $.ajax(
+             {
+               type:        "GET",
+               url:         url,
+               dataType:    'json',
+               contentType: 'text/html',
+               async:       false,
+               error:       function(xhr, textStatus, errorThrown)
+                            {
+                              if (xhr.responseText &&
+                                 (xhr.responseText !== ''))
+                              {
+                                var newDoc = document.open('text/html',
+                                                           "replace");
+
+                                newDoc.write(xhr.responseText);
+                                newDoc.close();
+                              }
+                              else
+                              {
+                                alert("Error Occured. " + textStatus + ": " +
+                                      errorThrown);
+                              }
+                            },
+               success:     function (data)
+                            {
+                              data = JSON.parse(data.template_checklists);
+
+                              for (var i = 0; i < data.length; i++)
+                              {
+                                $('#review_reviewtype').append(`<option value="${data[i].title}">${data[i].description} (${data[i].checklist_class} ${data[i].checklist_type})</option>`);
+                              }
+                            }
+             }
+           );
+  });
+
+  function duplicate_pact_files()
+  {
+    $('#pact_attachment').empty();
+
+    $("#review_pact_file option").each(function()
+    {
+        $('#pact_attachment').append(`<option value="${$(this).val()}">${$(this).text()}</option>`);
+    });
+  }
+
+  function new_attachment_file()
+  {
+    $('#new_attachment').hide();
+    $('#attachment_div').show();
+  }
+
+  function attachment_selected()
+  {
+    var selection = $('#attachment_type').val();
+
+    if (selection == 'EXTERNAL')
+    {
+      $('#url_div').show();
+      $('#file_div').hide();
+      $('#pact_div').hide();
+    }
+    else if (selection == 'ATTACHMENT')
+    {
+      $('#url_div').hide();
+      $('#file_div').show();
+      $('#pact_div').hide();
+    }
+    else if (selection == 'PACT')
+    {
+      duplicate_pact_files();
+
+      $('#url_div').hide();
+      $('#file_div').hide();
+      $('#pact_div').show();
+    }
+    else
+    {
+      $('#url_div').hide();
+      $('#file_div').hide();
+      $('#pact_div').hide();
+    }
+  }
+
+  function add_attachment_file()
+  {
+    var table                = document.getElementById("additional_attachments");
+    var totalRowCount        = table.rows.length;
+    var dataID               = 'data_' + totalRowCount;
+    var selection            = $('#attachment_type').val();
+    var row                  = table.insertRow(-1);
+    var cell                 = [];
+
+    cell[0]                  = row.insertCell(0);
+    cell[1]                  = row.insertCell(1);
+    cell[2]                  = row.insertCell(2);
+    cell[2].innerHTML        = '<div onclick=\'document.getElementById("additional_attachments").deleteRow(' +
+                               totalRowCount +
+                               ');\'><i class="material-icons md-24">delete</i></div>';
+    cell[3]                  = row.insertCell(3);
+    cell[3].style.visibility = 'hidden';
+    cell[3].id               = dataID;
+
+    if (selection == 'EXTERNAL')
+    {
+      cell[0].innerHTML      = "External URL";
+      cell[1].innerHTML      = $('#attachment_url').val();
+      cell[3].innerHTML      = $('#attachment_url').val();
+    }
+    else if (selection == 'ATTACHMENT')
+    {
+      var file               = $('#attachment_file');
+      var filename           = file.val();
+      var filenameIndex      = filename.indexOf('fakepath\\');
+
+      if (filenameIndex > 0)
+      {
+        filenameIndex += 9;
+        filename             = filename.substring(filenameIndex);
+      }
+
+      cell[0].innerHTML      = "Attach File";
+      cell[1].innerHTML      = filename;
+
+      file.attr("id",   "attachment_file_" + totalRowCount);
+      file.attr("name", "attachment_file_" + totalRowCount);
+
+      $('#' + dataID).append(file);
+      $('#file_div').append('<input type="file" id="attachment_file" name="attachment_file">');
+    }
+    else if (selection == 'PACT')
+    {
+      cell[0].innerHTML      = "PACT Documents";
+      cell[1].innerHTML      = $('#pact_attachment option:selected').text();
+      cell[3].innerHTML      = $('#pact_attachment').val();
+    }
+
+    $('#attachment_div').hide();
+    $('#new_attachment').show();
+  }
+
+  $(":input").keydown(function (event) {
+      if (event.keyCode == 112)
+        validate();
+      else if (event.keyCode == 113)
+        window.location.assign(window.location.href.replace(/\/\d+\/edit$/, ''));
+  }); 
+
+  function validate()
+  {
+    var form                 = document.forms[0];
+    var okay                 = validateForm();
+    var messageText          = '';
+    var evaluators_field     = document.getElementById(evaluators);
+
+    if (!okay)
+      return(false);
+
+    for (var i = 0, len = evaluators_field.options.length; i < len; i++)
+    {
+        evaluator            = evaluators_field.options[i];
+        evaluator.selected   = true;
+    }
+
+    if (okay)
+    {
+      var table         = document.getElementById("additional_attachments");
+      var totalRowCount = table.rows.length;
+
+      if (totalRowCount > 1)
+      {
+        for (var index = 1; index < totalRowCount; index++)
+        {
+          var link_type_field;
+          var link_description_field;
+          var link_data_field;
+          var row                    = table.rows[index];
+
+          if (row.cells[0].innerHTML == 'External URL')
+          {
+            link_type_field        = `'<input type="text" name="review[attachments][${index - 1}][link_type]"        id="review_attachments_${index - 1}_link_type"        value="EXTERNAL">'`;
+            link_description_field = `'<input type="text" name="review[attachments][${index - 1}][link_description]" id="review_attachments_${index - 1}_link_description" value="${row.cells[1].innerHTML}">'`;
+            link_data_field        = `'<input type="text" name="review[attachments][${index - 1}][link_data]"        id="review_attachments_${index - 1}_link_data"       value="${row.cells[3].innerHTML}">'`;
+
+            $('#attachment_div').append(link_type_field);
+            $('#attachment_div').append(link_description_field);
+            $('#attachment_div').append(link_data_field);
+          }
+          else if (row.cells[0].innerHTML == 'PACT Documents')
+          {
+            link_type_field        = `'<input type="text" name="review[attachments][${index - 1}][link_type]"        id="review_attachments_${index - 1}_link_type"        value="PACT">'`;
+            link_description_field = `'<input type="text" name="review[attachments][${index - 1}][link_description]" id="review_attachments_${index - 1}_link_description" value="${row.cells[1].innerHTML}">'`;
+            link_data_field        = `'<input type="text" name="review[attachments][${index - 1}][link_data]"        id="review_attachments_${index - 1}_link_data"       value="${row.cells[3].innerHTML}">'`;
+
+            $('#attachment_div').append(link_type_field);
+            $('#attachment_div').append(link_description_field);
+            $('#attachment_div').append(link_data_field);
+          }
+          else if (row.cells[0].innerHTML == 'Attach File')
+          {
+            var file               = $('#attachment_file_' + index);
+
+            file.attr("id",   'review_attachments_'  + (index - 1) + '_link_data');
+            file.attr("name", 'review[attachments][' + (index - 1) + '][link_data]');
+
+            link_type_field        = `'<input type="text" name="review[attachments][${index - 1}][link_type]"        id="review_attachments_${index - 1}_link_type"        value="ATTACHMENT">'`;
+            link_description_field = `'<input type="text" name="review[attachments][${index - 1}][link_description]" id="review_attachments_${index - 1}_link_description" value="${row.cells[1].innerHTML}">'`;
+
+            $('#attachment_div').append(link_type_field);
+            $('#attachment_div').append(link_description_field);
+            $('#attachment_div').append(file);
+          }
+        }
+      }
+
+      form.submit();
+    }
+    else
+    {
+      message.value          = messageText;
+      message.style.display  = "none";
+
+      alert(messageText);
+    }
+
+    return(okay);
+  }
+</script>

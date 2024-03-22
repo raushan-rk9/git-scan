@@ -1,0 +1,11 @@
+<h1>Checklist Items <%= t('misc.list') %></h1>
+
+<%= render partial: 'index' %>
+<script>
+  $( document ).ready(function() {
+    if (document.cookie.match(/scrollTop=(\d+)/))
+      $(window).scrollTop(document.cookie.match(/scrollTop=(\d+)/)[1]);
+  });
+
+  $(window).unload(function() {document.cookie = "scrollTop=" + $(window).scrollTop();});
+</script>

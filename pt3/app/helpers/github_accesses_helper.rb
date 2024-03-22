@@ -1,0 +1,2 @@
+module GithubAccessesHelper
+end

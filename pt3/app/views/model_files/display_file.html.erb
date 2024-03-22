@@ -1,0 +1,9 @@
+<% if @model_file.present? %>
+  <% if @model_file.upload_file.attached? && @model_file.file_type =~ /^image\/.+$/i %>
+    <%= image_tag(@model_file.upload_file) %>
+  <% end %>
+<% end %>
+
+<br>
+
+<%= link_to 'Back', go_back_path(1),  onclick: 'validateBack(1, this)', class: 'btn' %>

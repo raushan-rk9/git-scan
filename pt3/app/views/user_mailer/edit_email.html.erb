@@ -1,0 +1,125 @@
+Dear <%= @user.fullname %>:
+<p>
+Your user information has been changed in PACT. Please see below for the details.
+</p>
+<table style=" width: 100% !important; border: none !important;">
+  <thead>
+    <tr>
+      <th colspan=3 align="left">
+        <h4>
+          Detail:
+        </h4>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td width="10%">
+        &nbsp;
+      </td>
+      <td width="10%">
+        First Name:
+      </td>
+      <td width="80%">
+        <%= @user.firstname %>
+      </td>
+    </tr>
+    <tr>
+      <td width="10%">
+        &nbsp;
+      </td>
+      <td width="10%">
+        Last Name:
+      </td>
+      <td width="80%">
+        <%= @user.lastname %>
+      </td>
+    </tr>
+    <tr>
+      <td width="10%">
+        &nbsp;
+      </td>
+      <td width="10%">
+        Title:
+      </td>
+      <td width="80%">
+        <%= @user.title %>
+      </td>
+    </tr>
+    <tr>
+      <td width="10%">
+        &nbsp;
+      </td>
+      <td width="10%">
+        Phone:
+      </td>
+      <td width="80%">
+        <%= @user.phone %>
+      </td>
+    </tr>
+    <tr>
+      <td width="10%">
+        &nbsp;
+      </td>
+      <td width="10%">
+        Roles:
+      </td>
+      <td width="80%">
+        <%=@user.role %>
+      </td>
+    </tr>
+    <tr>
+      <td width="10%">
+        &nbsp;
+      </td>
+      <td width="10%">
+        Time Zone:
+      </td>
+      <td width="80%">
+        <%= @user.time_zone %>
+      </td>
+    </tr>
+    <tr>
+      <td width="10%">
+        &nbsp;
+      </td>
+      <td width="10%">
+        Notify on Changes:
+      </td>
+      <td width="80%">
+        <%= @user.notify_on_changes ? 'Yes' : 'No' %>
+      </td>
+    </tr>
+    <tr>
+      <td width="10%">
+        &nbsp;
+      </td>
+      <td width="10%">
+        Password Reset Required:
+      </td>
+      <td width="80%">
+        <%= @user.password_reset_required ? 'Yes' : 'No' %>
+      </td>
+    </tr>
+    <tr>
+      <td width="10%">
+        &nbsp;
+      </td>
+      <td width="10%">
+        User Disabled:
+      </td>
+      <td width="80%">
+        <%= @user.user_disabled ? 'Yes' : 'No' %>
+      </td>
+    </tr>
+  <tbody>
+</table>
+
+<% unless @user.user_disabled %>
+<p>
+  You can change your account information at <%= edit_user_url(@user) %>.
+</p>
+<% end %>
+PACT Automation<br>
+pact_cm@airworthinesscert.com
+</p>

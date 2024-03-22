@@ -1,0 +1,26 @@
+<ul class="list-group">
+  <li class="list-group-item active">
+    <h5>
+      <%= "Checkmark: #{@code_checkmark.checkmark_id}" %>
+    </h5>
+  </li>
+  <li class="list-group-item">
+    <p>
+      <strong>Source code:</strong>
+      <%= @code_checkmark.source_code %>
+    </p>
+    
+    <p>
+      <strong>Filename:</strong>
+      <%= @code_checkmark.filename %>
+    </p>
+    
+    <p>
+      <strong>Line number:</strong>
+      <%= @code_checkmark.line_number %>
+    </p>
+  </li>
+</ul>
+
+<%= link_to 'Edit', edit_code_checkmark_path(@code_checkmark) %>
+<%= link_to 'Back', go_back_path(1) %>

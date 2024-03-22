@@ -1,0 +1,28 @@
+reqid,full_id,description,category,verification_method,source,safety,implementation,version
+1000,SYS-001000,PACT SHALL provide an interface to manage Documents.,,,,FALSE,,1
+2000,SYS-002000,PACT SHALL provide an interface to manage Reviews.,,,,FALSE,,1
+3000,SYS-003000,PACT SHALL provide an interface to manage Requirements.,,,,FALSE,,1
+4000,SYS-004000,PACT SHALL provide Tracing for Requirements.,,,,FALSE,,1
+5000,SYS-005000,PACT SHALL provide an interface to manage Problem Reports.,,,,FALSE,,1
+6000,SYS-006000,PACT SHALL provide an interface to perform bidirectionality traceability to code for Software,,,,FALSE,,1
+7000,SYS-007000,PACT SHALL shall provide a document commenting system for Documents.,,,,FALSE,,1
+8000,SYS-008000,PACT SHALL provide an action item system for Reviews.,,,,FALSE,,1
+9000,SYS-009000,PACT SHALL provide an interface to manage Checklists.,,,,FALSE,,1
+10000,SYS-010000,PACT SHALL associate checklists with Documents and Reviews.,,,,FALSE,,1
+11000,SYS-011000,PACT SHALL provide an interface to manage users.,,,,FALSE,,1
+12000,SYS-012000,PACT SHALL provide an interface to manage files.,,,,FALSE,,1
+13000,SYS-013000,PACT SHALL provide an interface to manage projects.,,,,FALSE,,1
+14000,SYS-014000,PACT SHALL provide pre-defined data types for DO-178 lifecycle projects.,,,,FALSE,,1
+15000,SYS-015000,PACT SHALL provide pre-defined data types for DO-254 lifecycle projects    ,,,,FALSE,,1
+16000,SYS-016000,PACT SHALL provide pre-defined data types for DO-278 lifecycle projects. ,,,,FALSE,,1
+17000,SYS-017000,"PACT SHALL provide a single instantiation of the tool which supports all projects, which is one comment set of source code that all users share.  All production instances will be derived from a common set of source code.",,,,FALSE,,1
+18000,SYS-018000,PACT SHALL provide configuration management for all life cycle data.,,,,FALSE,,1
+19000,SYS-019000,PACT SHALL notify the user when the license is within 30 days of expiring.,,,,FALSE,,1
+20000,SYS-020000,PACT SHALL support the ReqIF standard for import and export of requirements documents.,,,,FALSE,,1
+21000,SYS-021000,PACT SHALL support trace matrices.,,,,FALSE,,1
+22000,SYS-022000,PACT SHALL support the use of templates.,,,,FALSE,,1
+23000,SYS-023000,PACT SHALL resize the width of text fields in the web browser window such that fields containing variable-length text can expand and contract as the web browser window is resized to fill 80% of web browser window.,,,CiES,FALSE,Software,1
+23010,SYS-023010,"PACT SHALL keep the headers, menus and navigation controls at the top of the browser window visible as the user scroll the contents of the window.",,,CiES,FALSE,Software,1
+23020,SYS-023020,"PACT SHALL have the controls for saving the current record, returning to the previous screen, undoing (where applicable) and performing any other function on the current record at the top left of the window below the main menu.",,,CiES,FALSE,Software,1
+23030,SYS-023030,PACT SHOULD whenever possible return the user to the previous screen at the item that the user was on previously if the user clicks the back button in the browser or chooses back from the navigation controls.,,,CiES,FALSE,Software,1
+23040,SYS-023040,PACT SHOULD allow for 100 organizations with 600 users per organization.,,,,FALSE,,1

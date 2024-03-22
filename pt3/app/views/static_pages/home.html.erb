@@ -1,0 +1,39 @@
+<% provide(:title, "Home") %>
+<div class="center jumbotron">
+
+<% flash.each do |type, msg| %>
+  <div style='text-align: left;'>
+    <h2><%= msg %></h2>
+  </div>
+<br>
+<% end %>
+
+  <table width='100%'>
+    <tr>
+      <td>
+        <%= image_tag("globe-medium.png", size: "282x276") %>
+      </td>
+      <td>
+        <h1>Welcome to <%= ENV.fetch("SYSNAME") { "CMS" } %></h1>
+        <h2>
+          <% if current_user.present? %>
+            <% session[:archives_visible] = false %>
+            <% session[:archive_type]     = nil %>
+
+            <% if current_user.organization.present?                                                          %>
+              <% organization = Licensee.find_by(identifier: current_user.organization)                       %>
+              <% welcome      = "#{current_user.fullname} from #{organization.name}" if organization.present? %>
+              Welcome <%= welcome %>.<br><br>
+            <% else %>
+              Welcome <%= current_user.fullname %>.<br><br>
+            <% end %>
+            <%= link_to "View all Projects", projects_path %>
+          <% else %>
+            Please <%= link_to "sign in", login_path %>.
+          <% end %>
+        </h2>
+      </td>
+    </tr>
+  </table>
+
+</div>

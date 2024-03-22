@@ -1,0 +1,38 @@
+<%= simple_form_for(@user, url: user_security_multifactor_challenge_path(), html: { method: :post }) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>
+  <br>
+  <%= @challenge_question.name if @challenge_question.present? %>
+  </p>
+
+  <%= f.input :challenge_code, required: true, autofocus: true, label: 'Response' %>
+  <%= f.input :use_multifactor_authentication, collection:  Constants::Limited_Multifactor_Authentication_hash, include_blank: false, label: 'Multifactor Authentication'  %> 
+  <%= f.button :submit, 'Send', data: { "disable-with": t('misc.save') } %>
+<% end %>
+
+<script>
+function validateCode() {
+  var code     = $('#challenge_code').val();
+  var result   = true;
+
+  return result;
+}
+
+$('form#new_user').submit(function() {
+    return (validateCode());
+});
+
+$('[id*="edit_user_"]').submit(function() {
+    return (validateCode());
+});
+
+</script>

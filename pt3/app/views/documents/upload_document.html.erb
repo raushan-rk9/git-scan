@@ -1,0 +1,263 @@
+<h1>Upload Document</h1>
+<%= simple_form_for( [@document.item, @document], html: { class: 'form-horizontal' }) do |f| %>
+  <%= f.error_notification %>
+
+  <% if @document.present? && @document.errors.present? && @document.errors.messages.present? %>
+    <% @document.errors.messages.each do |field, messages| %>
+      <h4 style="color: red;">
+        <%= field.to_s.titleize %>:
+        <% messages.each do |message| %>
+          <%= message %>&nbsp;
+        <% end %>
+        <br>
+      </h4>
+    <% end %>
+  <% end %>
+
+  <ul class="list-group">
+    <li class="list-group-item active">
+      <h5>
+        <%= "#{t('document.docid') }: #{@document.docid}" %>
+      </h5>
+    </li>
+    <li class="list-group-item">
+      <p>
+          <strong>Name:</strong>
+          <%= @document.name %>
+      </p>
+    </li>
+  </ul>
+
+  <div class="form-inputs">
+    <%= f.file_field  :file %>
+    <%= f.input         :release_document, as: :boolean %>
+
+    <% if current_user.fulladmin %>
+      <%= f.input       :draft_revision, label: 'Draft Version', :input_html => { :readonly => true } %>
+      <%= f.input       :revision, :input_html => { :readonly => true } %>
+      <%= f.input       :revdate, as: :date, html5: true, :input_html => { :readonly => true } %>
+    <% else %>
+      <%= f.input       :draft_revision, label: 'Draft Version', :input_html => { :readonly => true } %>
+      <%= f.input       :revision, :input_html => { :readonly => true } %>
+      <%= f.input       :revdate, as: :date, html5: true, :input_html => { :readonly => true } %>
+    <% end %>
+
+    <input name='original_draft_revision' id='original_draft_revision' type='hidden' value='<%= @document.draft_revision %>' />
+    <input name='original_revision'       id='original_revision'       type='hidden' value='<%= @document.revision %>' />
+    <input name='original_revdate'        id='original_revdate'        type='hidden' value='<%= @document.revdate %>' />
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, data: { "disable-with": t('misc.save') } %>
+    <%= link_to 'Back', go_back_path(1),  onclick: 'validateBack(1, this)', class: 'btn' %>
+  </div>
+<% end %>
+
+<script>
+  var model                 = "document";
+  var prefix                = model  + "_";
+  var draftRevision         = prefix + "draft_revision";
+  var revision              = prefix + 'revision';
+  var revdate               = prefix + 'revdate';
+  var release               = prefix + 'release_document';
+  var originalDraftRevision = 'original_draft_revision';
+  var originalRevision      = 'original_revision';
+  var originalRevdate       = 'original_revdate';
+  var releaseSelect         = '#' + release;
+
+  function isInteger(data)
+  {
+    return parseInt(data, 10);
+  }
+
+  function incrementInteger(data)
+  {
+    var result;
+    
+    if (isInteger(data))
+    {
+      result = data + 1;
+    }
+    else
+    {
+      result = 1;
+    }
+
+    return result;
+  }
+
+  function decrementInteger(data)
+  {
+    var result;
+    
+    if (isInteger(data))
+    {
+      result = data - 1;
+    }
+    else
+    {
+      result = 1;
+    }
+
+    return result;
+  }
+
+  function isFloat(data)
+  {
+    return parseFloat(data);
+  }
+
+  function incrementFloat(data, by, floor)
+  {
+    var result;
+
+    if (isFloat(data))
+    {
+      if (floor)
+        data = 0.0 + Math.floor(data);
+
+      result = data + by;
+    }
+    else
+    {
+      result = 1.0;
+    }
+
+    return result;
+  }
+
+  function decrementFloat(data, by)
+  {
+    var result;
+    
+    if (isFloat(data))
+    {
+      result = data - by;
+    }
+    else
+    {
+      result = 1.0;
+    }
+
+    return result;
+  }
+
+  function digitToAlpha(digit, uppercase)
+  {
+    var result = null;
+
+    if (!isInteger(digit) || (digit < 0) || (digit > 25))
+      return result;
+
+    if (uppercase)
+      result = String.fromCharCode(64 + digit);
+    else
+      result = String.fromCharCode(96 + digit);
+      
+    return result;
+  }
+
+  function alphaToDigit(alpha)
+  {
+    var result = null;
+
+    if ((alpha >= 'A') && (alpha <= 'Z'))
+      result = alpha.charCodeAt(0) - 64;
+    else if ((alpha >= 'a') && (alpha <= 'z'))
+      result = alpha.charCodeAt(0) - 96;
+
+    return result;
+  }
+
+  function incrementAlphaRevision(alphaRevision)
+  {
+    /*
+       This only deals with a string that is all of the same case
+       Since this is for revisions we limit the string from 'A' to 'ZZ'
+       the assumption is that there will not be more than 675 revisions
+     */
+
+    var uppercase   = false;
+
+    if (alphaRevision.match(/^[a-z]+$/i))
+    {
+      var alpha       = alphaRevision.charAt(0);
+
+      uppercase       = ((alpha >= 'A') && (alpha <= 'Z'));
+    }
+
+    if (alphaRevision.match(/^[a-z]$/i))
+    {
+      alphaRevision   = alphaToDigit(alphaRevision);
+
+      alphaRevision++;
+
+      if (alphaRevision <= 25)
+        alphaRevision = digitToAlpha(alphaRevision, uppercase);
+      else
+        alphaRevision = uppercase ? 'AA' : 'aa';
+    }
+    else if (alphaRevision.match(/^[a-z][a-z]$/i))
+    {
+      var digits      = [];
+
+      digits[0]       = alphaToDigit(alphaRevision.charAt(0));
+      digits[1]       = alphaToDigit(alphaRevision.charAt(1));
+      alphaRevision   = (digits[0] * 26) + digits[1];
+      alphaRevision  += 1;
+
+      if (alphaRevision > 675)
+        alphaRevision = uppercase ? 'AAA' : 'aaa';
+      else
+        alphaRevision = digitToAlpha((alphaRevision / 26), uppercase) +
+                        digitToAlpha((alphaRevision % 26), uppercase);
+    }
+
+    return alphaRevision;
+  }
+
+  function changeRelease()
+  {
+    var releaseField                 = document.getElementById(release);
+    var draftRevisionField           = document.getElementById(draftRevision);
+    var revisionField                = document.getElementById(revision);
+    var revdateField                 = document.getElementById(revdate);
+
+    if (releaseField.checked)
+    {
+      var draftRevisionValue         = draftRevisionField.value;
+      var revisionValue              = revisionField.value;
+      var todaysDate                 = new Date().toISOString().slice(0, 10);
+
+      if (revisionValue === "")
+      {
+        revisionField.value          = 'A';
+        draftRevisionField.value     = '1.0';
+      }
+      else
+      {
+        revisionValue                = incrementAlphaRevision(revisionValue);
+        revisionField.value          = revisionValue.toUpperCase();
+        draftRevisionField.value     = incrementFloat(draftRevisionValue, 1.0,
+                                                      true) + ".0";
+      }
+
+      revdateField.value             = todaysDate;
+    }
+    else
+    {
+      var originalDraftRevisionField = document.getElementById(originalDraftRevision);
+      var originalRevisionField      = document.getElementById(originalRevision);
+      var originalRevdateField       = document.getElementById(originalRevdate);
+
+      draftRevisionField.value       = originalDraftRevisionField.value;
+      revisionField.value            = originalRevisionField.value;
+      revdateField.value             = originalRevdateField.value;
+    }
+  }
+
+  $(document).ready(function()
+  {
+    $(releaseSelect).change(changeRelease);
+  });
+</script>

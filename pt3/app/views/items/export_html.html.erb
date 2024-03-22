@@ -1,0 +1,42 @@
+<head>
+  <title><%= full_title(yield(:title)) %></title>
+</head>
+
+<h1>Items Export</h1>
+<table style=" width: 100% !important; border: none !important;">
+  <tr>
+    <td>
+      <%= render partial: 'rtmtable_compare', :locals => {:firstcomparetext => "System Requirements", :secondcomparetext => "#{Item.item_type_title(@item, :high_level, :plural)} and #{Item.item_type_title(@item, :low_level, :plural)}"} %>
+          <% @sysreqs_all.each do |sysreq| %>
+            <tr>
+              <td col width="20%" align="left">
+                <%= link_to sysreq.fullreqid, project_system_requirement_path(@project, sysreq) %>:
+                <%= sysreq.description.to_s.html_safe %>
+              </td>
+              <td col align="left">
+                <table style="border: none !important;">
+                  <% sysreq.high_level_requirements.order(:full_id).each do |sysreq_hlr| %>
+                    <tr>
+                      <td>
+                        <%= link_to sysreq_hlr.fullreqid, item_high_level_requirement_path(sysreq_hlr.item_id, sysreq_hlr) %>:
+                        <%= sysreq_hlr.description.to_s.html_safe %>
+                      </td>
+                      <td>
+                        <% sysreq_hlr.low_level_requirements.order(:full_id).each do |sysreq_hlr_llr| %>
+                          <p>
+                            <%= link_to sysreq_hlr_llr.fullreqid, item_low_level_requirement_path(sysreq_hlr_llr.item_id, sysreq_hlr_llr) %>:
+                            <%= sysreq_hlr_llr.description.to_s.html_safe %>
+                          </p>
+                        <% end %>
+                      </td>
+                    </tr>
+                  <% end %>
+                </table>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </td>
+  </tr>
+</table>

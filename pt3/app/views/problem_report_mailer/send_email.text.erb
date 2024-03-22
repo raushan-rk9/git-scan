@@ -1,0 +1,31 @@
+<% @comments %>
+
+Detail:
+
+    Project:             <%= @project.name %>
+<% if @item.present? %>
+    Item/Artifact:       <%= @item.name %>
+<% end %>
+    ID:                  <%= @problem_report.prid %>
+    Title:               <%= @problem_report.title %>
+    Description:         <%= Sanitize.fragment(@problem_report.description) %>
+    Opened By:           <%= User.fullname_from_email(@problem_report.openedby) %>
+    Date Opened:         <%= @problem_report.dateopened %>
+    Status:              <%= @problem_report.status %>
+    Product:             <%= @problem_report.product %>
+    Criticality:         <%= @problem_report.criticality %>
+    Safety Related:      <%= @problem_report.safetyrelated %>
+    Source:              <%= @problem_report.source %>
+    Problem Found In:    <%= @problem_report.problemfoundin %>
+    Discipline Assigned: <%= @problem_report.discipline_assigned %>
+    Target Date:         <%= @problem_report.target_date %>
+    Corrective Action:   <%= @problem_report.correctiveaction %>
+    Fixed In:            <%= @problem_report.fixed_in %>
+    Verification:        <%= @problem_report.verification %>
+    Meeting ID:          <%= @problem_report.meeting_id %>
+    Close Date:          <%= @problem_report.close_date %>
+    Feedback:            <%= Sanitize.fragment(@problem_report.feedback) %>
+    Notes:               <%= Sanitize.fragment(@problem_report.notes) %>
+
+PACT Automation
+pact_cm@airworthinesscert.com

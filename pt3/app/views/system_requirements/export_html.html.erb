@@ -1,0 +1,231 @@
+<style>
+  table {
+          border: 1px solid #CCC;
+          border-collapse: collapse;
+          margin-left: 36pt
+  }
+
+  li::before
+  {
+          counter-increment: section important!;
+          content:           counters(section, "")  important!;
+  }
+
+  ol {
+          padding:       0px !important;
+          margin:        0px 0px 0px 0px !important;
+  }
+
+  li {
+          padding:       0px !important;
+          margin:        0px 0px 0px 0px !important;
+  }
+
+  level-one {
+          padding-left:  24px !important;
+  }
+  
+  level-two {
+          padding-left:  48px !important;
+  }
+
+  body {
+          font-family:   Cambria, Georgia, serif !important; 
+          font-style:    normal !important;
+          font-variant:  normal !important;
+          font-weight:   normal !important;
+          color:         black !important;
+          font-size:     11pt !important;
+          line-height:   13pt !important;
+          padding:       0px !important;
+          margin:        0px 0px 0px 0px !important;
+          border:        none !important;
+          counter-reset: section;
+  }
+  
+  title {
+          font-family:  Calibri, Candara, Segoe, "Segoe UI" !important;
+          font-style:   normal !important;
+          font-variant: normal !important;
+          font-weight:  bold !important;
+          color:        darkblue !important;
+          font-size:    24pt !important;
+          line-height:  22pt !important;
+          padding:      0px !important;
+          margin:       0px 0px 0px 0px !important;
+          border:       none !important;
+  }
+
+  h1 {
+          font-family:  Calibri, Candara, Segoe, "Segoe UI" !important;
+          font-style:   normal !important;
+          font-variant: normal !important;
+          font-weight:  bold !important;
+          color:        blue !important;
+          font-size:    20pt !important;
+          line-height:  22pt !important;
+          padding:      0px !important;
+          margin:       0px 0px 0px 0px !important;
+          border:       none !important;
+  }
+  
+  h2 {
+          font-family:  Calibri, Candara, Segoe, "Segoe UI" !important;
+          font-style:   normal !important;
+          font-variant: normal !important;
+          font-weight:  bold !important;
+          color:        blue !important;
+          font-size:    16pt !important;
+          line-height:  18pt !important;
+          padding:      0px !important;
+          margin:       0px 0px 0px 0px !important;
+          border:       none !important;
+  }
+  
+  h3 {
+          font-family: Calibri, Candara, Segoe, "Segoe UI" !important;
+          font-style:   normal !important;
+          font-variant: normal !important;
+          font-weight:  bold !important;
+          color:        blue !important;
+          font-size:    14pt !important;
+          line-height:  16pt !important;
+          padding:      0px !important;
+          margin:       0px 0px 0px 0px !important;
+          border:       none !important;
+  }
+  
+  h4 {
+          font-family: Calibri, Candara, Segoe, "Segoe UI" !important;
+          font-style:   normal !important;
+          font-variant: normal !important;
+          font-weight:  bold !important;
+          color:        lightblue !important;
+          font-size:    12pt !important;
+          line-height:  14pt !important;
+          padding:      0px !important;
+          margin:       0px 0px 0px 0px !important;
+          border:       none !important;
+  }
+  
+  h5 {
+          font-family: Calibri, Candara, Segoe, "Segoe UI" !important;
+          font-style:   normal !important;
+          font-variant: normal !important;
+          font-weight:  bold !important;
+          color:        lightblue !important;
+          font-size:    10pt !important;
+          line-height:  12pt !important;
+          padding:      0px !important;
+          margin:       0px 0px 0px 0px !important;
+          border:       none !important;
+  }
+  
+  h6 {
+          font-family: Calibri, Candara, Segoe, "Segoe UI" !important;
+          font-style:   normal !important;
+          font-variant: normal !important;
+          font-weight:  italic !important;
+          color:        lightblue !important;
+          font-size:    10pt !important;
+          line-height:  12pt !important;
+          padding:      0px !important;
+          margin:       0px 0px 0px 0px !important;
+          border:       none !important;
+  }
+</style>
+
+<head>
+  <title><%= full_title(yield(:title)) %></title>
+</head>
+
+<h3>System Requirements</h3>
+
+<% @system_requirements.each do |system_requirement| %>
+  <table style="width:7.5in" border="2">
+    <% if system_requirement.soft_delete %>
+      <% next %>
+    <% end %>
+    <tr>
+      <td width="25%" style="vertical-align:top">
+        <%= system_requirement.fullreqid %>
+      </td>
+      <td colspan="3" width="75%">
+        <%= system_requirement.description.to_s.html_safe %>
+
+        <% if system_requirement.model_file_id.present? && system_requirement.model_file.upload_file.attached? %>
+          <%= link_to image_tag(system_requirement.model_file.upload_file, :size => '25%xauto'), item_model_file_display_path(system_requirement.model_file.item_id, system_requirement.model_file) + '?new_window=true', target: :_blank %>
+        <% elsif system_requirement.document_id.present? && system_requirement.document.file.attached? %>
+          <%= link_to image_tag(system_requirement.document.file, :size => '25%xauto'), item_document_display_path(system_requirement.document.item_id, system_requirement.document) + '?new_window=true', target: :_blank %>
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td  width="25%" style="vertical-align:top">
+        Requirement Source:
+      </td>
+      <td width="25%"  style="vertical-align:top">
+        <%= system_requirement.source.to_s.html_safe %>
+      </td>
+      <td width="25%"  style="vertical-align:top">
+        Derived:
+      </td>
+      <td width="25%"  style="vertical-align:top">
+        <% if system_requirement.derived %>
+          Yes
+        <% else %>
+          No
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align:top">
+        Verification Method:
+      </td>
+      <td style="vertical-align:top">
+        <% if system_requirement.verification_method.instance_of?(Array) %>
+          <% system_requirement.verification_method.each do |method| %>
+            <% next unless method.present? %>
+            <%= method %>
+            <br>
+          <%end %>
+        <% elsif system_requirement.verification_method.instance_of?(String) %>
+          <%= system_requirement.verification_method %>
+        <% end %>
+      </td>
+      <td style="vertical-align:top">
+        Derived Justification:
+      </td>
+      <td style="vertical-align:top">
+        <%= system_requirement.derived_justification.to_s.html_safe %>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align:top">
+        Category:
+      </td>
+      <td style="vertical-align:top">
+        <%= system_requirement.category.to_s.html_safe %>
+      </td>
+      <td style="vertical-align:top">
+        Safety Related:
+      </td>
+      <td style="vertical-align:top">
+        <% if system_requirement.safety %>
+          Yes
+        <% else %>
+          No
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align:top">
+        Implementation:
+      </td>
+      <td colspan="3">
+        <%= system_requirement.implementation.to_s.html_safe %>
+      </td>
+    </tr>
+  </table>
+  <br>
+<% end if @system_requirements.present? %>

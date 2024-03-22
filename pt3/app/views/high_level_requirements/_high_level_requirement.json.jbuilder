@@ -1,0 +1,1 @@
+json.extract! high_level_requirement, :id, :reqid, :full_id, :description, :category, :safety, :robustness, :derived, :testmethod, :version, :item_id, :project_id, :derived_justification, :system_requirement_associations, :verification_method, :high_level_requirement_associations, :created_at, :updated_at 

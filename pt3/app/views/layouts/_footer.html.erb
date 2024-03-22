@@ -1,0 +1,40 @@
+<%= render 'cookies_eu/consent_banner' %>
+
+<footer class="footer">
+  <small>
+    <%= ENV.fetch("SYSNAME") { "CMS" } %> (C)<br>
+    <b>Airworthiness Certification Services, LLC</b><br>
+    PMB#224<br>
+    5500 Olympic Drive<br>
+    Suite H-105<br>
+    Gig Harbor Wa 98335<br>
+    Phone/fax: 425-427-1956<br>
+  </small>
+  <nav>
+    <ul>
+      <% if current_user.present? %>
+        <li><%= link_to "About",   about_path %></li>
+        <li><%= link_to "Privacy and Security", privacy_path %></li>
+        <li><%= link_to "Contact", contact_path %></li>
+      <% else %>
+        <li><a class="has-tip" title="Process and Artifact Compliance Tool
+
+Version: 1.7
+Copyright 2019-2020 by Airworthiness Certification Services LLC
+All Rights Reserved." onClick='javascript:alert("Process and Artifact Compliance Tool\n Version: 1.7\nCopyright 2019-2020 by Airworthiness Certification Services LLC\nAll Rights Reserved.");' >About</a></li>
+        <li><a class="has-tip" title="Contact Information
+PACT is sold and supported by:
+  AIRWORTHINESS CERTIFICATION SERVICES, LLC
+  PMB#224
+  5500 Olympic Drive, Suite H-105
+  Gig Harbor, WA 98335
+
+  Phone/fax: 425-427-1956
+
+  https://www.airworthinesscert.com.
+
+For Technical Support and/or to report issues with the tool or document, email support@airworthinesscert.com" onClick='javascript:alert("Contact Information\nPACT is sold and supported by:\n  AIRWORTHINESS CERTIFICATION SERVICES, LLC\n  PMB#224\n  5500 Olympic Drive, Suite H-105\n  Gig Harbor, WA 98335\n\n  Phone/fax: 425-427-1956\n\n  https://www.airworthinesscert.com.\n\nFor Technical Support and/or to report issues with the tool or document, email support@airworthinesscert.com");' >Contact</a></li>
+      <% end %>
+    </ul>
+  </nav>
+</footer>

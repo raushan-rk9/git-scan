@@ -1,0 +1,1 @@
+json.extract! test_procedure, :id, :procedure_id, :full_id, :file_name, :url_type, :url_description, :url_link, :version, :organization, :item_id, :project_id, :archive_id, :created_at, :updated_at, :test_case_associations, :description, :soft_delete, :document_id, :file_path, :content_type, :file_type, :revision, :draft_version, :revision_date, :upload_date

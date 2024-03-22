@@ -1,0 +1,2 @@
+module SpecObjectsHelper
+end

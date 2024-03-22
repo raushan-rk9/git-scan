@@ -1,0 +1,48 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+phac:
+  docid:            'PHAC'
+  name:             'PHAC.doc'
+  category:         'Control Category 1'
+  version:          0
+  item_id:          <%= Item.find_by(identifier: 'HARDWARE_ITEM').try(:id) %>
+  project_id:       <%= Project.find_by(identifier: 'TEST').try(:id) %>
+  draft_revision:   '0.1'
+  doccomment_count: 0
+  organization:     'test'
+  document_type:    'PHAC'
+  file_path:        '/var/folders/documents/patmos_engineering_services/PHAC.doc'
+  file_type:        'application/msword'
+  document_id:      1
+  upload_date:      <%= Date.today %>
+
+psac:
+  docid:            'PSAC'
+  name:             'PSAC.doc'
+  category:         'Control Category 1'
+  version:          0
+  item_id:          <%= Item.find_by(identifier: 'SOFTWARE_ITEM').try(:id) %>
+  project_id:       <%= Project.find_by(identifier: 'TEST').try(:id) %>
+  doccomment_count: 0
+  organization:     'test'
+  draft_revision:   '0.1'
+  document_type:    'PSAC'
+  file_path:        '/var/folders/documents/patmos_engineering_services/PSAC.doc'
+  file_type:        'application/msword'
+  document_id:      2
+  upload_date:      <%= Date.today %>
+
+flowchart:
+  docid:            'flowchart'
+  name:             'flowchart.png'
+  version:          0
+  item_id:          <%= Item.find_by(identifier: 'HARDWARE_ITEM').try(:id) %>
+  project_id:       <%= Project.find_by(identifier: 'TEST').try(:id) %>
+  draft_revision:   '0.1'
+  doccomment_count: 0
+  organization:     'test'
+  document_type:    'Other'
+  file_path:        '/var/folders/documents/patmos_engineering_services/flowchart.png'
+  file_type:        'mage/png'
+  document_id:      3
+  upload_date:      <%= Date.today %>
+

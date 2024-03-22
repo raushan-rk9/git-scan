@@ -1,0 +1,53 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+md-software-001:
+  module_description_number:           1
+  full_id:                             'MD-001'
+  description:                         'Safety.'
+  file_name:                           'alert_overpressure.c' 
+  version:                             1
+  draft_revision:                      '1.0'
+  high_level_requirement_associations: <%= HighLevelRequirement.find_by(full_id: 'HLR-001').try(:id) %>
+  low_level_requirement_associations:  <%= LowLevelRequirement.find_by(full_id: 'LLR-001').try(:id) %>
+  soft_delete:                         false
+  project_id:                          <%= Project.find_by(identifier: 'TEST').try(:id) %>
+  item_id:                             <%= Item.find_by(identifier: 'SOFTWARE_ITEM').try(:id) %>
+
+md-software-002:
+  module_description_number:           2
+  full_id:                             'MD-002'
+  description:                         'Safety.'
+  file_name:                           'alert_underpressure.c' 
+  version:                             1
+  draft_revision:                      '1.0'
+  high_level_requirement_associations: <%= HighLevelRequirement.find_by(full_id: 'HLR-002').try(:id) %>
+  low_level_requirement_associations:  <%= LowLevelRequirement.find_by(full_id: 'LLR-002').try(:id) %>
+  soft_delete:                         false
+  project_id:                          <%= Project.find_by(identifier: 'TEST').try(:id) %>
+  item_id:                             <%= Item.find_by(identifier: 'SOFTWARE_ITEM').try(:id) %>
+
+md-hardware-005:
+  module_description_number:           5
+  full_id:                             'MD-005'
+  description:                         'Safety.'
+  file_name:                           'alert_overpressure.c' 
+  version:                             1
+  draft_revision:                      '1.0'
+  high_level_requirement_associations: <%= HighLevelRequirement.find_by(full_id: 'HLR-004').try(:id) %>
+  low_level_requirement_associations:  <%= LowLevelRequirement.find_by(full_id: 'LLR-004').try(:id) %>
+  soft_delete:                         false
+  project_id:                          <%= Project.find_by(identifier: 'TEST').try(:id) %>
+  item_id:                             <%= Item.find_by(identifier: 'HARDWARE_ITEM').try(:id) %>
+
+md-hardware-006:
+  module_description_number:           6
+  full_id:                             'MD-006'
+  description:                         'Safety.'
+  file_name:                           'alert_underpressure.c' 
+  version:                             1
+  draft_revision:                      '1.0'
+  high_level_requirement_associations: <%= HighLevelRequirement.find_by(full_id: 'HLR-005').try(:id) %>
+  low_level_requirement_associations:  <%= LowLevelRequirement.find_by(full_id: 'LLR-005').try(:id) %>
+  soft_delete:                         false
+  project_id:                          <%= Project.find_by(identifier: 'TEST').try(:id) %>
+  item_id:                             <%= Item.find_by(identifier: 'HARDWARE_ITEM').try(:id) %>

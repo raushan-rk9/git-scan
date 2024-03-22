@@ -1,0 +1,33 @@
+<h1>Export</h1>
+
+<%= link_to 'User CSV', export_user_path(:format => "csv"), class: "btn btn-primary", style: "color:white" %>
+
+<%= link_to 'Show', "#", class: "btn btn-primary", style: "color:white", id: "show-user-link" %>
+<%= link_to 'Hide', "#", class: "btn btn-primary", style: "color:white", id: "hide-user-link" %>
+
+<%= simple_form_for( export_path(@export), html: { class: 'form-horizontal', :method => "put", :id => "export-form" }) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :export_type, :input_html => { :id => "export_type_input" } %>
+    <%= f.input :export_type, :input_html => { :id => "hidden_type_input", :class => "hidden_option" } %>
+
+    <%= f.input :project_select, 
+                :collection => Project.all, 
+                :label_method => :name,
+                include_blank: true, 
+                :input_html => { :id => "project_input" } %>
+    <%= f.input :item_select,
+                :as => :grouped_select,
+                :collection => Project.all,
+                include_blank: true,
+                :group_method => :items,
+                :group_label_method => :name,
+                :input_html => { :id => "item_input" } %>
+
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, data: { "disable-with": t('misc.save') } %>
+  </div>
+<% end %>

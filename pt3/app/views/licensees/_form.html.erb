@@ -1,0 +1,39 @@
+<%= simple_form_for(@licensee, validate: true ) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :identifier %>
+    <%= f.input :name %>
+    <%= f.input :description,  as: :summernote %>
+    <%= f.input :setup_date,   as: :datetime, html5: true %>
+    <%= f.input :license_date, as: :datetime, html5: true %>
+    <%= f.input :renewal_date, as: :datetime, html5: true %>
+    <%= f.input :license_type %>
+    <%=
+        f.input :administrator,
+                label:        'Adminstrator',
+                collection:    User.all,
+                label_method: :fullname,
+                value_method: :email,
+                selected:      @licensee.administrator
+     %>
+    <%= f.input :contact_emails %>
+    <%= f.input :contact_information, as: :summernote %>
+    <%= f.input :database %>
+    <%= f.input :encrypted_password %>
+  </div>
+
+  <div class="form-actions">
+    <% if controller.action_name == 'edit' %>
+      <%= f.button :submit, value: 'Update Organization', data: { "disable-with": t('misc.save') } %>
+    <% else %>
+      <%= f.button :submit, value: 'Create Organization', data: { "disable-with": t('misc.save') } %>
+    <% end %>
+
+    <% if @licensee.id.present? %>
+      <%= link_to 'Show', licensee_path(@licensee), class: 'btn btn-default'  %>
+    <% end %>
+
+    <%= link_to 'Back', 'javascript:null', class: "btn", onclick: 'validateBack(1)' %>
+  </div>
+<% end %>

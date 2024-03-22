@@ -1,0 +1,307 @@
+<style>
+  table {
+          border: 1px solid #CCC;
+          border-collapse: collapse;
+          margin-left: 36pt
+  }
+
+  li::before
+  {
+          counter-increment: section important!;
+          content:           counters(section, "")  important!;
+  }
+
+  ol {
+          padding:       0px !important;
+          margin:        0px 0px 0px 0px !important;
+  }
+
+  li {
+          padding:       0px !important;
+          margin:        0px 0px 0px 0px !important;
+  }
+
+  level-one {
+          padding-left:  24px !important;
+  }
+  
+  level-two {
+          padding-left:  48px !important;
+  }
+
+  body {
+          font-family:   Cambria, Georgia, serif !important; 
+          font-style:    normal !important;
+          font-variant:  normal !important;
+          font-weight:   normal !important;
+          color:         black !important;
+          font-size:     11pt !important;
+          line-height:   13pt !important;
+          padding:       0px !important;
+          margin:        0px 0px 0px 0px !important;
+          border:        none !important;
+          counter-reset: section;
+  }
+  
+  title {
+          font-family:  Calibri, Candara, Segoe, "Segoe UI" !important;
+          font-style:   normal !important;
+          font-variant: normal !important;
+          font-weight:  bold !important;
+          color:        darkblue !important;
+          font-size:    24pt !important;
+          line-height:  22pt !important;
+          padding:      0px !important;
+          margin:       0px 0px 0px 0px !important;
+          border:       none !important;
+  }
+
+  h1 {
+          font-family:  Calibri, Candara, Segoe, "Segoe UI" !important;
+          font-style:   normal !important;
+          font-variant: normal !important;
+          font-weight:  bold !important;
+          color:        blue !important;
+          font-size:    20pt !important;
+          line-height:  22pt !important;
+          padding:      0px !important;
+          margin:       0px 0px 0px 0px !important;
+          border:       none !important;
+  }
+  
+  h2 {
+          font-family:  Calibri, Candara, Segoe, "Segoe UI" !important;
+          font-style:   normal !important;
+          font-variant: normal !important;
+          font-weight:  bold !important;
+          color:        blue !important;
+          font-size:    16pt !important;
+          line-height:  18pt !important;
+          padding:      0px !important;
+          margin:       0px 0px 0px 0px !important;
+          border:       none !important;
+  }
+  
+  h3 {
+          font-family: Calibri, Candara, Segoe, "Segoe UI" !important;
+          font-style:   normal !important;
+          font-variant: normal !important;
+          font-weight:  bold !important;
+          color:        blue !important;
+          font-size:    14pt !important;
+          line-height:  16pt !important;
+          padding:      0px !important;
+          margin:       0px 0px 0px 0px !important;
+          border:       none !important;
+  }
+  
+  h4 {
+          font-family: Calibri, Candara, Segoe, "Segoe UI" !important;
+          font-style:   normal !important;
+          font-variant: normal !important;
+          font-weight:  bold !important;
+          color:        lightblue !important;
+          font-size:    12pt !important;
+          line-height:  14pt !important;
+          padding:      0px !important;
+          margin:       0px 0px 0px 0px !important;
+          border:       none !important;
+  }
+  
+  h5 {
+          font-family: Calibri, Candara, Segoe, "Segoe UI" !important;
+          font-style:   normal !important;
+          font-variant: normal !important;
+          font-weight:  bold !important;
+          color:        lightblue !important;
+          font-size:    10pt !important;
+          line-height:  12pt !important;
+          padding:      0px !important;
+          margin:       0px 0px 0px 0px !important;
+          border:       none !important;
+  }
+  
+  h6 {
+          font-family: Calibri, Candara, Segoe, "Segoe UI" !important;
+          font-style:   normal !important;
+          font-variant: normal !important;
+          font-weight:  italic !important;
+          color:        lightblue !important;
+          font-size:    10pt !important;
+          line-height:  12pt !important;
+          padding:      0px !important;
+          margin:       0px 0px 0px 0px !important;
+          border:       none !important;
+  }
+</style>
+
+<head>
+  <title><%= full_title(yield(:title)) %></title>
+</head>
+
+<h1>Introduction</h1>
+<table width = '50%' style='border: 1px solid black!important;'>
+    <tr>
+      <td width='10%' style='border: 1px solid black!important;'>
+        Item:
+      </td>
+       <td width='90%' style='border: 1px solid black!important;'>
+        <%= @item.name %>
+      </td>
+      </td>
+    </tr>
+    <tr>
+      <td width='10%' style='border: 1px solid black!important;'>
+        Project:
+      </td>
+       <td width='90%' style='border: 1px solid black!important;'>
+        <%= @project.name %>
+      </td>
+    </tr>
+</table>
+<p></p>
+<h1>Module Descriptions</h1>
+<% current_number = @starting_number.present? ? @starting_number : 1 %>
+<% @module_descriptions.each do |module_description| %>
+  <table style="width: 100%; border: none;">
+    <% if module_description.soft_delete %>
+      <% next %>
+    <% end %>
+    <tr>
+      <td>
+        <h2>
+          <ol start="<%= current_number %>" style="padding-left: 0pt !important;">
+            <% current_number += 1 %>
+            <li>
+              <h2>
+                <%= "#{t('module_description.module_description_id')}: #{module_description.full_id}" %>
+              </h2>
+            </li>
+          </ol>
+        </h2>
+      </td>
+    </tr>
+  </table>
+  <table width = '50%' style='border: 1px solid black!important;'>
+    <tr>
+      <td width='10%' style='border: 1px solid black!important;'>
+        <%= t('versioning.version') %>:
+      </td>
+      <td width='90%' style='border: 1px solid black!important;'>
+        <%= module_description.version %>
+      </td>
+      </td>
+    </tr>
+    <tr>
+      <td width='10%' style='border: 1px solid black!important;'>
+        <%= t('versioning.draft_revision') %>:
+      </td>
+      <td width='90%' style='border: 1px solid black!important;'>
+        <%= module_description.draft_revision %>
+      </td>
+      </td>
+    </tr>
+    <tr>
+      <td width='10%' style='border: 1px solid black!important;'>
+        <%= t('versioning.revision') %>:
+      </td>
+      <td width='90%' style='border: 1px solid black!important;'>
+        <%= module_description.revision %>
+      </td>
+    </tr>
+    <tr>
+      <td width='10%' style='border: 1px solid black!important;'>
+        <%= t('versioning.revision_date') %>:
+      </td>
+      <td width='90%' style='border: 1px solid black!important;'>
+        <%= module_description.revision_date %>
+      </td>
+    </tr>
+  </table>
+  <p></p>
+  <table width = '100%' style='border: none !important;'>
+    <tr class="level-one">
+      <td>
+        <h3><%= t('misc.desc') %>:</h3>
+      </td>
+    </tr>
+    <tr class="level-one">
+      <td>
+        <div class='level-two'>
+          <%= raw module_description.description %>
+        </div>
+      </td>
+    </tr>
+    <p></p>
+    <tr>
+      <td>
+        <h3>
+          <%= "#{Item.item_type_title(@item, :low_level, :plural)}:" %>
+        </h3>
+      </td>
+    </tr>
+    <% if module_description.low_level_requirements.present? %>
+      <tr>
+        <td>
+          <table width = '50%' style='border: 1px solid black!important;'>
+            <tr>
+              <th>
+                <div width='50%' class="body">Low Level Requirement</div>
+              </th>
+              <th>
+                <div width='50%' class="body">Description</div>
+              </th>
+            </tr>
+            <% module_description.low_level_requirements.each do |llr| %>
+              <% next unless display_full_id(llr, @item).present? %>
+              <tr>
+                <td  width='50%' style='white-space: nowrap !important; padding: 10px !important; border: 1px solid black!important; vertical-align: middle !important;'>
+                  <%= display_full_id(llr, @item) %>
+                </td>
+                <td  width='50%' style='padding: 10px !important; border: 1px solid black !important; vertical-align: middle !important;'>
+                <%= raw llr.description %>
+                </td>
+              </tr>
+          <% end %>
+          </table>
+        </td>
+      </tr>
+    <% end %>
+    </tr>
+    <tr>
+      <td>
+        <h3>Files:</h3>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <% if module_description.source_codes.present? %>
+          <p></p>
+          <table width = '50%' style='border: 1px solid black!important;'>
+            <tr>
+              <th>
+                <div class="body">Filename</div>
+              </th>
+              <th>
+                <div class="body">Description</div>
+              </th>
+            </tr>
+            <% module_description.source_codes.each do |sc| %>
+              <% next unless sc.file_name.present? %>
+              <tr>
+                <td width='50%' style='white-space: nowrap !important; padding: 10px !important; border: 1px solid black!important; vertical-align: middle !important;'>
+                  <%= sc.file_name %>
+                </td>
+                <td width='50%' style='padding: 10px !important; border: 1px solid black !important; vertical-align: middle !important;'>
+                <%= raw sc.description %>
+                </td>
+              </tr>
+            <% end %>
+          </table>
+        <% end %>
+      </td>
+    </tr>
+  </table>
+  <p></p>
+  </ol>
+<% end if @module_descriptions.present? %>

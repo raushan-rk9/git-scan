@@ -1,0 +1,127 @@
+<% if controller.action_name == 'edit'%>
+  <% url    = project_requirements_baseline_path(@project.id, @requirements_baseline.id) %>
+  <% action = :patch %>
+<% else %>
+  <% url    = new_project_requirements_baseline_path(@project.id).gsub(/\/new$/, '') %>
+  <% action = :post %>
+<% end %>
+
+<%= simple_form_for(@requirements_baseline,
+                    url:    url,
+                    method: action,
+                    html:   { class: 'form-horizontal' }) do |f| %>
+  <%= f.error_notification %>
+  <input name='message' id='message' type='hidden' style='color: #FF0000' readonly />
+
+  <div class="form-inputs">
+    <%= f.input :name,         required:  true %>
+    <%= f.input :full_id,      label:     'Baseline ID',   required: true %>
+    <%= f.input :description,  as:         :string %>
+    <%= f.input :pact_version, input_html: { readonly:     !current_user.fulladmin }  %>
+    <%= f.input :revision %>
+    <%= f.input :version,      label:      'Draft Version' %>
+    <%= f.input :archived_at,  label:      'Baselined At',  as: :datetime,   html5:      true, :input_html => { :readonly => true } %>
+    <%= f.input :archive_type, as:         :hidden, input_html: { value: @archive_type } %>
+    <%= f.input :element_id  , as:         :hidden, input_html: { value: @element_id }   %>
+    <%= f.input :item_id,      as:         :hidden, input_html: { value: @item.present? ? @item.id : '' }   %>
+  </div>
+
+  <div class="form-actions">
+    <%
+      object_name = 'Requirements'
+
+      case @archive_type
+        when Constants::PROJECT_ARCHIVE
+          object_name = I18n.t('projects.single_title')
+        when Constants::DOCUMENT_ARCHIVE
+          object_name = I18n.t('misc.document')
+        when Constants::MODEL_ARCHIVE
+          object_name = I18n.t('misc.model_file')
+        when Constants::SYSTEM_REQUIREMENTS_ARCHIVE
+          object_name = I18n.t('misc.system_requirement')
+        when Constants::HIGH_LEVEL_REQUIREMENTS_ARCHIVE
+          object_name = @item.get_item_title(:high_level, :singular)
+        when Constants::LOW_LEVEL_REQUIREMENTS_ARCHIVE
+          object_name = @item.get_item_title(:low_level, :singular)
+        when Constants::SOURCE_CODE_ARCHIVE
+          object_name = I18n.t('misc.source_code')
+        when Constants::TEST_CASE_ARCHIVE
+          object_name = I18n.t('misc.test_case')
+        when Constants::TEST_PROCEDURE_ARCHIVE
+          object_name = I18n.t('misc.test_procedure')
+        when Constants::REVIEW_ARCHIVE
+          object_name = I18n.t('reviews.single_title')
+      end
+    %>
+    <% if controller.action_name == 'edit' %>
+      <input id='update_requirements_baseline' name='update_requirements_baseline' value='Update <%= object_name %> Baseline' type="button" onclick='validate();' class="btn btn-default" />
+    <% else %>
+      <input id='update_requirements_baseline' name='update_requirements_baseline' value='Create <%= object_name %> Baseline' type="button" onclick='validate();' class="btn btn-default" />
+    <% end %>
+
+    <% if @requirements_baseline.id.present? %>
+      <%= link_to 'Show', project_requirements_baseline_path(@project, @requirements_baseline), class: 'btn' %>
+    <% end %>
+
+    <%= link_to 'Back', 'javascript:null', class: "btn", onclick: 'validateBack(1)' %>
+
+    <% if @undo_path.present? && !session[:archives_visible].present? %>
+      <%= link_to 'Undo', @undo_path, class: 'btn', title: @undo_message %>
+    <% end %>
+
+    <% if @redo_path.present? && !session[:archives_visible].present? %>
+      <%= link_to 'Redo', @redo_path, class: 'btn', title: @redo_message %>
+    <% end %>
+  </div>
+<% end %>
+<script>
+  var model         = "archive";
+  var table         = model  + 's';
+  var prefix        = model  + "_";
+  var parent        = "project";
+  var parent_table  = parent + 's';
+  var parent_prefix = parent + "_";
+  var name_field    = "name";
+  var id_field      = "full_id";
+
+  $(":input").keydown(function (event) {
+      if (event.keyCode == 112)
+        validate();
+      else if (event.keyCode == 113)
+        window.location.assign(window.location.href.replace(/\/\d+\/edit$/, ''));
+  }); 
+
+  function validate()
+  {
+    var nameValue   = document.getElementById(prefix + name_field).value;
+    var idValue     = document.getElementById(prefix + id_field).value;
+    var form        = document.forms[0];
+    var okay        = true;
+    var messageText = "";
+
+    if (nameValue === '')
+    {
+      messageText   = "You must provide a requirements baseline name.";
+      okay          = false;
+    }
+    else if (idValue === '')
+    {
+      messageText   = "You must provide a requirements baseline  ID.";
+      okay          = false;
+    }
+
+    if (okay)
+    {
+      form.submit();
+    }
+    else
+    {
+      message.value          = messageText;
+      message.style.display  = "none";
+
+      alert(messageText);
+    }
+
+    return(okay);
+  }
+</script>

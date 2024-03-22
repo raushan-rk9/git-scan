@@ -1,0 +1,682 @@
+<style>
+#cssTable 
+{
+  border:          none      !important;
+  border-collapse: collapse  !important;
+}
+
+#cssTable td 
+{
+  border-color:  white   !important;
+  text-align:     center !important; 
+  vertical-align: middle !important;
+  text-align:     left   !important;
+  margin:         0      !important;
+  padding:        0      !important;
+}
+
+#cssTable input[type='checkbox']
+{
+  margin:         0      !important;
+  padding:        0      !important;
+  width:          1em    !important;
+  height:         1em    !important;
+  vertical-align: middle !important;
+}
+
+input[type='radio']
+{
+  margin:         0        !important;
+  padding:        0        !important;
+  width:          1em      !important;
+  height:         1em      !important;
+  vertical-align: baseline !important;
+}
+
+.inline-label
+{ 
+    white-space:   nowrap   !important;
+    max-width:     200px    !important;
+    padding-left:  10px     !important;
+    overflow:      hidden   !important;
+    text-overflow: ellipsis !important;
+    float:         right    !important;     
+}
+</style>
+<% if flash[:notice] %>
+  <div class="notification is-primary global-notification">
+    <p class="notice"><%= notice %></p>
+  </div>
+<% end %>
+
+<% if flash[:alert] %>
+  <div class="notification is-danger global-notification">
+    <p class="alert"><%= alert %></p>
+  </div>
+<% end %>
+
+<table id="cssTable">
+  <tbody>
+    <tr id='test_row'>
+      <td colspan="4" id='empty_col_1'>
+      </td>
+      <td colspan="2" id='test_col'>
+        <table id='test_table'>
+          <tr id='test_table_row'>
+            <td id='test_cases_col'>
+              <div class='checkbox'>
+                <label for="test_cases"class="inline-label"> <%= t('misc.test_cases') %></label>
+                <% if @tc_checked %>
+                  <input id='test_cases' name='test_cases' type='checkbox' checked>
+                <% else %>
+                  <input id='test_cases' name='test_cases' type='checkbox'>
+                <% end %>
+              </div>
+            </td>
+            <td id='tc_tp_col'>
+              &nbsp;
+              <div id='tc_tp' style='display: none'>
+              <%= material_icon.trending_flat.md_48 %>
+              </div>
+              &nbsp;
+            </td>
+            <td id='test_procedures_col'>
+              <div class='checkbox'>
+                <label for="test_procedures"class="inline-label"> <%= t('misc.test_procedures') %></label>
+                <% if @tp_checked %>
+                  <input id='test_procedures' name='test_procedures' type='checkbox' checked>
+                <% else %>
+                  <input id='test_procedures' name='test_procedures' type='checkbox'>
+                <% end %>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr id='second_row'>
+      <td colspan="3" id='empty_col_2'>
+      </td>
+      <td id='hlr_tc_col'>
+        <div id='hlr_tc_forward' style='display: none'>
+          <%= material_icon.call_made.md_48 %>
+        </div>
+        <div id='hlr_tc_reverse' style='display: none'>
+          <%= material_icon.call_made.md_48.r90 %>
+        </div>
+      </td>
+      <td id='llr_tc_col'>
+        <div id='llr_tc_forward' style='display: none'>
+          <%= material_icon.trending_flat.md_48.r270 %>
+        </div>
+        <div id='llr_tc_reverse' style='display: none'>
+          <%= material_icon.trending_flat.md_48.r90 %>
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          &nbsp;
+        </div>
+      </td>
+    </tr>
+    <tr id='main_row'>
+      <td id='system_requirements_col'>
+        <div class='checkbox'>
+          <label for="system_requirements"class="inline-label"> <%= t('misc.system_requirements') %></label>
+          <% if @sysreq_checked %>
+            <input id='system_requirements' name='system_requirements' type='checkbox' checked>
+          <% else %>
+            <input id='system_requirements' name='system_requirements' type='checkbox'>
+          <% end %>
+        </div>
+      </td>
+      <td id='sys_hlr_col'>
+        &nbsp;
+        <div id='sys_hlr' style='display: none'>
+          <%= material_icon.trending_flat.md_48 %>
+        </div>
+        &nbsp;
+      </td>
+      <td id='high_level_requirements_col'>
+        <div class='checkbox'>
+          <label for="high_level_requirements"class="inline-label"><%= Item.item_type_title(@item, :high_level, :plural) %></label>
+          <% if @hlr_checked %>
+            <input id='high_level_requirements' name='high__level_requirements' type='checkbox' checked>
+          <% else %>
+            <input id='high_level_requirements' name='high__level_requirements' type='checkbox'>
+          <% end %>
+        </div>
+      </td>
+      <td id='hlr_llr_col'>
+        &nbsp;
+        <div id='hlr_llr' style='display: none'>
+          <%= material_icon.trending_flat.md_48 %>
+        </div>
+        &nbsp;
+      </td>
+      <td id='low_level_requirements_col'>
+        <div class='checkbox' style='width: 150px'>
+          <label for="low_level_requirements"class="inline-label"><%= Item.item_type_title(@item, :low_level, :plural) %></label>
+          <% if @llr_checked %>
+            <input id='low_level_requirements' name='low__level_requirements' type='checkbox' checked>
+          <% else %>
+            <input id='low_level_requirements' name='low__level_requirements' type='checkbox'>
+          <% end %>
+        </div>
+      </td>
+    </tr>
+    <tr id='fourth_row'>
+      <td colspan="3" id='empty_col_3'>
+      </td>
+      <td id='hlr_md_col'>
+        <div id='hlr_md_forward' style='display: none'>
+          <%= material_icon.call_made.md_48.r90 %>
+        </div>
+        <div id='hlr_md_reverse' style='display: none'>
+          <%= material_icon.call_made.md_48.r180 %>
+        </div>
+      </td>
+      <td id='llr_md_col'>
+        <div id='llr_md' style='display: none'>
+          <%= material_icon.trending_flat.md_48.r90 %>
+        </div>
+      </td>
+    </tr>
+    <tr id='module_description_row'>
+      <td colspan="4" id='empty_col_4'>
+      </td>
+      <td id='module_description_col'>
+        <div class='checkbox' style='width: 110px'>
+          <label for="module_descriptions"class="inline-label"> <%= t('module_description.pl_title') %></label>
+          <% if @md_checked %>
+            <input id='module_descriptions' name='module_descriptions' type='checkbox' checked>
+          <% else %>
+            <input id='module_descriptions' name='module_descriptions' type='checkbox'>
+          <% end %>
+        </div>
+      </td>
+    </tr>
+    <tr id='sixth_row'>
+      <td colspan="4" id='empty_col_4'>
+      </td>
+      <td id='hlr_llr_col'>
+      </td>
+      <td id='llr_md_col'>
+        <div id='llr_md' style='display: none'>
+          <%= material_icon.trending_flat.md_48.r90 %>
+        </div>
+      </td>
+    </tr>
+    <tr id='seventh_row'>
+      <td colspan="4" id='empty_col_4'>
+      </td>
+      <td id='md_sc_col'>
+        <div id='md_sc' style='display: none'>
+          <%= material_icon.trending_flat.md_48.r90 %>
+        </div>
+      </td>
+    </tr>
+    <tr id='source_code_row'>
+      <td colspan="4" id='empty_col_4'>
+      </td>
+      <td id='source_code_col'>
+        <div class='checkbox' style='width: 110px'>
+          <label for="source_code"class="inline-label"> <%= t('misc.source_code') %></label>
+          <% if @sc_checked %>
+            <input id='source_code' name='source_code' type='checkbox' checked>
+          <% else %>
+            <input id='source_code' name='source_code' type='checkbox'>
+          <% end %>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<p>
+  <label class="radio-inline">
+  <input type="radio" id="forward" name="direction" value="forward" checked>
+  Forward
+  &nbsp;
+  <input type="radio" id="reverse" name="direction" value="reverse">
+  Reverse
+  </label>
+</p>
+
+<input id='view' name='view' type="button" value="View" class='btn' onclick="runMatrix('specific');" /> 
+<input id='unlinked' name='unlinked' type="button" value="<%= t('hlrs.unlinked') %>" class='btn' onclick="runMatrix('unlinked');" /> 
+<input id='unallocated' name='unallocated' type="button" value="<%= t('hlrs.unallocated') %>" class='btn' onclick="runMatrix('unallocated');" /> 
+<input id='derived' name='derived' type="button" value="Derived" class='btn' onclick="runMatrix('derived');" /> 
+<input id='export' name='export' type="button" value="Export" class='btn' onclick="exportMatrix();" /> 
+<%= link_to 'Back', go_back_path(1),  onclick: 'validateBack(1, this)', class: 'btn' %>
+
+<script>
+function setupRequirements()
+{
+  var systemRequirementsChecked    = $('#system_requirements').prop('checked');
+  var highLevelRequirementsChecked = $('#high_level_requirements').prop('checked');
+  var lowLevelRequirementsChecked  = $('#low_level_requirements').prop('checked');
+  var testCasesChecked             = $('#test_cases').prop('checked');
+  var testProceduresChecked        = $('#test_procedures').prop('checked');
+  var moduleDescriptionsChecked    = $('#module_descriptions').prop('checked');
+  var sourceCodeChecked            = $('#source_code').prop('checked');
+  var forwardChecked               = $('#foward').prop('checked');
+  var reverseChecked               = $('#reverse').prop('checked');
+  var requirements                 = '';
+
+  if (reverseChecked)
+  {
+    if (testProceduresChecked)
+      requirements                 = 'test_procedures';
+
+    if (testCasesChecked)
+    {
+      if (requirements !== '')
+        requirements              += ',';
+
+      requirements                += "test_cases";
+    }
+
+    if (moduleDescriptionsChecked)
+    {
+      if (requirements !== '')
+        requirements              += ',';
+
+      requirements                += "module_descriptions";
+    }
+
+    if (sourceCodeChecked)
+    {
+      if (requirements !== '')
+        requirements              += ',';
+
+      requirements                += "source_code";
+    }
+    
+    if (lowLevelRequirementsChecked)
+    {
+      if (requirements !== '')
+        requirements              += ',';
+
+      requirements                += "low_level_requirements";
+    }
+
+    if (highLevelRequirementsChecked)
+    {
+      if (requirements !== '')
+        requirements              += ',';
+
+      requirements                += "high_level_requirements";
+    }
+
+    if (systemRequirementsChecked)
+    {
+      if (requirements !== '')
+        requirements              += ',';
+
+      requirements                += "system_requirements";
+    }
+
+    requirements                   = 'reversed,' + requirements;
+  }
+  else
+  {
+    if (systemRequirementsChecked)
+      requirements                 = 'system_requirements';
+
+    if (highLevelRequirementsChecked)
+    {
+      if (requirements !== '')
+        requirements              += ',';
+
+      requirements                += "high_level_requirements";
+    }
+
+    if (lowLevelRequirementsChecked)
+    {
+      if (requirements !== '')
+        requirements              += ',';
+
+      requirements                += "low_level_requirements";
+    }
+
+    if (moduleDescriptionsChecked)
+    {
+      if (requirements !== '')
+        requirements              += ',';
+
+      requirements                += "module_descriptions";
+    }
+
+    if (sourceCodeChecked)
+    {
+      if (requirements !== '')
+        requirements              += ',';
+
+      requirements                += "source_code";
+    }
+
+    if (testCasesChecked)
+    {
+      if (requirements !== '')
+        requirements              += ',';
+
+      requirements                += "test_cases";
+    }
+
+    if (testProceduresChecked)
+    {
+      if (requirements !== '')
+        requirements              += ',';
+
+      requirements                += "test_procedures";
+    }
+  }
+
+  return(requirements);
+}
+
+function runMatrix(matrixType)
+{
+  window.open(window.location.href + '/' + matrixType + '?requirements=' + setupRequirements());
+}
+
+function exportMatrix()
+{
+  window.open(window.location.href + '/export?requirements=' + setupRequirements(), '_blank');
+}
+
+function checkboxClicked()
+{
+  var forwardChecked        = $('#foward').prop('checked');
+  var reverseChecked        = $('#reverse').prop('checked');
+  var systemRequirements    = $('#system_requirements');
+  var highLevelRequirements = $('#high_level_requirements');
+  var lowLevelRequirements  = $('#low_level_requirements');
+  var testCases             = $('#test_cases');
+  var testProcedures        = $('#test_procedures');
+  var moduleDescriptions    = $('#module_descriptions');
+  var sourceCode            = $('#source_code');
+  var direction             = $('#direction');
+
+  if (this.checked)
+  {
+    switch(this.id) {
+      case  'system_requirements':
+        <% unless @sysreq_checked %>
+          alert('There are no System Requirements.');
+        <% end %>
+        break;
+      case  'hight_level_requirements':
+        <% unless @hlr_checked %>
+          alert('There are no <%= Item.item_type_title(@item, :high_level, :plural) %>.');
+        <% end %>
+        break;
+      case  'low_level_requirements':
+        <% unless @llr_checked %>
+          alert('There are no <%= Item.item_type_title(@item, :low_level, :plural) %>.');
+        <% end %>
+        break;
+      case  'module_descriptions':
+        <% unless @md_checked %>
+          alert('There are no Module Descriptions.');
+        <% end %>
+        break;
+      case  'source_code':
+        <% unless @sc_checked %>
+          alert('There are no Source Codes.');
+        <% end %>
+        break;
+      case  'test_cases':
+        <% unless @tc_checked %>
+          alert('There are no Test Cases.');
+        <% end %>
+        break;
+      case  'test_procedures':
+        <% unless @tp_checked %>
+          alert('There are no Test Procedures.');
+        <% end %>
+        break;
+    }
+  }
+
+  if (systemRequirements.prop('checked')     &&
+      lowLevelRequirements.prop('checked'))
+    highLevelRequirements.prop('checked', true);
+
+  if (testProcedures.prop('checked')         &&
+      !testCases.prop('checked')             &&
+      (highLevelRequirements.prop('checked') ||
+       lowLevelRequirements.prop('checked')))
+    testProcedures.prop('checked', false);
+
+  if (systemRequirements.prop('checked')     &&
+      testProcedures.prop('checked')         &&
+      lowLevelRequirements.prop('checked'))
+    highLevelRequirements.prop('checked', true);
+
+  if (systemRequirements.prop('checked')     &&
+      !highLevelRequirements.prop('checked') &&
+      (sourceCode.prop('checked')            ||
+       testCases.prop('checked')))
+    highLevelRequirements.prop('checked', true);
+
+  if (moduleDescriptions.prop('checked')     &&
+      !highLevelRequirements.prop('checked')  &&
+      (systemRequirements.prop('checked')    ||
+       sourceCode.prop('checked')))
+  {
+    highLevelRequirements.prop('checked', true);
+  }
+
+  if (moduleDescriptions.prop('checked')     &&
+      !lowLevelRequirements.prop('checked')  &&
+      (systemRequirements.prop('checked')    ||
+       sourceCode.prop('checked')))
+  {
+    lowLevelRequirements.prop('checked', true);
+  }
+
+  if (lowLevelRequirements.prop('checked')   &&
+      sourceCode.prop('checked'))
+    moduleDescriptions.prop('checked', true);
+
+  if (systemRequirements.prop('checked')     &&
+      testProcedures.prop('checked')         &&
+      !testCases.prop('checked')             &&
+      !highLevelRequirements.prop('checked') &&
+      !lowLevelRequirements.prop('checked'))
+  {
+    highLevelRequirements.prop('checked', true);
+    testCases.prop('checked', true);
+  }
+
+  if (systemRequirements.prop('checked') && highLevelRequirements.prop('checked'))
+    $('#sys_hlr').show();
+  else
+    $('#sys_hlr').hide();
+
+  if (highLevelRequirements.prop('checked') || lowLevelRequirements.prop('checked'))
+    if (reverseChecked)
+    {
+      $('#hlr_md_reverse').show();
+      $('#llr_md_reverse').show();
+      $('#hlr_md_forward').hide();
+    }
+    else
+    {
+      $('#hlr_md_reverse').hide();
+      $('#hlr_md_forward').show();
+    }
+  else
+  {
+      $('#hlr_md_forward').hide();
+      $('#hlr_md_reverse').hide();
+  }
+
+  if (highLevelRequirements.prop('checked') && testCases.prop('checked'))
+  {
+    if (reverseChecked)
+    {
+      $('#hlr_tc_reverse').show();
+      $('#hlr_tc_forward').hide();
+    }
+    else
+    {
+      $('#hlr_tc_reverse').hide();
+      $('#hlr_tc_forward').show();
+    }
+  }
+  else
+  {
+      $('#hlr_tc_forward').hide();
+      $('#hlr_tc_reverse').hide();
+  }
+
+  if (lowLevelRequirements.prop('checked') && testCases.prop('checked'))
+  {
+    if (reverseChecked)
+    {
+      $('#llr_tc_reverse').show();
+      $('#llr_tc_forward').hide();
+    }
+    else
+    {
+      $('#llr_tc_forward').show();
+      $('#llr_tc_reverse').hide();
+    }
+  }
+  else
+  {
+    $('#llr_tc_forward').hide();
+    $('#llr_tc_reverse').hide();
+  }
+
+  if (testCases.prop('checked') && testProcedures.prop('checked'))
+    $('#tc_tp').show();
+  else
+    $('#tc_tp').hide();
+
+  if ((highLevelRequirements.prop('checked') || lowLevelRequirements.prop('checked')) && moduleDescriptions.prop('checked'))
+  {
+    if (reverseChecked)
+    {
+      $('#hlr_md_forward').hide();
+      $('#hlr_md_reverse').show();
+    }
+    else
+    {
+      $('#hlr_md_forward').show();
+      $('#hlr_md_reverse').hide();
+    }
+    
+    $('#llr_md').show();
+  }
+  else
+  {
+    $('#hlr_md_forward').hide();
+    $('#hlr_md_reverse').hide();
+    $('#llr_md_forward').hide();
+    $('#llr_md_reverse').hide();
+    $('#llr_md').hide();
+  }
+
+  if (moduleDescriptions.prop('checked') && sourceCode.prop('checked'))
+    $('#md_sc').show();
+  else
+    $('#md_sc').hide();
+}
+
+function radioButtonClicked()
+{
+  var forwardChecked = $('#foward').prop('checked');
+  var reverseChecked = $('#reverse').prop('checked');
+  var table          = $("#cssTable");
+  var hlrTc          = $('#hlr_tc');
+  var llrTc          = $('#llr_tc');
+  var hlrMd          = $('#hlr_md');
+  var llrMd          = $('#llr_md');
+  var mdSc           = $('#md_sc');
+  var hlrTcHtml      = hlrTc.html();
+  var llrTcHtml      = llrTc.html();
+  var llrMdHtml      = llrMd.html();
+  var mdScHtml       = mdSc.html();
+
+  if (reverseChecked)
+  {
+    $('#hlr_tc_reverse').show();
+    $('#llr_tc_reverse').show();
+    $('#hlr_tc_forward').hide();
+    $('#llr_tc_forward').hide();
+    $('#hlr_md_reverse').show();
+    $('#llr_md_reverse').show();
+    $('#hlr_md_forward').hide();
+    $('#llr_md_forward').hide();
+    hlrTc.css({'text-align': 'right'});
+    llrTc.css({'text-align': 'right'});
+    llrMd.css({'text-align': 'right'});
+    mdSc.css({'text-align': 'right'});
+    table.css({'direction':  'rtl'});
+  }
+  else
+  {
+    $('#hlr_tc_reverse').hide();
+    $('#llr_tc_reverse').hide();
+    $('#hlr_tc_forward').show();
+    $('#llr_tc_forward').show();
+    $('#hlr_md_reverse').hide();
+    $('#llr_md_reverse').hide();
+    $('#hlr_md_forward').show();
+    $('#llr_md_forward').show();
+
+    hlrTc.css({'text-align': 'left'});
+    llrTc.css({'text-align': 'left'});
+    llrMd.css({'text-align': 'left'});
+    mdSc.css({'text-align': 'left'});
+    table.css({'direction':  'ltr'});
+  }
+}
+
+$(document).ready(function()
+{
+  $('input[type=checkbox]').change(checkboxClicked);
+  $('input[type=radio]').change(radioButtonClicked);
+
+  checkboxClicked();
+});
+</script>

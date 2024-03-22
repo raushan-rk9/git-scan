@@ -1,0 +1,143 @@
+<style>
+  table {
+      border: 1px solid #CCC;
+      border-collapse: collapse;
+  }
+
+  td {
+      border: none;
+  }
+
+  h5 {
+      font-size: 2rem
+      z-index: 2;
+      color: #fff;
+      background-color: #007bff;
+      border-color: #007bff;
+      margin-bottom: 0.5rem;
+      font-family: inherit;
+      font-weight: 500;
+      line-height: 1.2;
+  }
+</style>
+<head>
+  <title><%= full_title(yield(:title)) %></title>
+</head>
+
+<h1>Module Description</h1>
+
+<% @module_descriptions.each do |module_description| %>
+  <table style="width: 100%" border="none">
+    <% if module_description.soft_delete %>
+      <% next %>
+    <% end %>
+    <tr>
+      <td>
+        <h5>
+          <%= "#{t('module_description.module_description_id')}: #{module_description.full_id}" %>
+        </h5>
+      <td>
+    </tr>
+    <tr>
+      <td>
+        <strong><%= t('misc.desc') %>:</strong>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding-left: 30px !important;">
+        <%= raw module_description.description %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong><%= Item.item_type_title(@item, :low_level, :plural) %>:</strong>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding-left: 30px !important;">
+      <% module_description.low_level_requirements.each do |llr| %>
+        <% next unless display_full_id(llr, @item).present? %>
+        <%= display_full_id(llr, @item) %><br>
+      <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong><%= t('misc.filenames') %>:</strong>
+      </td>
+    <tr>
+      <td style="padding-left: 30px !important;">
+      <% module_description.source_codes.each do |sc| %>
+        <% next unless sc.file_name.present? %>
+        <%= sc.file_name %><br>
+      <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding-left: 30px !important;">
+        <%= raw module_description.file_name %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong><%= t('versioning.revision') %>:</strong>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding-left: 30px !important;">
+        <%= module_description.revision %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong><%= t('versioning.draft_revision') %>:</strong>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding-left: 30px !important;">
+        <%= module_description.draft_revision %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong><%= t('versioning.revision_date') %>:</strong>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding-left: 30px !important;">
+        <%= module_description.revision_date %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong><%= t('versioning.version') %>:</strong>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding-left: 30px !important;">
+        <%= module_description.version %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Item:</strong>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding-left: 30px !important;">
+        <%= module_description.item.name %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Project:</strong>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding-left: 30px !important;">
+        <%= module_description.project.name %>
+      </td>
+    </tr>
+  </table>
+  <br>
+<% end if @module_descriptions.present? %>

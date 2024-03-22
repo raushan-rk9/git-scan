@@ -1,0 +1,2 @@
+module CodeCheckmarkHitsHelper
+end

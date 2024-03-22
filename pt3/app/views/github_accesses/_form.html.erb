@@ -1,0 +1,73 @@
+<%= simple_form_for(@github_access) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :username %>
+    <%= f.input :password %>
+    <%= f.input :token %>
+    <%= f.input :repository_url %>
+    <%= f.input :last_accessed_repository %>
+    <%= f.input :last_accessed_branch %>
+    <%= f.input :last_accessed_folder %>
+    <% if current_user.present? and current_user.fulladmin %>
+      <%= f.input :user_id, :collection => User.where(organization: current_user.organization), :label_method => :fullname, include_blank: false %>
+    <% else %>
+      <%= f.input :user_id, :as => :hidden, :input_html => { :value => "#{current_user.id}" } %>
+    <% end %>
+  </div>
+
+  <div class="form-actions">
+    <input id='save_credentials_id' name='save_credentials' value='Save Credentials' type="button" onclick='validate();' class="btn btn-default" />
+
+    <% if @github_access.id.present? %>
+      <%= link_to 'Show', github_access_path(@github_access), class: 'btn btn-default'  %>
+    <% end %>
+
+    <%= link_to 'Back', 'javascript:null', class: "btn", onclick: 'validateBack(1)' %>
+
+    <% if @undo_path.present? && !session[:archives_visible].present? %>
+      <%= link_to 'Undo', @undo_path, class: 'btn btn-default', title: @undo_message %>
+    <% end %>
+
+    <% if @redo_path.present? && !session[:archives_visible].present? %>
+      <%= link_to 'Redo', @redo_path, class: 'btn btn-default', title: @redo_message %>
+    <% end %>
+  </div>
+
+  <script>
+    var model         = "";
+    var table         = "";
+    var prefix        = "";
+    
+    $( document ).ready(function() {
+      model          = "github_access";
+      table          = model  + 's';
+      prefix         = model  + "_";
+    });
+
+    $(":input").keydown(function (event) {
+        if (event.keyCode == 112)
+          validate();
+        else if (event.keyCode == 113)
+          window.location.assign(window.location.href.replace(/\/\d+\/edit$/, ''));
+    }); 
+
+    function validate()
+    {
+      var username = document.getElementById(prefix + "username");
+      var password = document.getElementById(prefix + "password");
+      var token    = document.getElementById(prefix + "token");
+      var form     = document.forms[0];
+      var okay     = (token.value.length > 0) ||
+                     ((username.value.length > 0) &&
+                      (password.value.length > 0));
+
+      if (okay)
+        form.submit();
+      else
+        alert("Either Username and Password must be entered or Token must be entered.");
+
+      return(okay);
+    }
+  </script>
+<% end %>

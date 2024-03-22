@@ -1,0 +1,33 @@
+<h2>Copy User</h2>
+render "layouts/display_flash"
+<%= simple_form_for(@user, url: user_copy_user_path(User.current), html: { method: :post }) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(user.errors.count, "error") %> prohibited this from being saved:</h2>
+      <ul>
+      <% user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% else %>
+    <%= render "layouts/display_flash" %>
+  <% end %>
+
+  <div class="form-inputs">
+    <%= f.input :email, label: "Copy User", collection: User.all.order(:firstname), value_method: :email, label_method: :fullname, include_blank: false %>
+  </div>
+
+  <div class="form-inputs">
+    <%= f.input :source_organization, label: "From Organization", collection: @organizations, value_method: :identifier, label_method: :name, include_blank: false %>
+  </div>
+
+  <div class="form-inputs">
+    <%= f.input :destination_organization, label: "To Organization", collection: @organizations, value_method: :identifier, label_method: :name, include_blank: false %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit,   "Copy User", class: "btn btn-default" %>
+    <%= link_to 'Back', go_back_path(1),  onclick: 'validateBack(1, this)', class: 'btn' %>
+  </div>
+<% end %>

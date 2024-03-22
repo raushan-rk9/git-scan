@@ -1,0 +1,93 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+hardware_hlr_001:
+  reqid:                               1
+  full_id:                             'HLR-001'
+  description:                         'The System SHALL monitor the check value to prevent over-pressure.'
+  safety:                              true
+  version:                             0
+  project_id:                          <%= Project.find_by(identifier: 'TEST').try(:id) %>
+  item_id:                             <%= Item.find_by(identifier: 'HARDWARE_ITEM').try(:id) %>
+  category:                            'Safety'
+  verification_method:                 [ 'Test' ]
+  testmethod:                          'Inspection,Simulation,Test'
+  system_requirement_associations:     <%= SystemRequirement.find_by(full_id: 'SYS-001').try(:id) %>
+  model_file_id:                       <%= ModelFile.find_by(full_id: 'MF-001').try(:id) %>
+  organization:                        'test'
+
+hardware_hlr_002:
+  reqid:                               2
+  full_id:                             'HLR-002'
+  description:                         'The System SHALL monitor the check value to prevent under-pressure.'
+  safety:                              true
+  version:                             0
+  project_id:                          <%= Project.find_by(identifier: 'TEST').try(:id) %>
+  item_id:                             <%= Item.find_by(identifier: 'HARDWARE_ITEM').try(:id) %>
+  category:                            'Safety'
+  verification_method:                 [ 'Test' ]
+  testmethod:                          'Inspection,Simulation,Test'
+  system_requirement_associations:     <%= SystemRequirement.find_by(full_id: 'SYS-001').try(:id) %>
+  model_file_id:                       <%= ModelFile.find_by(full_id: 'MF-001').try(:id) %>
+  organization:                        'test'
+
+hardware_hlr_003:
+  reqid:                               3
+  full_id:                             'HLR-003'
+  description:                         'The System SHALL have a test mode to verify functionality.'
+  safety:                              true
+  version:                             0
+  project_id:                          <%= Project.find_by(identifier: 'TEST').try(:id) %>
+  item_id:                             <%= Item.find_by(identifier: 'HARDWARE_ITEM').try(:id) %>
+  category:                            'Safety'
+  verification_method:                 [ 'Test' ]
+  testmethod:                          'Inspection,Simulation,Test'
+  model_file_id:                       <%= ModelFile.find_by(full_id: 'MF-001').try(:id) %>
+  organization:                        'test'
+  derived:                             true
+  derived_justification:              'Testing is needed to verify other requirements.'
+
+software_hlr_001:
+  reqid:                               1
+  full_id:                             'HLR-001'
+  description:                         'The System SHALL monitor the check value to prevent over-pressure.'
+  safety:                              true
+  version:                             0
+  project_id:                          <%= Project.find_by(identifier: 'TEST').try(:id) %>
+  item_id:                             <%= Item.find_by(identifier: 'SOFTWARE_ITEM').try(:id) %>
+  category:                            'Safety'
+  verification_method:                 [ 'Test' ]
+  testmethod:                          'Inspection,Test'
+  system_requirement_associations:     <%= SystemRequirement.find_by(full_id: 'SYS-001').try(:id) %>
+  high_level_requirement_associations: <%= HighLevelRequirement.find_by(item_id: Item.find_by(identifier: 'HARDWARE_ITEM').try(:id), full_id: 'HLR-001').try(:id) %>
+  organization:                        'test'
+
+software_hlr_002:
+  reqid:                               2
+  full_id:                             'HLR-002'
+  description:                         'The System SHALL monitor the check value to prevent under-pressure.'
+  safety:                              true
+  version:                             0
+  project_id:                          <%= Project.find_by(identifier: 'TEST').try(:id) %>
+  item_id:                             <%= Item.find_by(identifier: 'SOFTWARE_ITEM').try(:id) %>
+  category:                            'Safety'
+  verification_method:                 [ 'Test' ]
+  testmethod:                          'Inspection,Test'
+  system_requirement_associations:     <%= SystemRequirement.find_by(full_id: 'SYS-001').try(:id) %>
+  high_level_requirement_associations: <%= HighLevelRequirement.find_by(item_id: Item.find_by(identifier: 'HARDWARE_ITEM').try(:id), full_id: 'HLR-002').try(:id) %>
+  organization:                        'test'
+
+software_hlr_003:
+  reqid:                               3
+  full_id:                             'HLR-003'
+  description:                         'The System SHALL have a test mode to verify functionality.'
+  safety:                              true
+  version:                             0
+  project_id:                          <%= Project.find_by(identifier: 'TEST').try(:id) %>
+  item_id:                             <%= Item.find_by(identifier: 'SOFTWARE_ITEM').try(:id) %>
+  category:                            'Safety'
+  verification_method:                 [ 'Test' ]
+  testmethod:                          'Inspection,Simulation,Test'
+  model_file_id:                       <%= ModelFile.find_by(full_id: 'MF-001').try(:id) %>
+  organization:                        'test'
+  derived:                             true
+  derived_justification:              'Testing is needed to verify other requirements.'
+

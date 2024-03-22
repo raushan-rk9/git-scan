@@ -1,0 +1,156 @@
+<style>
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before {}
+
+table th
+{
+  font-family: verdana !important;
+  font-size:   14px    !important;
+  line-height: 18px    !important;
+}
+
+table td
+{
+  font-family: verdana !important;
+  font-size:   14px    !important;
+  line-height: 18px    !important;
+}
+</style>
+
+<h1>Document Comments <%= t('misc.list') %></h1>
+
+<table id="scrollableDataTable" class="table table-striped table-bordered table-sm" cellspacing="0"  width="100%">
+  <thead>
+    <tr>
+      <th scope="col"><%= t('document_comments.document_comment_id') %></th>
+      <th scope="col">Requested By</th>
+      <th scope="col">Assigned To</th>
+      <th scope="col">Status</th>
+      <th scope="col">Document Revision</th>
+      <th scope="col">Comment</th>
+      <th class="th-sm"></th>
+      <th class="th-sm"></th>
+      <th class="th-sm"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @document_comments.each do |document_comment| %>
+      <tr>
+        <td><%= document_comment.commentid %></td>
+        <td><%= User.fullname_from_email(document_comment.requestedby) %></td>
+        <td><%= User.fullname_from_email(document_comment.assignedto) %></td>
+        <td><%= document_comment.status %></td>
+        <td><%= document_comment.docrevision %></td>
+        <td><%= raw document_comment.comment %></td>
+
+        <td>
+          <% if policy(document_comment).show? %>
+            <%= link_to document_document_comment_path(@document, document_comment) do %>
+              <%= material_icon.zoom_in.md_24 %><br>Show
+            <% end %>
+          <% else %>
+            &nbsp;
+          <% end %>
+        </td>
+        <td class="td-centered">
+          <% if policy(document_comment).edit? %>
+            <%= link_to edit_document_document_comment_path(@document, document_comment) do %>
+              <%= material_icon.edit.md_24 %><br>Edit
+            <% end %>
+          <% else %>
+            &nbsp;
+          <% end %>
+        </td>
+        <td class="td-centered">
+          <% if policy(document_comment).destroy? %>
+            <%= link_to document_document_comment_path(@document, document_comment), method: :delete, data: { confirm: 'Are you sure?' } do %>
+              <%= material_icon.delete.md_24 %><br>Delete
+            <% end %>
+          <% else %>
+            &nbsp;
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Document Comment', new_document_document_comment_path(@document),    class: 'btn btn-default' %>
+<%= link_to 'Go to Document',     item_document_path(@document.item_id, @document), class: 'btn btn-default' %>
+
+<script>
+  if (document.cookie.match(/scrollTop=(\d+)/))
+    $(window).scrollTop(document.cookie.match(/scrollTop=(\d+)/)[1]);
+
+  $(document).ready
+  (
+    function()
+    {
+      var first     = true;
+      var sortOrder = '[0, "asc"]';
+
+      if (Cookies.get("document_comments_table_order"))
+        sortOrder = Cookies.get("document_comments_table_order")
+    
+      if (document.cookie.match(/scrollTop=(\d+)/))
+        $(window).scrollTop(document.cookie.match(/scrollTop=(\d+)/)[1]);
+
+      $('#scrollableDataTable').DataTable
+      (
+        {
+          "sDom":           "Rlfrtip",
+          "scrollX":        true,
+          "scrollY":        "55vh",
+          "aLengthMenu":    [[10, 50, 100, -1], [25, 50, 100, "All"]],
+          "pageLength":     -1,
+          "scrollCollapse": true,
+          "paging":         false,
+          "ordering":       true,
+          "info":           false,
+          "drawCallback":   function(settings)
+                            {
+                              get_order(!first);
+                            },
+          "order":          JSON.parse(sortOrder)
+        }
+      );
+
+      $(window).unload(function() {document.cookie = "scrollTop=" + $(window).scrollTop();});
+
+      var tableOrder  = Cookies.get("document_comments_table_order");
+
+      function get_order(force)
+      {
+        if (!Cookies.get("document_comments_table_order") || force)
+        {
+          var table   = $('#scrollableDataTable').DataTable();
+          var date    = new Date();
+          var minutes = 30;
+
+          first       = false;
+
+          date.setTime(date.getTime() + (minutes * 60 * 1000));
+          Cookies.set('document_comments_table_order', table.order(), { expires: date });
+
+          return table.order();      
+        }
+        else
+        {
+          first       = false;
+
+          return Cookies.get("document_comments_table_order") ;
+        }
+      }
+    }
+  );
+</script>

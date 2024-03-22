@@ -1,0 +1,36 @@
+<%= simple_form_for( import_path(@import), html: { class: 'form-horizontal', :method => "put", :id => "import-form" }) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <% if @item.present? %>
+      <%= f.input :item_select, 
+                  :collection => Item.where(organization: current_user.organization), 
+                  :label_method => :name,
+                  include_blank: true, 
+                  :selected => @item.id,
+                  :input_html => { :id => "llr_item_input" } %>
+    <% else %>
+      <%= f.input :item_select, 
+                  :collection => Item.where(organization: current_user.organization), 
+                  :label_method => :name,
+                  include_blank: true, 
+                  :input_html => { :id => "llr_item_input" } %>
+    <% end %>
+    <%= f.file_field :file %>
+    <%= f.input :duplicates_permitted,          as: :boolean %>
+    <%= f.input :association_changes_permitted, as: :boolean %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, "Load #{t('misc.model_files')}", data: { "disable-with": t('misc.load') } %>
+    <%= link_to 'Back', go_back_path(1),  onclick: 'validateBack(1, this)', class: 'btn' %>
+
+    <% if @undo_path.present? && !session[:archives_visible].present? %>
+      <%= link_to 'Undo', @undo_path, class: 'btn btn-default', title: @undo_message %>
+    <% end %>
+
+    <% if @redo_path.present? && !session[:archives_visible].present? %>
+      <%= link_to 'Redo', @redo_path, class: 'btn btn-default', title: @redo_message %>
+    <% end %>
+  </div>
+<% end %>

@@ -1,0 +1,62 @@
+<% @template_checklist.template_checklist_item.order(:clitemid).each do |checklist_item| %>
+  <p>
+    <table style="width:7.5in" border="2">
+      <tr>
+        <td nowrap>
+            <strong>Checklist Item ID:</strong>
+        </td>
+        <td style="vertical-align: middle;">
+            <%= checklist_item.clitemid %>
+        </td>  
+      </tr>
+      <tr>
+        <td>
+          <strong>Description:</strong>
+        </td>  
+        <td>
+          <%= checklist_item.description %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Reference:</strong>
+        </td>
+        <td>
+          <%= checklist_item.reference %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Minimum DAL:</strong>
+        </td>
+        <td>
+          <%= checklist_item.minimumdal.join(', ') %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Supplements:</strong>
+        </td>
+        <td>
+          <%= checklist_item.supplements.join(', ') %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Status:</strong>
+        </td>
+        <td>
+          <%= checklist_item.status %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Notes:</strong>
+        </td>
+        <td>
+          <%= checklist_item.note %>
+        </td>
+      </tr>
+    </table>
+  </p>
+<% end %>

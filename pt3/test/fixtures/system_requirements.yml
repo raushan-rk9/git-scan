@@ -1,0 +1,44 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+sys_001:
+  reqid:                 1
+  full_id:               'SYS-001'
+  description:           'The System SHALL maintain proper pump pressure.'
+  source:                'Client Requirements'
+  safety:                true
+  implementation:        'Hardware'
+  version:               0
+  project_id:            <%= Project.find_by(identifier: 'TEST').try(:id) %>
+  category:              'Safety'
+  verification_method:    [ 'Test' ]
+  organization:          'test'
+  model_file_id:         <%= ModelFile.find_by(full_id: 'MF-001').try(:id) %>
+
+sys_002:
+  reqid:                 2
+  full_id:               'SYS-002'
+  description:           'The System SHALL provide an external interface to monitor pump pressure.'
+  source:                'Client Requirements'
+  safety:                true
+  implementation:        'Hardware'
+  version:               0
+  project_id:            <%= Project.find_by(identifier: 'TEST').try(:id) %>
+  category:              'Safety'
+  verification_method:    [ 'Test' ]
+  organization:          'test'
+  model_file_id:         <%= ModelFile.find_by(full_id: 'MF-001').try(:id) %>
+
+sys_003:
+  reqid:                 3
+  full_id:               'SYS-003'
+  description:           'The System SHALL have a test mode to verify functionality.'
+  source:                'Engineering'
+  safety:                true
+  implementation:        'Hardware'
+  version:               0
+  project_id:            <%= Project.find_by(identifier: 'TEST').try(:id) %>
+  category:              'Safety'
+  verification_method:    [ 'Test' ]
+  organization:          'test'
+  model_file_id:         <%= ModelFile.find_by(full_id: 'MF-001').try(:id) %>
+  derived:               true
+  derived_justification: 'Testing is needed to verify other requirements.'

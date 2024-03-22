@@ -1,0 +1,91 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+pr_history_001:
+  action:           'Create Problem Report'
+  modifiedby:       'test_3@airworthinesscert.com'
+  status:           'New'
+  datemodified:      <%= Date.today - 7.days %>
+  project_id:        <%= Project.find_by(identifier: 'TEST').try(:id) %>
+  problem_report_id: <%= ProblemReport.find_by(prid: 1).try(:id) %>
+  organization:      'test'
+  severity_type:     'Type 0 - Failure (Safety Impact)'
+
+pr_history_002:
+  action:           "status changed from 'Open' to 'In-Work'."
+  modifiedby:       'test_4@airworthinesscert.com'
+  status:           'In-Work'
+  datemodified:      <%= Date.today - 6.days %>
+  project_id:        <%= Project.find_by(identifier: 'TEST').try(:id) %>
+  problem_report_id: <%= ProblemReport.find_by(prid: 1).try(:id) %>
+  organization:      'test'
+  severity_type:     'Type 0 - Failure (Safety Impact)'
+
+pr_history_003:
+  action:           "status changed from 'In-Work' to 'Implemented'.\nfeedback changed from '' to '[TM] Heat Sink added. Please verify.'"
+  modifiedby:       'test_4@airworthinesscert.com'
+  status:           'Implemented'
+  datemodified:      <%= Date.today - 5.days %>
+  project_id:        <%= Project.find_by(identifier: 'TEST').try(:id) %>
+  problem_report_id: <%= ProblemReport.find_by(prid: 1).try(:id) %>
+  organization:      'test'
+  severity_type:     'Type 0 - Failure (Safety Impact)'
+
+pr_history_004:
+  action:           "status changed from 'Implemented' to 'In-Work'.\nnotes chqnged from '' to '[QA] Failed at 110c. Please Fix.'"
+  modifiedby:       'test_3@airworthinesscert.com'
+  status:           'In-Work'
+  datemodified:      <%= Date.today - 4.days %>
+  project_id:        <%= Project.find_by(identifier: 'TEST').try(:id) %>
+  problem_report_id: <%= ProblemReport.find_by(prid: 1).try(:id) %>
+  organization:      'test'
+  severity_type:     'Type 0 - Failure (Safety Impact)'
+
+pr_history_005:
+  action:           "status changed from 'In-Work' to 'Implemented'.\nfeedback changed from '[TM] Heat Sink added. Please verify.' to '[TM] Heat Sink added. Please verify.<br>[TM] Increased Heat sink size. Please verify.'"
+  modifiedby:       'test_4@airworthinesscert.com'
+  status:           'Implemented'
+  datemodified:      <%= Date.today - 3.days %>
+  project_id:        <%= Project.find_by(identifier: 'TEST').try(:id) %>
+  problem_report_id: <%= ProblemReport.find_by(prid: 1).try(:id) %>
+  organization:      'test'
+  severity_type:     'Type 0 - Failure (Safety Impact)'
+
+pr_history_006:
+  action:           "status changed from 'Implemented' to 'Verified'.\nnotes chqnged from '[QA] Failed at 110c. Please Fix.' to '[QA] Failed at 110c. Please Fix.<br>[QA] Verified. Heated board to 120c and communmication port still worked.'"
+  modifiedby:       'test_3@airworthinesscert.com'
+  status:           'Verified'
+  datemodified:      <%= Date.today - 3.days %>
+  project_id:        <%= Project.find_by(identifier: 'TEST').try(:id) %>
+  problem_report_id: <%= ProblemReport.find_by(prid: 1).try(:id) %>
+  organization:      'test'
+  severity_type:     'Type 0 - Failure (Safety Impact)'
+
+pr_history_007:
+  action:           "status changed from 'Verified' to 'Closed'"
+  modifiedby:       'test_4@airworthinesscert.com'
+  status:           'Closed'
+  datemodified:      <%= Date.today%>
+  project_id:        <%= Project.find_by(identifier: 'TEST').try(:id) %>
+  problem_report_id: <%= ProblemReport.find_by(prid: 1).try(:id) %>
+  organization:      'test'
+  severity_type:     'Type 0 - Failure (Safety Impact)'
+
+pr_history_008:
+  action:           'Create Problem Report'
+  modifiedby:       'test_3@airworthinesscert.com'
+  status:           'New'
+  datemodified:      <%= Date.today %>
+  project_id:        <%= Project.find_by(identifier: 'TEST').try(:id) %>
+  problem_report_id: <%= ProblemReport.find_by(prid: 2).try(:id) %>
+  organization:      'test'
+  severity_type:     'Type 0 - Failure (Safety Impact)'
+
+pr_history_009:
+  action:           'Create Problem Report'
+  modifiedby:       'test_3@airworthinesscert.com'
+  status:           'New'
+  datemodified:      <%= Date.today %>
+  project_id:        <%= Project.find_by(identifier: 'TEST').try(:id) %>
+  problem_report_id: <%= ProblemReport.find_by(prid: 3).try(:id) %>
+  organization:      'test'
+  severity_type:     'Type 0 - Failure (Safety Impact)'

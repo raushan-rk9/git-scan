@@ -1,0 +1,1466 @@
+HAS_A:
+  document_code:    HAS
+  description:      'Hardware Accomplishment Summary'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - A
+  control_category: 'CC1/HC1'
+
+HAS_B:
+  document_code:    HAS
+  description:      'Hardware Accomplishment Summary'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - B
+  control_category: 'CC1/HC1'
+
+HAS_C:
+  document_code:    HAS
+  description:      'Hardware Accomplishment Summary'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - C
+  control_category: 'CC1/HC1'
+
+HAS_D:
+  document_code:    HAS
+  description:      'Hardware Accomplishment Summary'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - D
+  control_category: 'CC1/HC1'
+
+HCI_A:
+  document_code:    HCI
+  description:      'Hardware Configuration Index'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - A
+  control_category: 'CC1/HC1'
+
+HCI_B:
+  document_code:    HCI
+  description:      'Hardware Configuration Index'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - B
+  control_category: 'CC1/HC1'
+
+HCI_C:
+  document_code:    HCI
+  description:      'Hardware Configuration Index'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - C
+  control_category: 'CC1/HC1'
+
+HCI_D:
+  document_code:    HCI
+  description:      'Hardware Configuration Index'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - D
+  control_category: 'CC1/HC1'
+
+HCIA_A:
+  document_code:    HCIA
+  description:      'Hardware Change Impact Analysis'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - A
+  control_category: 'CC2/HC2'
+
+HCIA_B:
+  document_code:    HCIA
+  description:      'Hardware Change Impact Analysis'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - B
+  control_category: 'CC2/HC2'
+
+HCIA_C:
+  document_code:    HCIA
+  description:      'Hardware Change Impact Analysis'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - C
+  control_category: 'CC2/HC2'
+
+HCIA_D:
+  document_code:    HCIA
+  description:      'Hardware Change Impact Analysis'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - D
+  control_category: 'CC2/HC2'
+
+HCMP_A:
+  document_code:    HCMP
+  description:      'Hardware Configuration Management Plan'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - A
+  control_category: 'CC1/HC1'
+
+HCMP_B:
+  document_code:    HCMP
+  description:      'Hardware Configuration Management Plan'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - B
+  control_category: 'CC1/HC1'
+
+HCMP_C:
+  document_code:    HCMP
+  description:      'Hardware Configuration Management Plan'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - C
+  control_category: 'CC2/HC2'
+
+HCMP_D:
+  document_code:    HCMP
+  description:      'Hardware Configuration Management Plan'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - D
+  control_category: 'CC2/HC2'
+
+HDD_A:
+  document_code:    HDD
+  description:      'Hardware Design Document'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - A
+  control_category: 'CC2/HC2'
+
+HDD_B:
+  document_code:    HDD
+  description:      'Hardware Design Document'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - B
+  control_category: 'CC2/HC2'
+
+HDD_C:
+  document_code:    HDD
+  description:      'Hardware Design Document'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - C
+  control_category: 'CC2/HC2'
+
+HDD_D:
+  document_code:    HDD
+  description:      'Hardware Design Document'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - D
+  control_category: 'CC2/HC2'
+
+HDP_A:
+  document_code:    HDP
+  description:      'Hardware Development Plan'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - A
+  control_category: 'CC2/HC2'
+
+HDP_B:
+  document_code:    HDP
+  description:      'Hardware Development Plan'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - B
+  control_category: 'CC2/HC2'
+
+HDP_C:
+  document_code:    HDP
+  description:      'Hardware Development Plan'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - C
+  control_category: 'CC2/HC2'
+
+HDP_D:
+  document_code:    HDP
+  description:      'Hardware Development Plan'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - D
+  control_category: ''
+
+HDS_A:
+  document_code:    HDS
+  description:      'Hardware Design Standards'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - A
+  control_category: 'CC2/HC2'
+
+HDS_B:
+  document_code:    HDS
+  description:      'Hardware Design Standards'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - B
+  control_category: 'CC2/HC2'
+
+HDS_C:
+  document_code:    HDS
+  description:      'Hardware Design Standards'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - C
+  control_category: ''
+
+HDS_D:
+  document_code:    HDS
+  description:      'Hardware Design Standards'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - D
+  control_category: ''
+
+HCAR_A:
+  document_code:    HCAR
+  description:      'Hardware Elemental Analysis Results'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - A
+  control_category: 'CC2/HC2'
+
+HCAR_B:
+  document_code:    HCAR
+  description:      'Hardware Elemental Analysis Results'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - B
+  control_category: 'CC2/HC2'
+
+HCAR_C:
+  document_code:    HCAR
+  description:      'Hardware Elemental Analysis Results'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - C
+  control_category: 'CC2/HC2'
+
+HCAR_D:
+  document_code:    HCAR
+  description:      'Hardware Elemental Analysis Results'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - D
+  control_category: 'CC2/HC2'
+
+HECI_A:
+  document_code:    HECI
+  description:      'Hardware Environment Lifecycle Index'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - A
+  control_category: 'CC1/HC1'
+
+HECI_B:
+  document_code:    HECI
+  description:      'Hardware Environment Lifecycle Index'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - B
+  control_category: 'CC1/HC1'
+
+HECI_C:
+  document_code:    HECI
+  description:      'Hardware Environment Lifecycle Index'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - C
+  control_category: 'CC1/HC1'
+
+HECI_D:
+  document_code:    HECI
+  description:      'Hardware Environment Lifecycle Index'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - D
+  control_category: 'CC1/HC1'
+
+HPAP_A:
+  document_code:    HPAP
+  description:      'Hardware Process Assurance Plan'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - A
+  control_category: 'CC2/HC2'
+
+HPAP_B:
+  document_code:    HPAP
+  description:      'Hardware Process Assurance Plan'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - B
+  control_category: 'CC2/HC2'
+
+HPAP_C:
+  document_code:    HPAP
+  description:      'Hardware Process Assurance Plan'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - C
+  control_category: ''
+
+HPAP_D:
+  document_code:    HPAP
+  description:      'Hardware Process Assurance Plan'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - D
+  control_category: ''
+
+HRD_A:
+  document_code:    HRD
+  description:      'Hardware Requirements Document'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - A
+  control_category: 'CC1/HC1'
+
+HRD_B:
+  document_code:    HRD
+  description:      'Hardware Requirements Document'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - B
+  control_category: 'CC1/HC1'
+
+HRD_C:
+  document_code:    HRD
+  description:      'Hardware Requirements Document'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - C
+  control_category: 'CC1/HC1'
+
+HRD_D:
+  document_code:    HRD
+  description:      'Hardware Requirements Document'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - D
+  control_category: 'CC1/HC1'
+
+HRS_A:
+  document_code:    HRS
+  description:      'Hardware Requirements Standards'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - A
+  control_category: 'CC2/HC2'
+
+HRS_B:
+  document_code:    HRS
+  description:      'Hardware Requirements Standards'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - B
+  control_category: 'CC2/HC2'
+
+HRS_C:
+  document_code:    HRS
+  description:      'Hardware Requirements Standards'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - C
+  control_category: ''
+
+HRS_D:
+  document_code:    HRS
+  description:      'Hardware Requirements Standards'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - D
+  control_category: ''
+
+HTP_A:
+  document_code:    HTP
+  description:      'Hardware Test Procedures'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - A
+  control_category: 'CC1/HC1'
+
+HTP_B:
+  document_code:    HTP
+  description:      'Hardware Test Procedures'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - B
+  control_category: 'CC1/HC1'
+
+HTP_C:
+  document_code:    HTP
+  description:      'Hardware Test Procedures'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - C
+  control_category: 'CC2/HC2'
+
+HTP_D:
+  document_code:    HTP
+  description:      'Hardware Test Procedures'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - D
+  control_category: 'CC2/HC2'
+
+HVCP_A:
+  document_code:    HVCP
+  description:      'Hardware Verification Cases and Procedures'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - A
+  control_category: 'CC1/HC1'
+
+HVCP_B:
+  document_code:    HVCP
+  description:      'Hardware Verification Cases and Procedures'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - B
+  control_category: 'CC1/HC1'
+
+HVCP_C:
+  document_code:    HVCP
+  description:      'Hardware Verification Cases and Procedures'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - C
+  control_category: 'CC1/HC1'
+
+HVCP_D:
+  document_code:    HVCP
+  description:      'Hardware Verification Cases and Procedures'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - D
+  control_category: 'CC1/HC1'
+
+HVP_A:
+  document_code:    HVP
+  description:      'Hardware Verification Plan'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - A
+  control_category: 'CC1/HC1'
+
+HVP_B:
+  document_code:    HVP
+  description:      'Hardware Verification Plan'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - B
+  control_category: 'CC1/HC1'
+
+HVP_C:
+  document_code:    HVP
+  description:      'Hardware Verification Plan'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - C
+  control_category: 'CC1/HC1'
+
+HVP_D:
+  document_code:    HVP
+  description:      'Hardware Verification Plan'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - D
+  control_category: 'CC1/HC1'
+
+HVR_A:
+  document_code:    HVR
+  description:      'Hardware Verification Results'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - A
+  control_category: 'CC1/HC1'
+
+HVR_B:
+  document_code:    HVR
+  description:      'Hardware Verification Results'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - B
+  control_category: 'CC2/HC2'
+
+HVR_C:
+  document_code:    HVR
+  description:      'Hardware Verification Results'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - C
+  control_category: 'CC2/HC2'
+
+HVR_D:
+  document_code:    HVR
+  description:      'Hardware Verification Results'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - D
+  control_category: 'CC2/HC2'
+
+MBDS_A:
+  document_code:    MBDS
+  description:      'Model-Based Design Standards'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - A
+  control_category: 'CC1/HC1'
+
+MBDS_B:
+  document_code:    MBDS
+  description:      'Model-Based Design Standards'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - B
+  control_category: 'CC1/HC1'
+
+MBDS_C:
+  document_code:    MBDS
+  description:      'Model-Based Design Standards'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - C
+  control_category: 'CC1/HC1'
+
+MBDS_D:
+  document_code:    MBDS
+  description:      'Model-Based Design Standards'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - D
+  control_category: 'CC1/HC1'
+
+PDI_A:
+  document_code:    PDI
+  description:      'Parameter Data types'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - A
+  control_category: 'CC1/HC1'
+
+PDI_B:
+  document_code:    PDI
+  description:      'Parameter Data types'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - B
+  control_category: 'CC1/HC1'
+
+PDI_C:
+  document_code:    PDI
+  description:      'Parameter Data types'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - C
+  control_category: 'CC1/HC1'
+
+PDI_D:
+  document_code:    PDI
+  description:      'Parameter Data types'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - D
+  control_category: 'CC1/HC1'
+
+PHAC_A:
+  document_code:    PHAC
+  description:      'Plan for Hardware Aspects of Certification'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - A
+  control_category: 'CC1/HC1'
+
+PHAC_B:
+  document_code:    PHAC
+  description:      'Plan for Hardware Aspects of Certification'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - B
+  control_category: 'CC1/HC1'
+
+PHAC_C:
+  document_code:    PHAC
+  description:      'Plan for Hardware Aspects of Certification'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - C
+  control_category: 'CC1/HC1'
+
+PHAC_D:
+  document_code:    PHAC
+  description:      'Plan for Hardware Aspects of Certification'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - D
+  control_category: 'CC1/HC1'
+
+PSAC_A:
+  document_code:    PSAC
+  description:      'Plan for Software Aspects of Certification'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - A
+  control_category: 'CC1/HC1'
+
+PSAC_B:
+  document_code:    PSAC
+  description:      'Plan for Software Aspects of Certification'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - B
+  control_category: 'CC1/HC1'
+
+PSAC_C:
+  document_code:    PSAC
+  description:      'Plan for Software Aspects of Certification'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - C
+  control_category: 'CC1/HC1'
+
+SAS_A:
+  document_code:    SAS
+  description:      'Software Accomplishment Summary'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - A
+  control_category: 'CC1/HC1'
+
+SAS_B:
+  document_code:    SAS
+  description:      'Software Accomplishment Summary'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - B
+  control_category: 'CC1/HC1'
+
+SAS_C:
+  document_code:    SAS
+  description:      'Software Accomplishment Summary'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - C
+  control_category: 'CC1/HC1'
+
+SAS_D:
+  document_code:    SAS
+  description:      'Software Accomplishment Summary'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - D
+  control_category: 'CC1/HC1'
+
+SCI_A:
+  document_code:    SCI
+  description:      'Software Configuration Index'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - A
+  control_category: 'CC1/HC1'
+
+SCI_B:
+  document_code:    SCI
+  description:      'Software Configuration Index'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - B
+  control_category: 'CC1/HC1'
+
+SCI_C:
+  document_code:    SCI
+  description:      'Software Configuration Index'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - C
+  control_category: 'CC1/HC1'
+
+SCI_D:
+  document_code:    SCI
+  description:      'Software Configuration Index'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - D
+  control_category: 'CC1/HC1'
+
+SCMP_A:
+  document_code:    SCMP
+  description:      'Software Configuration Management Plan'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - A
+  control_category: 'CC1/HC1'
+
+SCMP_B:
+  document_code:    SCMP
+  description:      'Software Configuration Management Plan'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - B
+  control_category: 'CC1/HC1'
+
+SCMP_C:
+  document_code:    SCMP
+  description:      'Software Configuration Management Plan'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - C
+  control_category: 'CC2/HC2'
+
+SCMP_D:
+  document_code:    SCMP
+  description:      'Software Configuration Management Plan'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - D
+  control_category: 'CC2/HC2'
+
+SCS_A:
+  document_code:    SCS
+  description:      'Software Code Standards'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - A
+  control_category: 'CC2/HC2'
+
+SCS_B:
+  document_code:    SCS
+  description:      'Software Code Standards'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - B
+  control_category: 'CC2/HC2'
+
+SCS_C:
+  document_code:    SCS
+  description:      'Software Code Standards'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - C
+  control_category: 'CC2/HC2'
+
+SCS_D:
+  document_code:    SCS
+  description:      'Software Code Standards'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - D
+  control_category: ''
+
+SDD_A:
+  document_code:    SDD
+  description:      'System Design Document'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - A
+  control_category: 'CC1/HC1'
+
+SDD_B:
+  document_code:    SDD
+  description:      'System Design Document'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - B
+  control_category: 'CC1/HC1'
+
+SDD_C:
+  document_code:    SDD
+  description:      'System Design Document'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - C
+  control_category: 'CC1/HC1'
+
+SDD_D:
+  document_code:    SDD
+  description:      'System Design Document'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - D
+  control_category: 'CC2/HC2'
+
+SDP_A:
+  document_code:    SDP
+  description:      'Software Development Plan'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - A
+  control_category: 'CC1/HC1'
+
+SDP_B:
+  document_code:    SDP
+  description:      'Software Development Plan'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - B
+  control_category: 'CC1/HC1'
+
+SDP_C:
+  document_code:    SDP
+  description:      'Software Development Plan'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - C
+  control_category: 'CC2/HC2'
+
+SDP_D:
+  document_code:    SDP
+  description:      'Software Development Plan'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - D
+  control_category: 'CC2/HC2'
+
+SDS_A:
+  document_code:    SDS
+  description:      'Software Design Standards'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - A
+  control_category: 'CC1/HC1'
+
+SDS_B:
+  document_code:    SDS
+  description:      'Software Design Standards'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - B
+  control_category: 'CC1/HC1'
+
+SDS_C:
+  document_code:    SDS
+  description:      'Software Design Standards'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - C
+  control_category: 'CC2/HC2'
+
+SDS_D:
+  document_code:    SDS
+  description:      'Software Design Standards'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - D
+  control_category: ''
+
+SECI_A:
+  document_code:    SECI
+  description:      'Software Environment Lifecycle Index'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - A
+  control_category: 'CC1/HC1'
+
+SECI_B:
+  document_code:    SECI
+  description:      'Software Environment Lifecycle Index'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - B
+  control_category: 'CC1/HC1'
+
+SECI_C:
+  document_code:    SECI
+  description:      'Software Environment Lifecycle Index'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - C
+  control_category: 'CC1/HC1'
+
+SECI_D:
+  document_code:    SECI
+  description:      'Software Environment Lifecycle Index'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - D
+  control_category: 'CC2/HC2'
+
+SQAP_A:
+  document_code:    SQAP
+  description:      'Software Quality Assurance Plan'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - A
+  control_category: 'CC1/HC1'
+
+SQAP_B:
+  document_code:    SQAP
+  description:      'Software Quality Assurance Plan'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - B
+  control_category: 'CC1/HC1'
+
+SQAP_C:
+  document_code:    SQAP
+  description:      'Software Quality Assurance Plan'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - C
+  control_category: 'CC2/HC2'
+
+SQAP_D:
+  document_code:    SQAP
+  description:      'Software Quality Assurance Plan'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - D
+  control_category: 'CC2/HC2'
+
+SRS_A:
+  document_code:    SRS
+  description:      'Software Requirements Standards'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - A
+  control_category: 'CC1/HC1'
+
+SRS_B:
+  document_code:    SRS
+  description:      'Software Requirements Standards'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - B
+  control_category: 'CC1/HC1'
+
+SRS_C:
+  document_code:    SRS
+  description:      'Software Requirements Standards'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - C
+  control_category: 'CC2/HC2'
+
+SRS_D:
+  document_code:    SRS
+  description:      'Software Requirements Standards'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - D
+  control_category: ''
+
+SVP_A:
+  document_code:    SVP
+  description:      'Software Verification Plan'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - A
+  control_category: 'CC1/HC1'
+
+SVP_B:
+  document_code:    SVP
+  description:      'Software Verification Plan'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - B
+  control_category: 'CC1/HC1'
+
+SVP_C:
+  document_code:    SVP
+  description:      'Software Verification Plan'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - C
+  control_category: 'CC2/HC2'
+
+SVP_D:
+  document_code:    SVP
+  description:      'Software Verification Plan'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - D
+  control_category: 'CC2/HC2'
+
+SVR_A:
+  document_code:    SVR
+  description:      'Software Verification Results'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - A
+  control_category: 'CC1/HC1'
+
+SVR_B:
+  document_code:    SVR
+  description:      'Software Verification Results'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - B
+  control_category: 'CC1/HC1'
+
+SVR_C:
+  document_code:    SVR
+  description:      'Software Verification Results'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - C
+  control_category: 'CC1/HC1'
+
+SVR_D:
+  document_code:    SVR
+  description:      'Software Verification Results'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - D
+  control_category: 'CC1/HC1'
+
+SWDD_A:
+  document_code:    SWDD
+  description:      'Software Design Document'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - A
+  control_category: 'CC1/HC1'
+
+SWDD_B:
+  document_code:    SWDD
+  description:      'Software Design Document'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - B
+  control_category: 'CC1/HC1'
+
+SWDD_C:
+  document_code:    SWDD
+  description:      'Software Design Document'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - C
+  control_category: 'CC1/HC1'
+
+SWDD_D:
+  document_code:    SWDD
+  description:      'Software Design Document'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - D
+  control_category: 'CC2/HC2'
+
+SWRD_A:
+  document_code:    SWRD
+  description:      'Software Requirements Document'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - A
+  control_category: 'CC1/HC1'
+
+SWRD_B:
+  document_code:    SWRD
+  description:      'Software Requirements Document'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - B
+  control_category: 'CC1/HC1'
+
+SWRD_C:
+  document_code:    SWRD
+  description:      'Software Requirements Document'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - C
+  control_category: 'CC1/HC1'
+
+SWRD_D:
+  document_code:    SWRD
+  description:      'Software Requirements Document'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - D
+  control_category: 'CC1/HC1'
+
+SWVCP_A:
+  document_code:    SWVCP
+  description:      'Software Verification Cases and Procedures'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - A
+  control_category: 'CC1/HC1'
+
+SWVCP_B:
+  document_code:    SWVCP
+  description:      'Software Verification Cases and Procedures'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - B
+  control_category: 'CC1/HC1'
+
+SWVCP_C:
+  document_code:    SWVCP
+  description:      'Software Verification Cases and Procedures'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - C
+  control_category: 'CC2/HC2'
+
+SWVCP_D:
+  document_code:    SWVCP
+  description:      'Software Verification Cases and Procedures'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - D
+  control_category: 'CC2/HC2'
+
+SRD_A:
+  document_code:    SRD
+  description:      'System Requirements Document'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - A
+  control_category: 'CC1/HC1'
+
+SRD_B:
+  document_code:    SRD
+  description:      'System Requirements Document'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - B
+  control_category: 'CC1/HC1'
+
+SRD_C:
+  document_code:    SRD
+  description:      'System Requirements Document'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - C
+  control_category: 'CC1/HC1'
+
+SRD_D:
+  document_code:    SRD
+  description:      'System Requirements Document'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - D
+  control_category: 'CC1/HC1'
+
+TQP_A:
+  document_code:    TQP
+  description:      'Tool Qualification Plan'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - A
+  control_category: 'CC1/HC1'
+
+TQP_B:
+  document_code:    TQP
+  description:      'Tool Qualification Plan'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - B
+  control_category: 'CC1/HC1'
+
+TQP_C:
+  document_code:    TQP
+  description:      'Tool Qualification Plan'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - C
+  control_category: 'CC1/HC1'
+
+TQP_D:
+  document_code:    TQP
+  description:      'Tool Qualification Plan'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - D
+  control_category: 'CC1/HC1'
+
+TQR_A:
+  document_code:    TQR
+  description:      'Tool Qualification Results'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - A
+  control_category: 'CC2/HC2'
+
+TQR_B:
+  document_code:    TQR
+  description:      'Tool Qualification Results'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - B
+  control_category: 'CC2/HC2'
+
+TQR_C:
+  document_code:    TQR
+  description:      'Tool Qualification Results'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - C
+  control_category: 'CC2/HC2'
+
+TQR_D:
+  document_code:    TQR
+  description:      'Tool Qualification Results'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - D
+  control_category: 'CC2/HC2'
+
+VVS_A:
+  document_code:    VVS
+  description:      'Validation and Verification Standards'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - A
+  control_category: 'CC1/HC1'
+
+VVS_B:
+  document_code:    VVS
+  description:      'Validation and Verification Standards'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - B
+  control_category: 'CC1/HC1'
+
+VVS_C:
+  document_code:    VVS
+  description:      'Validation and Verification Standards'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - C
+  control_category: 'CC1/HC1'
+
+VVS_D:
+  document_code:    VVS
+  description:      'Validation and Verification Standards'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - D
+  control_category: 'CC1/HC1'
+
+RTM_A_1:
+  document_code:    RTM
+  description:      'Requirements Traceability Matrix'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - A
+  control_category: 'CC1/HC1'
+
+RTM_B_1:
+  document_code:    RTM
+  description:      'Requirements Traceability Matrix'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - B
+  control_category: 'CC1/HC1'
+
+RTM_C_1:
+  document_code:    RTM
+  description:      'Requirements Traceability Matrix'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - C
+  control_category: 'CC1/HC1'
+
+RTM_D_1:
+  document_code:    RTM
+  description:      'Requirements Traceability Matrix'
+  item_types:
+                  - '1'
+  dal_levels:
+                  - D
+  control_category: 'CC1/HC1'
+
+RTM_A_2:
+  document_code:    RTM
+  description:      'Requirements Traceability Matrix'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - A
+  control_category: 'CC1/HC1'
+
+RTM_B_2:
+  document_code:    RTM
+  description:      'Requirements Traceability Matrix'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - B
+  control_category: 'CC1/HC1'
+
+RTM_C_2:
+  document_code:    RTM
+  description:      'Requirements Traceability Matrix'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - C
+  control_category: 'CC1/HC1'
+
+RTM_D_2:
+  document_code:    RTM
+  description:      'Requirements Traceability Matrix'
+  item_types:
+                  - '2'
+  dal_levels:
+                  - D
+  control_category: 'CC1/HC1'

@@ -1,0 +1,121 @@
+<ul class="list-group">
+  <li class="list-group-item active">
+    <h5>
+      <%= "#{t('sourcecodes.codeid') }: #{@source_code.fullcodeid}" %>
+    </h5>
+  </li>
+  <li class="list-group-item">
+    <p>
+      <strong><%= t('misc.desc') %>:</strong>
+      <%= raw @source_code.description %>
+    </p>
+
+    <p>
+      <strong><%= t('sourcecodes.filename') %>:</strong><br>
+      <%= link_to raw(@source_code.file_name), item_source_code_display_path(@item, @source_code), target: :_blank %>
+    </p>
+
+    <p>
+      <strong><%= t('misc.url') %>:</strong>
+
+      <% if @source_code.url_type.present? && @source_code.url_link.present? %>
+        <% if @source_code.url_type == Constants::UPLOAD_ATTACHMENT && @source_code.upload_file.attached? %>
+          <% if @source_code.url_link =~ /^http.*/i %>
+            <%= link_to @source_code.url_link, @source_code.url_link, target: :_blank  %>
+          <% else %>
+            <%= link_to @source_code.url_link, item_source_code_download_path(@item, @source_code) + '?new_window=true', target: :_blank %>
+          <% end %>
+        <% else %>
+          <% description = @source_code.url_description %>
+
+          <% unless description.present? %>
+            <% description = @source_code.url_link %>
+          <% end %>
+
+          <% if @source_code.url_link =~ /^http[s]{0,1}:\/\/.+$/ %>
+            <%= link_to description, @source_code.url_link + '?new_window=true', target: :_blank %>
+          <% else %>
+            <%= description %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </p>
+
+    <p>
+      <strong><%= t('sourcecodes.function') %>:</strong>
+      <%= simple_format(@source_code.function) %>
+    </p>
+
+    <p>
+      <strong>Linked <%= t('module_description.pl_title') %>:</strong><br>
+      <% @source_code.module_descriptions.each do |md| %>
+        <%= display_full_id(md, @item) %><br>
+      <% end %>
+    </p>
+
+    <p>
+      <strong><%= t('versioning.external_version') %>:</strong>
+      <%= @source_code.external_version %>
+    </p>
+
+    <p>
+      <strong><%= t('versioning.versionid') %>:</strong>
+      <%= @source_code.version %>
+    </p>
+
+    <p>
+      <strong>Item:</strong>
+      <%= @source_code.item.name %>
+    </p>
+
+    <p>
+      <strong>Project:</strong>
+      <%= @source_code.project.name %>
+    </p>
+    </p>
+  </li>
+</ul>
+
+<% if @source_code.archive_id.nil? %>
+  <%= link_to 'Edit', edit_item_source_code_path(@item, @source_code),                          class: 'btn' %>
+  <%= link_to 'New Source Code', new_item_source_code_path(@item),                              class: "btn" %>
+<% end %>
+
+<% if @source_code.archive_id.nil? %>
+  <%= link_to 'Source Code File History', item_source_code_file_history_path(@item, @source_code), class: 'btn' %>
+<% end %>
+
+<%= link_to 'Back', go_back_path(1),  onclick: 'validateBack(1, this)', class: 'btn' %>
+
+<% if @undo_path.present? && !session[:archives_visible].present? %>
+  <%= link_to 'Undo', @undo_path, class: 'btn btn-default', title: @undo_message %>
+<% end %>
+
+<% if @redo_path.present? && !session[:archives_visible].present? %>
+  <%= link_to 'Redo', @redo_path, class: 'btn btn-default', title: @redo_message %>
+<% end %>
+
+<%
+    if @source_code_ids.present? && @source_code.archive_id.nil?
+      current_index = @source_code_ids.find_index(@source_code.id)
+      previous_id   = @source_code_ids[current_index - 1] if current_index > 0
+      next_id       = @source_code_ids[current_index + 1] if current_index < (@source_code_ids.length - 1)
+    end
+ %>
+
+<% if previous_id.present? %>
+  <% if (params[:previous_mode] == 'editing') && policy(@source_code).edit? %>
+    <%= link_to('Previous', edit_item_source_code_path(@item, previous_id), class: 'btn btn-default') %>
+  <% else %>
+    <%= link_to('Previous', item_source_code_path(@item, previous_id),      class: 'btn btn-default') %>
+  <% end %>
+<% end %>
+
+<% if next_id.present? %>
+  <% if (params[:previous_mode] == 'editing') && policy(@source_code).edit? %>
+    <%= link_to('Next',     edit_item_source_code_path(@item, next_id),     class: 'btn btn-default') %>
+  <% else %>
+    <%= link_to('Next',     item_source_code_path(@item, next_id),          class: 'btn btn-default') %>
+  <% end %>
+<% end %>
+

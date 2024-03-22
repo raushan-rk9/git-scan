@@ -1,0 +1,9 @@
+<% if @document.present? %>
+  <% if @document.file.attached? && @document.file_type =~ /^image\/.+$/i %>
+    <%= image_tag(@document.file) %>
+  <% end %>
+<% end %>
+
+<br>
+
+<%= link_to 'Back', go_back_path(1),  onclick: 'validateBack(1, this)', class: 'btn' %>

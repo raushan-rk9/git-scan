@@ -1,0 +1,21 @@
+<%
+    action_url = if @item.present?
+                   item_model_files_export_path(@item)
+                 else
+                   project_model_files_export_path(@project)
+                 end
+%>
+
+<%= simple_form_for :mf_export, { url: action_url } do |f| %>
+  <%= f.input :export_type, collection: Constants::Export_RequirementTypes, include_blank: false %>
+  <%= f.button :submit, "Export" %>
+  <%= link_to 'Back', go_back_path(1),  onclick: 'validateBack(1, this)', class: 'btn' %>
+
+  <% if @undo_path.present? && !session[:archives_visible].present? %>
+    <%= link_to 'Undo', @undo_path, class: 'btn', title: @undo_message %>
+  <% end %>
+
+  <% if @redo_path.present? && !session[:archives_visible].present? %>
+    <%= link_to 'Redo', @redo_path, class: 'btn', title: @redo_message %>
+  <% end %>
+<% end %>

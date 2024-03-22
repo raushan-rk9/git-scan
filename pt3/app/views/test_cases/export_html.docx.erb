@@ -1,0 +1,101 @@
+<head>
+  <title><%= full_title(yield(:title)) %></title>
+</head>
+
+<style>
+  .column_1 {
+    width:          225px !important;
+    vertical-align: top
+  }
+
+  .column_2 {
+    width:          350px !important;
+    vertical-align: top
+  }
+
+  .column_3 {
+    width:          225px !important;
+    vertical-align: top
+  }
+
+  .column_4 {
+    vertical-align: top
+  }
+</style>
+
+<h3>Test Cases</h3>
+
+<% @test_cases.each do |test_case| %>
+  <table tyle="width: 100%" border="2">
+    <% if test_case.soft_delete %>
+      <% next %>
+    <% end %>
+    <tr>
+      <td class="column_1">
+        <%= test_case.full_id %>
+      </td>
+      <td colspan="3" style="vertical-align:top">
+        <%= test_case.description.to_s.html_safe %>
+
+        <% if test_case.model_file_id.present? && test_case.model_file.upload_file.attached? %>
+          <%= link_to image_tag(test_case.model_file.upload_file, :size => '25%xauto'), item_model_file_display_path(test_case.model_file.item_id, test_case.model_file) + '?new_window=true', target: :_blank %>
+        <% elsif test_case.document_id.present? && test_case.document.file.attached? %>
+          <%= link_to image_tag(test_case.document.file), item_document_display_path(item, test_case.document) + '?new_window=true', target: :_blank  %>
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td class="column_1">
+        Procedure:
+      </td>
+      <td colspan="3" style="vertical-align:top">
+        <%= test_case.procedure.to_s.html_safe %>
+      </td>
+    </tr>
+    <tr>
+      <td class="column_1">
+        Covers:
+      </td>
+      <td class="column_2">
+        <% if test_case.test_procedure_associations.present? %>
+          <% test_procedures = test_case.test_procedure_associations.split(',') %>
+          <% test_procedures.each do |test_procedure| %>
+            <% next unless test_procedure.present? %>
+            <% if test_procedure =~ /^\d+$/ %>
+              <% test_procedure = TestProcedure.find(test_procedure) %>
+              <%= test_procedure.fullreqid %>
+            <% else %>
+              <%= test_procedure %>
+            <% end %>
+            <br>
+          <%end %>
+        <% end %>
+      </td>
+      <td class="column_3">
+        Robustness:
+      </td>
+      <td class="column_4">
+        <% if test_case.robustness %>
+          Yes
+        <% else %>
+          No
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td class="column_1">
+        Test Method:
+      </td>
+      <td class="column_2">
+        <%= test_case.testmethod %>
+      </td>
+      <td class="column_3">
+        Version:
+      </td>
+      <td style="vertical-align:top">
+        <%= test_case.version %>
+      </td>
+    </tr>
+  </table>
+  <br>
+<% end if @test_cases.present? %>

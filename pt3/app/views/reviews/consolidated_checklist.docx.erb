@@ -1,0 +1,100 @@
+<style>
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before {}
+</style>
+
+<h1>Consolidated Checklist</h1>
+
+<ul class="list-group">
+  <li class="list-group-item active">
+    <h5>Review ID: <%= @review.fullreviewid %></h5>
+  </li>
+  <li class="list-group-item">
+    <%= render 'review_summary' %>
+  </li>
+  <li class="list-group-item">
+    <table id="scrollableDataTable" class="table table-striped table-bordered table-sm" cellspacing="0"  width="100%">
+      <thead>
+        <tr>
+          <th class="th-sm">ID</th>
+          <th class="th-sm">Description</th>
+          <th class="th-sm">Status</th>
+          <th class="th-sm">Notes</th>
+        </tr>
+      </thead>
+    
+      <tbody>
+        <% @consolidated_items.each do |checklist_item| %>
+          <tr>
+            <td width="5%">
+              <%= checklist_item[:clitemid] %>
+            </td>
+            <td width="35%">
+              <%= checklist_item[:description] %>
+            </td>
+            <td width="25%">
+              <% if checklist_item[:statuses_match] %>
+                <%= checklist_item[:statuses].first[1] %>
+              <% else %>
+                <table style="width: 100%; border: none !important;">
+                  <% checklist_item[:statuses].each do |key, value| %>
+                    <tr style="background-color: inherit !important;" >
+                      <td width="40%">
+                        <%= User.find(key).fullname %>:
+                      </td>
+                      <td width="60%">
+                        <%= value %>
+                      </td>
+                    </tr>
+                  <% end %>
+                </table>
+              <% end %>
+            </td>
+            <td width="35%">
+              <% if checklist_item[:notes_match] %>
+                <%= checklist_item[:notes].first[1] %>
+              <% else %>
+                <table style="width: 100%; border: none !important;">
+                  <% checklist_item[:notes].each do |key, value| %>
+                    <tr style="background-color: inherit !important;" >
+                      <td width="40%">
+                        <%= User.find(key).fullname %>:
+                      </td>
+                      <td width="60%">
+                        <%= value %>
+                      </td>
+                    </tr>
+                  <% end %>
+                </table>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </li>
+</ul>
+<br>
+
+<% unless @no_links %>
+  <%= link_to 'Export', review_export_consolidated_checklist_path(@review) + '?new_window=true', target: :_blank, class: "btn d-print-none"  %>
+  <%= link_to 'Back',   go_back_path(1),  onclick: 'validateBack(1, this)', class: 'btn' %>
+<% end %>
+
+<script>
+  $( document ).ready(function() {
+    $('#scrollableDataTable').DataTable({
+    "sDom":           "Rlfrtip",
+    "scrollX":        true,
+    "scrollY":        "55vh",
+    "aLengthMenu":    [[10, 50, 100, -1], [25, 50, 100, "All"]],
+    "pageLength":     -1,
+    "scrollCollapse": true,
+    "paging":         false,
+    "ordering":       true,
+    "info":           false,
+    });
+  });
+</script>

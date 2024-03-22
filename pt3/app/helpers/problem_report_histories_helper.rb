@@ -1,0 +1,2 @@
+module ProblemReportHistoriesHelper
+end

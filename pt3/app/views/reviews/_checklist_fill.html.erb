@@ -1,0 +1,34 @@
+<%= simple_form_for( [@review.item, @review], :url => { :action => "cl_fill" }, html: { class: 'form-horizontal', :method => "put" } ) do |f| %>
+  <%= f.error_notification %>
+  <% if @review.present? && @review.errors.present? && @review.errors.messages.present? %>
+    <% @review.errors.messages.each do |field, messages| %>
+      <h4 style="color: red;">
+        <%= field.to_s.titleize %>:
+        <% messages.each do |message| %>
+          <%= message %>&nbsp;
+        <% end %>
+        <br>
+      </h4>
+    <% end %>
+  <% end %>
+
+  <div class="form-inputs">
+    <%= f.input :reviewtype, :collection => TemplateChecklist.get_checklists(@review.item.itemtype, @review.reviewtype), :label_method => :description, :value_method => :title, include_blank: false %>
+  </div>
+
+  <div class="form-actions">
+    <% unless @review.checklist_item.present? %>
+      <%= f.button :submit, 'Populate Checklist', data: { "disable-with": t('misc.save') } %>
+    <% end %>
+
+    <%= link_to 'Back', go_back_path(1),  onclick: 'validateBack(1, this)', class: 'btn' %>
+
+    <% if @undo_path.present? && !session[:archives_visible].present? %>
+      <%= link_to 'Undo', @undo_path, class: 'btn btn-default', title: @undo_message %>
+    <% end %>
+
+    <% if @redo_path.present? && !session[:archives_visible].present? %>
+      <%= link_to 'Redo', @redo_path, class: 'btn btn-default', title: @redo_message %>
+    <% end %>
+  </div>
+<% end %>

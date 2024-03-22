@@ -1,0 +1,2 @@
+id,procedure_id,full_id,file_name,url_type,url_description,url_link,version,organization,item_id,project_id,archive_id,created_at,updated_at,test_case_associations,description,soft_delete,document_id,file_path,content_type,file_type,revision,draft_version,revision_date,upload_date
+93,1,APC_CB-TP-0001,"",1,APC_CB,ACMEY Company Avionics Passenger Counter,ATTACHMENT,tp_3.vhd,tp_3.vhd,"APCCB-TC-0002,APCCB-TC-0004",2020-06-25 12:59PM PDT,2020-06-26 10:42AM PDT,demo,,,""

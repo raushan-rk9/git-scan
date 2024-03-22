@@ -1,0 +1,25 @@
+_fixture:
+  model_class: Licensee
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+# Use "rails db:fixtures:load FIXTURES=users_prod" to seed this fixture.
+patmos:
+  identifier:  patmos_engineering_services
+  name: 'Patmos Engineering Services, Inc'
+  setup_date: 2020-04-28
+  license_date: 2020-04-28
+  renewal_date: 2020-05-10
+  contact_emails: paul@patmos-eng.com
+
+demo:
+  identifier:  Demo Organization
+  name: 'Demo Organization'
+  setup_date: 2020-05-20
+  license_date: 2020-05-20
+  renewal_date: 2099-12-31 
+  contact_emails: paul@patmos-eng.com

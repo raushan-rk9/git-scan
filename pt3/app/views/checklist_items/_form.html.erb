@@ -1,0 +1,134 @@
+<%= simple_form_for( [@review, @checklist_item], html: { class: 'form-horizontal' }) do |f| %>
+  <%= f.error_notification %>
+  <input name='message' id='message' type='hidden' style='color: #FF0000' readonly />
+
+  <div class="form-inputs">
+    <%= f.input :clitemid %>
+    <%= f.input :description, as: :summernote %>
+    <%= f.input :reference %>
+    <%= f.input :minimumdal %>
+    <%= f.input :supplements, collection: Constants::Review_Supplements, input_html: { multiple: true }, include_blank: true %>
+    <% if ChecklistItem.column_names.include?('status') %>
+      <%= f.input :status, collection: [['Pass', 'Pass'] ,['Fail', 'Fail'], ['N/A', 'N/A']], include_blank: true  %> 
+    <% else %>
+      <%= f.input :passing %>
+      <%= f.input :failing %>
+    <% end %>
+
+    <% if @checklist_item.evaluator.present? %>
+      <%=
+          f.input :evaluator,
+                  label:        'Evaluator',
+                  collection:    User.organization_or_role(current_user.organization,
+                                                           'AirWorthinessCert Member'),
+                  label_method: :fullname,
+                  value_method: :email,
+                  selected:      @checklist_item.evaluator,
+                  include_blank: true
+       %>
+    <% else %>
+      <%=
+          f.input :evaluator,
+                  label:        'Evaluator',
+                  collection:    User.organization_or_role(current_user.organization,
+                                                           'AirWorthinessCert Member'),
+                  label_method: :fullname,
+                  value_method: :email,
+                  selected:     @current_user.email,
+                  include_blank: true
+       %>
+    <% end %>
+
+    <%= f.input :evaluation_date, as: :date, html5: true %>
+
+    <% if @item.present? %>
+      <%= f.association :document, collection: Document.where(item_id: @item.id) %>
+    <% elsif @review.present? && @review.item_id.present? %>
+      <%= f.association :document, collection: Document.where(item_id: @review.item_id, archive_id:  nil), include_blank: true %>
+    <% end %>
+
+    <% if current_user.fulladmin && @review.present? && @review.item_id.present? %>
+      <%= f.association :review,   collection: Review.where(item_id:   @review.item_id, archive_id:  nil), include_blank: true %>
+    <% end %>
+
+    <%= f.input :note, as: :summernote %>
+  </div>
+
+  <div class="form-actions">
+    <input id='save_checklist_item' name='save_checklist_item' value='Save Checklist Item' type="button" onclick='validate();' class="btn btn-default" />
+
+    <% if @checklist_item.id.present? %>
+      <%= link_to 'Show', review_checklist_item_path(@review, @checklist_item), class: 'btn btn-default' %>
+    <% end %>
+
+    <%= link_to 'Back', 'javascript:null', class: "btn", onclick: 'validateBack(1)' %>
+
+    <% if @undo_path.present? && !session[:archives_visible].present? %>
+      <%= link_to 'Undo', @undo_path, class: 'btn btn-default', title: @undo_message %>
+    <% end %>
+
+    <% if @redo_path.present? && !session[:archives_visible].present? %>
+      <%= link_to 'Redo', @redo_path, class: 'btn btn-default', title: @redo_message %>
+    <% end %>
+  </div>
+
+  <script>
+    var model             = "";
+    var prefix            = "";
+
+    $( document ).ready(function() {
+      model               = "checklist_item";
+      table               = model  + 's';
+      prefix              = model  + "_";
+    });
+
+    $(":input").keydown(function (event) {
+        if (event.keyCode == 112)
+          validate();
+      else if (event.keyCode == 113)
+        window.location.assign(window.location.href.replace(/\/\d+\/edit$/, ''));
+    }); 
+
+    function validate()
+    {
+      var noteField       = document.getElementById(prefix + "note");
+      var checklistStatus = document.getElementById(prefix + "status").value;
+      var form            = document.forms[0];
+      var okay            = true;
+      var messageText     = "";
+
+      if (checklistStatus == "Fail")
+      {
+        var noteText = noteField.value;
+
+        if (noteText.length === 0)
+        {
+          messageText          = "If the status is fail then you must provide a defect comment in the notes.";
+          okay                 = false;
+        }
+        else
+        {
+          if (noteText.indexOf("Defect Comment:") < 0)
+          {
+            noteText        = "Defect Comment:" + noteText;
+            noteField.value = noteText;
+          }
+        }
+      }
+
+      if (okay)
+      {
+        form.submit();
+      }
+      else
+      {
+        message.value          = messageText;
+        message.style.display  = "none";
+
+        alert(messageText);
+      }
+
+      return(okay);
+    }
+  </script>
+<% end %>

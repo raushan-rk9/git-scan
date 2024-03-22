@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @spec_object.type %>
+</p>
+
+<p>
+  <strong>Data:</strong>
+  <%= @spec_object.data %>
+</p>
+
+<p>
+  <strong>Value:</strong>
+  <%= @spec_object.value %>
+</p>
+
+<%= link_to 'Edit', edit_spec_object_path(@spec_object) %>
+<%= link_to 'Back', go_back_path(1),  onclick: 'validateBack(1, this)', class: 'btn' %>

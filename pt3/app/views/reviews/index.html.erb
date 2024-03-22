@@ -1,0 +1,188 @@
+<style>
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before {}
+
+table th
+{
+  font-family: verdana !important;
+  font-size:   14px    !important;
+  line-height: 18px    !important;
+}
+
+table td
+{
+  font-family: verdana !important;
+  font-size:   14px    !important;
+  line-height: 18px    !important;
+}
+</style>
+
+<h1>Reviews <%= t('misc.list') %></h1>
+
+<table id="scrollableDataTable" class="table table-striped table-bordered table-sm" cellspacing="0"  width="100%">
+  <thead>
+    <tr>
+      <th class="th-sm">Review ID</th>
+      <th class="th-sm">Specific Review Type</th>
+      <th class="th-sm">Title</th>
+      <th class="th-sm">Evaluation Date</th>
+      <th class="th-sm">Description</th>
+      <th class="th-sm">Review Passing</th>
+      <th class="th-sm"><%= t('ai.pl_title') %></th>
+      <th class="th-sm"><%= t('versioning.versionid') %></th>
+      <th class="th-sm"></th>
+      <th class="th-sm"></th>
+      <th class="th-sm"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @reviews.each do |review| %>
+      <tr>
+        <td><%= review.reviewid %></td>
+        <td><%= TemplateChecklist.template_description_from_title(review.reviewtype) %></td>
+        <td><%= review.title %></td>
+        <td><%= review.evaldate %></td>
+        <td><%= sanitize review.description %></td>
+        <td class="td-centered"><%= review.checklistitems_passing ? "Yes" : "No" %></td>
+        <td>
+          <%=review.actionitems_open %> open AI(s)
+          <br>
+          <% if review.action_item.length == 0 %>
+            <%= link_to "Manage Action Items:", review_action_items_path(review) %>
+          <% elsif review.action_item.length == 1 %>
+            <%= link_to sanitize(review.action_item[0].description), review_action_items_path(review) %>
+          <% else %>
+            <%
+                description         = ''
+
+                review.action_item.each do |item|
+                  item_description  = strip_tags(item.description).truncate(40)
+                  description      += "#{item_description}\n"
+                end
+             %>
+            <%= link_to simple_format(description), review_action_items_path(review) %>
+          <% end %>
+        </td>
+        <td class="td-centered"><%= review.version %></td>
+
+        <td>
+          <% if policy(review).show? %>
+            <%= link_to item_review_path(@item, review) do %>
+              <%= material_icon.zoom_in.md_24 %><br>Show
+            <% end %>
+          <% else %>
+            &nbsp;
+          <% end %>
+        </td>
+        <td class="td-centered">
+          <% if (review.status != 'Closed')  && policy(review).edit? %>
+            <%= link_to [:edit, @item, review] do %>
+              <%= material_icon.edit.md_24 %><br>Edit
+            <% end %>
+          <% else %>
+            &nbsp;
+          <% end %>
+        </td>
+        <td class="td-centered">
+          <% if policy(review).destroy? %>
+            <%= link_to [@item, review], method: :delete, data: { confirm: 'Are you sure?' } do %>
+              <%= material_icon.delete.md_24 %><br>Delete
+            <% end %>
+          <% else %>
+            &nbsp;
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Review', new_item_review_path(@item),  class: "btn btn-primary", style: "color:white" %>
+<%= link_to 'Back',       go_back_path(1),  onclick: 'validateBack(1, this)',              class: 'btn' %>
+
+<% if @undo_path.present? && !session[:archives_visible].present? %>
+  <%= link_to 'Undo',     @undo_path,                   class: 'btn btn-default' %>
+<% end %>
+
+<% if @redo_path.present? && !session[:archives_visible].present? %>
+  <%= link_to 'Redo',     @redo_path,                   class: 'btn btn-default' %>
+<% end %>
+
+<script>
+  if (document.cookie.match(/scrollTop=(\d+)/))
+    $(window).scrollTop(document.cookie.match(/scrollTop=(\d+)/)[1]);
+
+  $(document).ready
+  (
+    function()
+    {
+      var first     = true;
+      var sortOrder = '[0, "asc"]';
+
+      if (Cookies.get("table_order"))
+        sortOrder = Cookies.get("table_order")
+    
+      if (document.cookie.match(/scrollTop=(\d+)/))
+        $(window).scrollTop(document.cookie.match(/scrollTop=(\d+)/)[1]);
+
+      $('#scrollableDataTable').DataTable
+      (
+        {
+          "sDom":           "Rlfrtip",
+          "scrollX":        true,
+          "scrollY":        "55vh",
+          "aLengthMenu":    [[10, 50, 100, -1], [25, 50, 100, "All"]],
+          "pageLength":     -1,
+          "scrollCollapse": true,
+          "paging":         false,
+          "ordering":       true,
+          "info":           false,
+          "drawCallback":   function(settings)
+                            {
+                              get_order(!first);
+                            },
+          "order":          JSON.parse(sortOrder)
+        }
+      );
+
+      $(window).unload(function() {document.cookie = "scrollTop=" + $(window).scrollTop();});
+
+      var tableOrder  = Cookies.get("table_order");
+
+      function get_order(force)
+      {
+        if (!Cookies.get("table_order") || force)
+        {
+          var table   = $('#scrollableDataTable').DataTable();
+          var date    = new Date();
+          var minutes = 30;
+
+          first       = false;
+
+          date.setTime(date.getTime() + (minutes * 60 * 1000));
+          Cookies.set('table_order', table.order(), { expires: date });
+
+          return table.order();      
+        }
+        else
+        {
+          first       = false;
+
+          return Cookies.get("table_order") ;
+        }
+      }
+    }
+  );
+</script>

@@ -1,0 +1,125 @@
+en:
+  simple_form:
+    "yes": 'Yes'
+    "no": 'No'
+    required:
+      text: 'required'
+      mark: '*'
+      # You can uncomment the line below if you need to overwrite the whole required html.
+      # When using html, text and mark won't be used.
+      # html: '<abbr title="required">*</abbr>'
+    error_notification:
+      default_message: "Please review the problems below:"
+    # Examples
+    # labels:
+    #   defaults:
+    #     password: 'Password'
+    #   user:
+    #     new:
+    #       email: 'E-mail to sign in.'
+    #     edit:
+    #       email: 'E-mail.'
+    # hints:
+    #   defaults:
+    #     username: 'User name to sign in.'
+    #     password: 'No special characters, please.'
+    # include_blanks:
+    #   defaults:
+    #     age: 'Rather not say'
+    # prompts:
+    #   defaults:
+    #     age: 'Select your age'
+    labels:
+      defaults:
+        itemtype: "Item Type"
+        reqid: "Requirement ID"
+      action_item:
+        actionitemid: "Action Item ID"
+        assignedto: "Assigned To"
+        openedby: "Opened By"
+      problem_report:
+        project:             "Project"
+        item:                "Item"
+        prid:                "Problem Report ID"
+        dateopened:          "Date Opened"
+        status:              "Status"
+        openedby:            "Opened By"
+        title:               "Title"
+        product:             "Product"
+        criticality:         "Criticality"
+        source:              "Source"
+        discipline_assigned: "Discipline Assigned"
+        assignedto:          "Assigned To"
+        target_date:         "Target Date"
+        close_date:          "Close Date"
+        description:         "Description"
+        problemfoundin:      "Found In"
+        corrective_action:   "Corrective Action"
+        fixed_in:            "Fixed In"
+        verification:        "Verification"
+        feedback:            "Feedback"
+        notes:               "Notes"
+        meeting_id:          "Meeting ID"
+        safetyrelated:       "Safety Related"
+        datemodified:        "Date Modified"
+        prh_action:          "Description of Modification/Action"
+
+      problem_report_history:
+        problem_report: "Problem Report"
+        datemodified: "Date Modified"
+        modifiedby: "Modified By"
+        action: "Action"
+        status: "Status"
+        project: "Project"
+      project:
+        identifier: "Identifier"
+        name: "Name"
+      item:
+        name: "Name"
+        itemtype: "Type of Item"
+        identifier: "Identifier"
+        level: "Design Assurance Level"
+        project: "Project"
+      system_requirement:
+        reqid: "Requirement ID"
+        description: "Description"
+        source: "Source"
+        safety: "Safety Related?"
+        implementation: "Implementation"
+        image: "Image"
+        remove_image: "Remove Image?"
+        project: "Project"
+      high_level_requirement:
+        safety: "Safety Related?"
+        robustness: "Robustness?"
+        derived: "Derived?"
+        testmethod: "Test Method"
+        remove_image: "Remove Image?"
+        system_requirements: "System Requirement Associations"
+      low_level_requirement:
+        derived: "Derived?"
+        remove_image: "Remove Image?"
+        high_level_requirements: "High Level Requirement Associations"
+      test_case:
+        high_level_requirements: "High Level Requirement Associations"
+        testmethod: "Test Method"
+        derived: "Derived?"
+        robustness: "Robustness?"
+        remove_image: "Remove Image?"
+        caseid: "Case ID"
+      document:
+        docid: "Document ID"
+        revdate: "Revision Date"
+      review:
+        reviewid: "Review ID"
+        reviewtype: "Review Type"
+        removeallclitems: "Remove all Checklist Items?"
+      checklist_item:
+        clitemid: "Checklist Item ID"
+        minimumdal: "Applicable DAL"
+        passing: "Passing?"
+        failing: "Failing?"
+      user:
+        firstname: "First Name"
+        lastname: "Last Name"
+        time_zone: "Time Zone"

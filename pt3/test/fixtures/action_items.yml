@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+hardware_ai_1:
+  actionitemid: 1
+  description:  'PHAC Missing Table of Contents'
+  openedby:     'test_3@airworthinesscert.com'
+  assignedto:   'test_4@airworthinesscert.com'
+  status:       'Open'
+  note:         'Please add table of contents.'
+  item_id:      <%= Item.find_by(identifier: 'HARDWARE_ITEM').try(:id) %>
+  project_id:   <%= Project.find_by(identifier: 'TEST').try(:id) %>
+  review_id:    <%= Review.find_by(reviewid: 1).try(:id) %>
+  organization: 'test'
+
+software_ai_1:
+  actionitemid: 1
+  description:  'PSAC Missing Table of Contents'
+  openedby:     'test_3@airworthinesscert.com'
+  assignedto:   'test_4@airworthinesscert.com'
+  status:       'Closed'
+  note:         'Please add table of contents.'
+  item_id:      <%= Item.find_by(identifier: 'SOFTWARE_ITEM').try(:id) %>
+  project_id:   <%= Project.find_by(identifier: 'TEST').try(:id) %>
+  review_id:    <%= Review.find_by(reviewid: 2).try(:id) %>
+  organization: 'test'

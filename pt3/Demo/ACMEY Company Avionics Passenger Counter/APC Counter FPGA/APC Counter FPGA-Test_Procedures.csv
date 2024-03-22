@@ -1,0 +1,4 @@
+id,procedure_id,full_id,file_name,url_type,url_description,url_link,version,organization,item_id,project_id,archive_id,created_at,updated_at,test_case_associations,description,soft_delete,document_id,file_path,content_type,file_type,revision,draft_version,revision_date,upload_date
+98,1,APC-CNTR_FPGA-APC_CB-TP-0001,"",3,APC-CNTR_FPGA,ACMEY Company Avionics Passenger Counter,ATTACHMENT,tp_1.vhd,tp_1.vhd,"APC-CNTR_FPGA-APC_CB-TC-0001,APC-CNTR_FPGA-APC_CB-TC-0002",2020-07-01 03:08PM PDT,2020-07-01 03:11PM PDT,demo,,,""
+99,2,APC-CNTR_FPGA-APC_CB-TP-0002,"",3,APC-CNTR_FPGA,ACMEY Company Avionics Passenger Counter,ATTACHMENT,tp_2.vhd,tp_2.vhd,APC-CNTR_FPGA-APC_CB-TC-0002,2020-07-01 03:09PM PDT,2020-07-01 03:12PM PDT,demo,,,""
+100,3,APC-CNTR_FPGA-APC_CB-TP-0003,"",2,APC-CNTR_FPGA,ACMEY Company Avionics Passenger Counter,ATTACHMENT,tp_3.vhd,tp_3.vhd,APC-CNTR_FPGA-APC_CB-TC-0001,2020-07-01 03:10PM PDT,2020-07-01 03:12PM PDT,demo,,,""

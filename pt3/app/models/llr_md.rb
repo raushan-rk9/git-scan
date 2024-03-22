@@ -1,0 +1,2 @@
+class LlrMd < ApplicationRecord
+end

@@ -1,0 +1,254 @@
+<head>
+  <title><%= full_title(yield(:title)) %></title>
+</head>
+
+<style>
+  table {
+          border: 1px solid #CCC;
+          border-collapse: collapse;
+          margin-left: 36pt
+  }
+
+  li::before
+  {
+          counter-increment: section important!;
+          content:           counters(section, "")  important!;
+  }
+
+  ol {
+          padding:       0px !important;
+          margin:        0px 0px 0px 0px !important;
+  }
+
+  li {
+          padding:       0px !important;
+          margin:        0px 0px 0px 0px !important;
+  }
+
+  level-one {
+          padding-left:  24px !important;
+  }
+  
+  level-two {
+          padding-left:  48px !important;
+  }
+
+  body {
+          font-family:   Cambria, Georgia, serif !important; 
+          font-style:    normal !important;
+          font-variant:  normal !important;
+          font-weight:   normal !important;
+          color:         black !important;
+          font-size:     11pt !important;
+          line-height:   13pt !important;
+          padding:       0px !important;
+          margin:        0px 0px 0px 0px !important;
+          border:        none !important;
+          counter-reset: section;
+  }
+  
+  title {
+          font-family:  Calibri, Candara, Segoe, "Segoe UI" !important;
+          font-style:   normal !important;
+          font-variant: normal !important;
+          font-weight:  bold !important;
+          color:        darkblue !important;
+          font-size:    24pt !important;
+          line-height:  22pt !important;
+          padding:      0px !important;
+          margin:       0px 0px 0px 0px !important;
+          border:       none !important;
+  }
+
+  h1 {
+          font-family:  Calibri, Candara, Segoe, "Segoe UI" !important;
+          font-style:   normal !important;
+          font-variant: normal !important;
+          font-weight:  bold !important;
+          color:        blue !important;
+          font-size:    20pt !important;
+          line-height:  22pt !important;
+          padding:      0px !important;
+          margin:       0px 0px 0px 0px !important;
+          border:       none !important;
+  }
+  
+  h2 {
+          font-family:  Calibri, Candara, Segoe, "Segoe UI" !important;
+          font-style:   normal !important;
+          font-variant: normal !important;
+          font-weight:  bold !important;
+          color:        blue !important;
+          font-size:    16pt !important;
+          line-height:  18pt !important;
+          padding:      0px !important;
+          margin:       0px 0px 0px 0px !important;
+          border:       none !important;
+  }
+  
+  h3 {
+          font-family: Calibri, Candara, Segoe, "Segoe UI" !important;
+          font-style:   normal !important;
+          font-variant: normal !important;
+          font-weight:  bold !important;
+          color:        blue !important;
+          font-size:    14pt !important;
+          line-height:  16pt !important;
+          padding:      0px !important;
+          margin:       0px 0px 0px 0px !important;
+          border:       none !important;
+  }
+  
+  h4 {
+          font-family: Calibri, Candara, Segoe, "Segoe UI" !important;
+          font-style:   normal !important;
+          font-variant: normal !important;
+          font-weight:  bold !important;
+          color:        lightblue !important;
+          font-size:    12pt !important;
+          line-height:  14pt !important;
+          padding:      0px !important;
+          margin:       0px 0px 0px 0px !important;
+          border:       none !important;
+  }
+  
+  h5 {
+          font-family: Calibri, Candara, Segoe, "Segoe UI" !important;
+          font-style:   normal !important;
+          font-variant: normal !important;
+          font-weight:  bold !important;
+          color:        lightblue !important;
+          font-size:    10pt !important;
+          line-height:  12pt !important;
+          padding:      0px !important;
+          margin:       0px 0px 0px 0px !important;
+          border:       none !important;
+  }
+  
+  h6 {
+          font-family: Calibri, Candara, Segoe, "Segoe UI" !important;
+          font-style:   normal !important;
+          font-variant: normal !important;
+          font-weight:  italic !important;
+          color:        lightblue !important;
+          font-size:    10pt !important;
+          line-height:  12pt !important;
+          padding:      0px !important;
+          margin:       0px 0px 0px 0px !important;
+          border:       none !important;
+  }
+
+  .identifier {
+    font-weight:    bold           !important;
+    color:          blue           !important;
+    font-size:      x-large        !important;
+  }
+
+  .full_width_table {
+    width:          95%            !important;
+    border:         2px solid black !important;
+    vertical-align: baseline        !important;
+  }
+
+  .subtable {
+    width:          100%            !important;
+    border-style:   none            !important;
+    border-width:   0               !important;
+    vertical-align: baseline        !important;
+    padding:        0px             !important;
+    margin:         0px 0px 0px 0px !important;
+  }
+
+  .column_1 {
+    font-weight:    bold            !important;
+    font-size:      large           !important;
+    width:          20%             !important; 
+    vertical-align: baseline        !important;
+  }
+
+  .column_2 {
+    width:          80%             !important;
+    vertical-align: baseline        !important;
+  }
+
+  .subcolumn_1 {
+    width:          20%             !important; 
+    vertical-align: baseline        !important;
+  }
+
+  .subcolumn_2 {
+    width:          80%             !important;
+    vertical-align: baseline        !important;
+  }
+
+</style>
+<h1>Test Procedures</h1>
+
+<% @test_procedures.each do |test_procedure| %>
+  <table class="full_width_table">
+    <tbody class="body">
+      <% if test_procedure.soft_delete %>
+        <% next %>
+      <% end %>
+      <tr>
+        <td class="column_1">
+          <div class="identifier">
+            <h2><%= test_procedure.full_id %></h2>
+          </div>
+        </td>
+        <td class="column_2">
+          <div class="identifier">
+            <h2><%= test_procedure.description.to_s.html_safe %></h2>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="column_1">
+          <h3>Filename:</h3>
+        </td>
+        <td class="body">
+          <%= test_procedure.file_name.to_s.html_safe %>
+        </td>
+      </tr>
+      <tr>
+        <td class="column_1">
+          <h3>Covers:</h3>
+        </td>
+        <td class="column_2">
+          <% if test_procedure.test_case_associations.present? %>
+            <table class="subtable">
+             <tbody class="body">
+              <% test_procedure.test_cases.each do |test_case| %>
+                <% next unless test_case.present? %>
+                <tr>
+                  <td class='subcolumn_1'>
+                     <div class="body">
+                       Test Case:
+                     </div>
+                  </td>
+                  <td class='subcolumn_2'>
+                     <div class="body">
+                      <% test_case = TestCase.find_by(id: test_case.to_i) if test_case =~ /^\d+$/ %>
+
+                      <%=  test_case.full_id if test_case.present? %>
+                     </div>
+                  </td>
+                </tr>
+              <% end %>
+             </tbody>
+            </table>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td class="column_1">
+          <h3>Version:</h3>
+        </td>
+        <td class="column_2">
+          <%= test_procedure.version %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <br>
+<% end if @test_procedures.present? %>

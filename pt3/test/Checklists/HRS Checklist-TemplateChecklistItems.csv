@@ -1,0 +1,7 @@
+clitemid,title,description,note,template_checklist_id,reference,minimumdal,supplements,status
+1,"Does the HRS include the rules, procedures, methods, guidance and criteria for developing the requirements?","Does the HRS include the rules, procedures, methods, guidance and criteria for developing the requirements?",,79,10.2.1,"[""A"", ""B""]",[],
+2,Does the HRS include the methods and criteria for validating the requirements? ,Does the HRS include the methods and criteria for validating the requirements? ,,79,10.2.1,"[""A"", ""B""]",[],
+3,Does the HRS include the notations used to express the requirements? ,Does the HRS include the notations used to express the requirements? ,,79,10.2.1,"[""A"", ""B""]",[],
+4,Does the HRS include guidance on the use of requirements specification tools? ,Does the HRS include guidance on the use of requirements specification tools? ,,79,10.2.1,"[""A"", ""B""]",[],
+5,Does the HRS include the means used to provide derived requirements to the system design process?,Does the HRS include the means used to provide derived requirements to the system design process?,,79,10.2.1,"[""A"", ""B""]",[],
+6,Has the HRS been subjected to appropriate change and configuration control (HC2)?,Has the HRS been subjected to appropriate change and configuration control (HC2)?,,79,Table A-1,"[""A"", ""B""]",[],

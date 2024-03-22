@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+<ul class="list-group">
+  <li class="list-group-item active">
+    <h5><%= @archive_type.titleize %> Baseline: <%= @requirements_baseline.name %></h5>
+  </li>
+  <li class="list-group-item">
+    <h6><u>Details:</u></h6>
+    <p>
+      <strong>Full:</strong>
+      <%= @requirements_baseline.full_id %><br>
+      <strong>Description:</strong>
+      <%= @requirements_baseline.description %><br>
+      <strong>Revision:</strong>
+      <%= @requirements_baseline.revision %><br>
+      <strong>Version:</strong>
+      <%= @requirements_baseline.version %><br>
+      <strong>Baselined at:</strong>
+      <%= @requirements_baseline.archived_at %><br>
+      <strong>Pact version:</strong>
+      <%= @requirements_baseline.pact_version %><br>
+      <strong>Baseline type:</strong>
+      <%= @requirements_baseline.archive_type.titleize %><br>
+      <strong>Organization:</strong>
+      <%= @requirements_baseline.organization.titleize %><br>
+      <strong>Project:</strong>
+      <%= Project.name_from_id(@requirements_baseline.project_id) %><br>
+      <strong>Item:</strong>
+      <%= Item.identifier_from_id(@requirements_baseline.item_id) %>
+    </p>
+  </li>
+</ul>
+
+<br>
+<%= link_to 'Edit',                      edit_project_requirements_baseline_path(@project, @requirements_baseline),  class: 'btn' %>
+<%= link_to 'New Requirements Baseline', new_project_requirements_baseline_path(@project),                           class: 'btn' %>
+<%= link_to 'Back', go_back_path(1),  onclick: 'validateBack(1, this)', class: 'btn' %>
+
+<% if @undo_path.present? && !session[:archives_visible].present? %>
+  <%= link_to 'Undo', @undo_path, class: 'btn btn-default', title: @undo_message %>
+<% end %>
+
+<% if @redo_path.present? && !session[:archives_visible].present? %>
+  <%= link_to 'Redo', @redo_path, class: 'btn btn-default', title: @redo_message %>
+<% end %>

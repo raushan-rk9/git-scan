@@ -1,0 +1,2 @@
+class HlrMd < ApplicationRecord
+end

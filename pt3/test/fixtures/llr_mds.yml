@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  llr_mds: MyString
+  low_level_requirement: 
+  module_description: 
+
+two:
+  llr_mds: MyString
+  low_level_requirement: 
+  module_description: 

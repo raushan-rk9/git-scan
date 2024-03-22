@@ -1,0 +1,26 @@
+Dear <%= @user.fullname %>:
+
+Your user information has been changed in PACT.
+Please see below for the details.
+
+Detail:
+
+First Name:              <%= @user.firstname %>
+Last Name:               <%= @user.lastname %>
+Title:                   <%= @user.title %>
+Phone:                   <%= @user.phone %>
+Roles:                   <%= @user.role %>
+Time Zone:               <%= @user.time_zone %>
+Notify on Changes:       <%= @user.notify_on_changes ? 'Yes' : 'No' %>
+Password Reset Required: <%= @user.password_reset_required ? 'Yes' : 'No' %>
+User Disabled:           <%= @user.user_disabled ? 'Yes' : 'No' %>
+
+<% unless @user.user_disabled %>
+You can change your account information at edit_user_url(@user).
+<% end %>
+
+The PACT Manual has been attached and can be accessed at:
+  https://acs-pact.com/pact_awc/PACT-Users-Guide.pdf
+
+PACT Automation
+pact_cm@airworthinesscert.com

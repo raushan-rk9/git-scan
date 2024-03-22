@@ -1,0 +1,111 @@
+<%= simple_form_for( [ @template, @template_checklist ], validate: true, html: { class: 'form-horizontal' }) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :clid, required: true, label: 'Checklist ID' %>
+    <%= f.input :title, required: true %>
+    <%= f.input :description, as: :summernote %>
+    <%= f.input :notes, as: :summernote %>
+    <%= f.input :checklist_type %>
+    <%= f.input :checklist_class %>
+    <%= f.input :source %>
+    <%= f.input :filename %>
+    <%= f.input :revision, label: 'Document Revision' %>
+    <%= f.input :draft_revision, label: 'Draft Version' %>
+
+    <% if controller.action_name == 'edit' && params[:awc] && current_user.organization != 'global' %>
+      <label class="control-label integer required" for="template_checklist_new_checklist_name" ><abbr title="required">*</abbr>New Checklist Name</label>
+      <input class="form-control string required" type='text' id=template_checklist_new_checklist_name name='template_checklist[new_checklist_name]' required="required" aria-required="true" data-validate="true" value='<%= current_user.organization %> <%= @template_checklist.title %>'/>
+    <% end %>
+  </div>
+
+  <div class="form-actions">
+    <% if controller.action_name == 'new' %>
+      <input id='update_template_checklist' name='update_template_checklist' value='Create Template Checklist' type="button" onclick='validate();' class="btn btn-default" />
+    <% else %>
+      <input id='update_template_checklist' name='update_template_checklist' value='Update Template Checklist' type="button" onclick='validate();' class="btn btn-default" />
+    <% end %>
+
+    <% if policy(template_checklist).edit? && template_checklist.id %>
+      <%=
+          link_to 'Edit Template Checklist Items',
+                  template_template_checklist_template_checklist_items_path(@template,
+                                                                            template_checklist,
+                                                                            awc: params[:awc]),
+                  class: 'btn btn-default'
+        %>
+        <%=
+             link_to 'Export',
+                      template_template_checklist_export_path(@template,
+                                                              @template_checklist,
+                                                              awc: params[:awc]) + '?new_window=true',
+                      target: :_blank,
+                      class: "btn btn-primary"
+         %>
+        <%=
+             link_to 'Import',
+                     template_template_checklist_import_path(@template,
+                                                             @template_checklist,
+                                                             awc: params[:awc]),
+                     class: "btn btn-primary"
+         %>
+    <% end %>
+
+    <% if template_checklist.id.present? %>
+      <%=
+          link_to 'Show',
+                  template_template_checklist_path(@template,
+                                                   template_checklist,
+                                                   awc: params[:awc]),
+                  class: 'btn btn-default'
+        %>
+    <% end %>
+
+    <%=
+        link_to 'New Template Checklist',
+                new_template_template_checklist_path(@template,
+                                                     @template_checklist,
+                                                     awc: params[:awc]),
+                class: "btn btn-primary"
+    %>
+
+    <%= link_to 'Back', 'javascript:null', class: "btn", onclick: 'validateBack(1)' %>
+
+    <% if @undo_path.present? && !session[:archives_visible].present? %>
+      <%= link_to 'Undo', @undo_path, class: 'btn btn-default', title: @undo_message %>
+    <% end %>
+
+    <% if @redo_path.present? && !session[:archives_visible].present? %>
+      <%= link_to 'Redo', @redo_path, class: 'btn btn-default', title: @redo_message %>
+    <% end %>
+  </div>
+<% end %>
+<script>
+  $(":input").keydown(function (event) {
+      if (event.keyCode == 112)
+        validate();
+      else if (event.keyCode == 113)
+        window.location.assign(window.location.href.replace(/\/\d+\/edit$/, ''));
+  }); 
+
+  function validate()
+  {
+    var form                 = document.forms[0];
+    var okay                 = validateForm();
+    var messageText          = "";
+
+    if (!okay)
+      return(false);
+
+    if (okay)
+    {
+      form.submit();
+    }
+    else
+    {
+      alert(messageText);
+    }
+
+    return(okay);
+  }
+</script>

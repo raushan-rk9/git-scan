@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+phac_checklist:
+  clid:            1
+  title:           'Plan for Hardware Aspects of Certification'
+  description:     'Plan for Hardware Aspects of Certification'
+  notes:           'Imported from /app/app/templates/do-254/checklists/peer/1a.DO254.Peer-Review-Checklist-PHAC.FINAL.r1a.xlsx.'
+  checklist_class: 'DO-254'
+  checklist_type:  'Peer Review'
+  template_id:     <%= Template.find_by(title: 'ACS DO-254 Templates').try(:id) %>
+  version:         '1'
+  source:          'Airworthiness Certification Services'
+  filename:        '/app/app/templates/do-254/checklists/peer/1a.DO254.Peer-Review-Checklist-PHAC.FINAL.r1a.xlsx'
+  draft_revision:  '0.0'
+  organization:    'test'

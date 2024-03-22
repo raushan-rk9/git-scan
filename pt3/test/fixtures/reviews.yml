@@ -1,0 +1,35 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+review_001:
+  reviewid:            1
+  reviewtype:          'Plan for Hardware Aspects of Certification'
+  title:               'PHAC Review'
+  evaluators:          [ 'test_1@airworthinesscert.com', 'test_2@airworthinesscert.com', 'test_3@airworthinesscert.com' ]
+  evaldate:            <%= Date.today %>
+  description:         'Review Plan for Hardware Aspects of Certification'
+  version:             1
+  item_id:             <%= Item.find_by(identifier: 'HARDWARE_ITEM').try(:id) %>
+  project_id:          <%= Project.find_by(identifier: 'TEST').try(:id) %>
+  clitem_count:        0
+  ai_count:            0
+  organization:        'test'
+  attendees:           [ 'test_1@airworthinesscert.com', 'test_2@airworthinesscert.com', 'test_3@airworthinesscert.com' ]
+  checklists_assigned: false
+  upload_date:         <%= Date.today %>
+
+review_002:
+  reviewid:            2
+  reviewtype:          'Plan for Software Aspects of Certification'
+  title:               'PSAC Review'
+  evaluators:          [ 'test_1@airworthinesscert.com', 'test_2@airworthinesscert.com', 'test_3@airworthinesscert.com' ]
+  evaldate:            <%= Date.today %>
+  description:         'Review Plan for Software Aspects of Certification'
+  version:             1
+  item_id:             <%= Item.find_by(identifier: 'SOFTWARE_ITEM').try(:id) %>
+  project_id:          <%= Project.find_by(identifier: 'TEST').try(:id) %>
+  clitem_count:        0
+  ai_count:            0
+  organization:        'test'
+  attendees:           [ 'test_1@airworthinesscert.com', 'test_2@airworthinesscert.com', 'test_3@airworthinesscert.com' ]
+  checklists_assigned: false
+  upload_date:         <%= Date.today %>

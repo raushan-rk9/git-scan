@@ -1,0 +1,78 @@
+<h1>Run Results Profile</h1>
+
+<style>
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before {}
+</style>
+
+<table id="scrollableDataTable" class="table table-striped table-bordered table-sm" cellspacing="0"  width="100%">
+  <thead>
+    <tr>
+      <th class="th-sm"><%= t('sourcecodes.codeid') %></th>
+      <th class="th-sm"><%= t('misc.filename') %></th>
+      <th class="th-sm"><%= t('misc.url') %></th>
+      <th class="th-sm">Code Marks</th>
+      <th class="th-sm">Unique Code Mark Hits</th>
+      <th class="th-sm">Total Hits</th>
+      <th class="th-sm">Code Marks Not Hit</th>
+      <th class="th-sm">Coverage</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @profiled_source_codes.each do |profiled_source_code| %>
+      <% source_code = profiled_source_code[:source_code] %>
+      <tr>
+        <td><%= source_code.fullcodeid %></td>
+        <td><%= source_code.file_name %></td>
+        <td style="max-width: 200px !important; word-wrap: break-word !important;">
+          <% if source_code.url_type.present? && source_code.url_link.present? %>
+            <% if source_code.url_type == 'ATTACHMENT' && source_code.upload_file.attached? %>
+              <%= link_to source_code.upload_file.filename, url_for(source_code.upload_file) + '?new_window=true', target: :_blank %>
+            <% else %>
+              <% description = source_code.url_description %>
+        
+              <% unless description.present? %>
+                <% if source_code.url_type == 'PACT' %>
+                  <% description = source_code.filename %>
+                <% else %>
+                  <% description = source_code.url_link %>
+                <% end %>
+              <% end %>
+        
+              <% if source_code.url_link =~ /^http[s]{0,1}:\/\/.+$/ %>
+                <%= link_to description, source_code.url_link + '?new_window=true', target: :_blank %>
+              <% else %>
+                <%= description %>
+              <% end %>
+            <% end %>
+          <% end %>
+        </td>
+        <td><%= link_to profiled_source_code[:code_checkmarks].length, item_source_code_code_checkmarks_path(@item, source_code) %></td>
+        <td><%= profiled_source_code[:checkmark_hits] %></td>
+        <td><%= link_to profiled_source_code[:code_checkmark_hits].length, item_source_code_code_checkmark_hits_path(@item, source_code) %></td>
+        <td><%= link_to profiled_source_code[:checkmark_misses], item_source_code_code_checkmark_misses_path(@item, source_code) %></td>
+        <% coverage = sprintf("%5.2f", profiled_source_code[:coverage]) %>
+        <td><%= coverage %>%</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Back', go_back_path(1),  onclick: 'validateBack(1, this)', class: 'btn' %>
+
+<% if @undo_path.present? && !session[:archives_visible].present? %>
+  <%= link_to 'Undo', @undo_path, class: 'btn btn-default', title: @undo_message %>
+<% end %>
+
+<% if @redo_path.present? && !session[:archives_visible].present? %>
+  <%= link_to 'Redo', @redo_path, class: 'btn btn-default', title: @redo_message %>
+<% end %>
+

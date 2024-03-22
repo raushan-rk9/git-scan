@@ -1,0 +1,130 @@
+<style> 
+ </style>
+
+<h1>Analyze <%= t('misc.source_code') %></h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th class="all"><input :select_all, { type="checkbox", class="largerCheckbox", id="select_all", value="ALL"}>&nbsp;</th>
+      <th scope="col", style='height: 100px; vertical-align:middle'>Code ID</th>
+      <th scope="col", style='height: 100px; vertical-align:middle'>Full ID</th>
+      <th scope="col", style='height: 100px; vertical-align:middle'>File Name</th>
+      <th scope="col", style='height: 100px; vertical-align:middle'>Module</th>
+      <th scope="col", style='height: 100px; vertical-align:middle'>Function</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @source_codes.each do |source_code| %>
+      <tr>
+        <% if source_code.selected %>
+          <td><input id=source_code.id name=source_code.id type="checkbox" class="largerCheckbox" checked value="<%= source_code.id %>" /></td>
+        <% else %>
+          <td><input id=source_code.id name=source_code.id type="checkbox" class="largerCheckbox" value="<%= source_code.id %>"/></td>
+        <% end %>
+        <td><%= source_code.fullcodeid %></td>
+        <td><%= source_code.file_name %></td>
+        <td style="max-width: 200px !important; word-wrap: break-word !important;">
+          <% if source_code.url_type.present? && source_code.url_link.present? %>
+            <% if source_code.url_type == 'ATTACHMENT' && source_code.upload_file.attached? %>
+              <%= link_to source_code.upload_file.filename, url_for(source_code.upload_file) + '?new_window=true', target: :_blank %>
+            <% else %>
+              <% description = source_code.url_description %>
+
+              <% unless description.present? %>
+                <% if source_code.url_type == 'PACT' %>
+                  <% description = source_code.filename %>
+                <% else %>
+                  <% description = source_code.url_link %>
+                <% end %>
+              <% end %>
+
+              <% if source_code.url_link =~ /^http[s]{0,1}:\/\/.+$/ %>
+                <%= link_to description, source_code.url_link + '?new_window=true', target: :_blank %>
+              <% else %>
+                <%= description %>
+              <% end %>
+            <% end %>
+          <% end %>
+        </td>
+        <td><%= source_code.module %></td>
+        <td><%= simple_format(source_code.function) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<input type='submit' value='Done' onclick='submit_source_codes();' class='btn btn-primary' style='color:white' />
+<%= link_to 'Back', go_back_path(1),  onclick: 'validateBack(1, this)', class: 'btn' %>
+<br>
+
+<script>
+function submit_source_codes()
+{
+  var current_url    = window.location.href;
+  var okay           = true;
+  var data           = [];
+
+
+  $("input[type=checkbox]").each(function(){
+    if ($(this).prop('checked'))
+    {
+      var value = $(this).prop('value');
+
+      if (value !== "ALL")
+          data.push(value);
+    }
+  });
+
+  $.ajax({
+           type:    "put",
+           url:     current_url,
+           async:   false,
+           data:    {
+                      select_source_codes: JSON.stringify(data),
+                      autoinstrument:      $("select#autoinstrument").val(),
+                      cmark:               $("select#cmark").val(),
+                      resetnumbering:      $("select#resetnumbering").val()
+                    },
+           error:   function(xhr, textStatus, errorThrown)
+                    {
+                      if (xhr.responseText &&
+                          (xhr.responseText !== ''))
+                      {
+                        var newDoc = document.open("text/html",
+                                                   "replace");
+
+                        newDoc.write(xhr.responseText);
+                        newDoc.close();
+                      }
+                      else
+                      {
+                        alert("Error Occured. " + textStatus + ": " +
+                              errorThrown);
+                      }
+                    },
+           success: function(data)
+                    {
+                      //callback methods go right here
+                    }
+  });
+
+  return(true);
+}
+
+$(document).ready(function()
+{
+  $("th.all").change(function()
+  {
+    var checked = false;
+
+    if (document.getElementById("select_all").checked)
+      checked = true;
+    else
+      checked = false;
+
+    $("input[type=checkbox]").prop('checked', checked);
+  });
+});
+</script>

@@ -1,0 +1,23 @@
+Dear <%= @user.fullname %>:
+
+One of your checklists has been removed.
+Please see below for the details.
+
+Detail:
+
+Review ID:       <%= @review.reviewid %>
+Title:           <%= @review.title %>
+Description:     <%= Sanitize.fragment(@review.description) %>
+Type:            <%= @review.reviewtype %>
+Evaluation Date: <%= @review.evaldate %>
+Evaluators:
+<% if @review.evaluators.instance_of?(String) %>
+<% @review.evaluators = [ @review.evaluators ] %>
+<% end %>
+<% @review.evaluators.each do |evaluator| %>
+<% next unless evaluator.present? %>
+                 <%= User.fullname_from_email(evaluator) %>
+<% end %>
+
+PACT Automation
+pact_cm@airworthinesscert.com

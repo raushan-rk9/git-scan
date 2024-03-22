@@ -1,0 +1,94 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+hardware_tc_001:
+  caseid:                              1
+  full_id:                             'TC-001'
+  description:                         'Test pump over pressure.'
+  procedure:                           'Expected Results: Pressure over 4700 psia reports overpressure.'
+  version:                             0
+  category:                            'Hardware'
+  project_id:                          <%= Project.find_by(identifier: 'TEST').try(:id) %>
+  item_id:                             <%= Item.find_by(identifier: 'HARDWARE_ITEM').try(:id) %>
+  category:                            'Safety'
+  testmethod:                          [ 'Test' ]
+  high_level_requirement_associations: <%= HighLevelRequirement.find_by(item_id: Item.find_by(identifier: 'HARDWARE_ITEM').try(:id), full_id: 'HLR-001').try(:id) %>
+  low_level_requirement_associations:  <%= LowLevelRequirement.find_by(item_id: Item.find_by(identifier: 'HARDWARE_ITEM').try(:id), full_id: 'LLR-001').try(:id) %>
+  model_file_id:                       <%= ModelFile.find_by(full_id: 'MF-001').try(:id) %>
+  organization:                        'test'
+
+hardware_tc_002:
+  caseid:                              2
+  full_id:                             'TC-002'
+  description:                         'Test pump under pressure.'
+  procedure:                           'Expected Results: Pressure under 500 psia reports underpressure.'
+  version:                             0
+  category:                            'Hardware'
+  project_id:                          <%= Project.find_by(identifier: 'TEST').try(:id) %>
+  item_id:                             <%= Item.find_by(identifier: 'HARDWARE_ITEM').try(:id) %>
+  category:                            'Safety'
+  testmethod:                          [ 'Test' ]
+  low_level_requirement_associations:  <%= LowLevelRequirement.find_by(item_id: Item.find_by(identifier: 'HARDWARE_ITEM').try(:id), full_id: 'LLR-002').try(:id) %>
+  model_file_id:                       <%= ModelFile.find_by(full_id: 'MF-001').try(:id) %>
+  organization:                        'test'
+
+hardware_tc_003:
+  caseid:                              3
+  full_id:                             'TC-003'
+  description:                         'The System SHALL have a test mode to verify functionality.'
+  procedure:                           'Expected Results: Test will succeed.'
+  version:                             0
+  category:                            'Hardware'
+  project_id:                          <%= Project.find_by(identifier: 'TEST').try(:id) %>
+  item_id:                             <%= Item.find_by(identifier: 'HARDWARE_ITEM').try(:id) %>
+  category:                            'Safety'
+  testmethod:                          [ 'Test' ]
+  low_level_requirement_associations:  <%= LowLevelRequirement.find_by(item_id: Item.find_by(identifier: 'HARDWARE_ITEM').try(:id), full_id: 'LLR-002').try(:id) %>
+  model_file_id:                       <%= ModelFile.find_by(full_id: 'MF-001').try(:id) %>
+  organization:                        'test'
+  derived:                             true
+  derived_justification:              'Testing is needed to verify other requirements.'
+
+software_tc_001:
+  caseid:                              1
+  full_id:                             'TC-001'
+  description:                         'Test alert on pump over pressure.'
+  procedure:                           'Expected Results: Pressure over 4700 psia reports overpressure.'
+  version:                             0
+  category:                            'Software'
+  project_id:                          <%= Project.find_by(identifier: 'TEST').try(:id) %>
+  item_id:                             <%= Item.find_by(identifier: 'SOFTWARE_ITEM').try(:id) %>
+  category:                            'Safety'
+  testmethod:                          [ 'Test' ]
+  low_level_requirement_associations:  <%= LowLevelRequirement.find_by(item_id: Item.find_by(identifier: 'SOFTWARE_ITEM').try(:id), full_id: 'LLR-001').try(:id) %>
+  organization:                        'test'
+
+software_tc_002:
+  caseid:                              2
+  full_id:                             'TC-002'
+  description:                         'Test alert on pump under pressure.'
+  procedure:                           'Expected Results: Pressure under 500 psia reports onderpressure.'
+  version:                             0
+  category:                            'Software'
+  project_id:                          <%= Project.find_by(identifier: 'TEST').try(:id) %>
+  item_id:                             <%= Item.find_by(identifier: 'SOFTWARE_ITEM').try(:id) %>
+  category:                            'Safety'
+  testmethod:                          [ 'Test' ]
+  low_level_requirement_associations:  <%= LowLevelRequirement.find_by(item_id: Item.find_by(identifier: 'SOFTWARE_ITEM').try(:id), full_id: 'LLR-002').try(:id) %>
+  organization:                        'test'
+
+software_tc_003:
+  caseid:                              3
+  full_id:                             'TC-003'
+  description:                         'The System SHALL have a test mode to verify functionality.'
+  procedure:                           'Expected Results: Test will succeed.'
+  version:                             0
+  category:                            'Software'
+  project_id:                          <%= Project.find_by(identifier: 'TEST').try(:id) %>
+  item_id:                             <%= Item.find_by(identifier: 'SOFTWARE_ITEM').try(:id) %>
+  category:                            'Safety'
+  testmethod:                          [ 'Test' ]
+  low_level_requirement_associations:  <%= LowLevelRequirement.find_by(item_id: Item.find_by(identifier: 'SOFTWARE_ITEM').try(:id), full_id: 'LLR-002').try(:id) %>
+  model_file_id:                       <%= ModelFile.find_by(full_id: 'MF-001').try(:id) %>
+  organization:                        'test'
+  derived:                             true
+  derived_justification:              'Testing is needed to verify other requirements.'
+

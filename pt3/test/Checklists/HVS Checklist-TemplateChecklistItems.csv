@@ -1,0 +1,8 @@
+clitemid,title,description,note,template_checklist_id,reference,minimumdal,supplements,status
+1,Does the HVS include the rules for validating and verifying the hardware design and implementation?,Does the HVS include the rules for validating and verifying the hardware design and implementation?,,81,10.2.3,"[""A"", ""B""]",[],
+2,Does the HVS include the procedure for validating and verifying the hardware design and implementation?,Does the HVS include the procedure for validating and verifying the hardware design and implementation?,,81,10.2.3,"[""A"", ""B""]",[],
+3,Does the HVS include the method for validating and verifying the hardware design and implementation?,Does the HVS include the method for validating and verifying the hardware design and implementation?,,81,10.2.3,"[""A"", ""B""]",[],
+4,"Does the HVS include the guidance and criteria for
+validating and verifying the hardware design and implementation?","Does the HVS include the guidance and criteria for
+validating and verifying the hardware design and implementation?",,81,10.2.3,"[""A"", ""B""]",[],
+5,Has the HVS been subjected to appropriate change and configuration control (HC2)?,Has the HVS been subjected to appropriate change and configuration control (HC2)?,,81,Table A-1,"[""A"", ""B""]",[],

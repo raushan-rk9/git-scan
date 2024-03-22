@@ -1,0 +1,120 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+admin:
+  email: admin@faaconsultants.com
+  encrypted_password: <%= User.new.send(:password_digest, 'test') %>
+  firstname: Admin
+  lastname: User
+  title:    'Administrator'
+  phone: '(800) 555-1212'
+  organization: global
+  organizations: [ 'Global', 'test' ]
+  role: ['AirWorthinessCert Member']
+  time_zone: 'Pacific Time (US & Canada)'
+  notify_on_changes: true
+  fulladmin: true
+
+project_manager:
+  email: 'test_1@airworthinesscert.com'
+  encrypted_password: <%= User.new.send(:password_digest, 'TestEmail1') %>
+  firstname: 'Project'
+  lastname: 'Manager'
+  title:    'Project Manager'
+  phone: '(800) 555-1212'
+  organization: 'test'
+  organizations: [ 'test' ]
+  role: ['Project Manager']
+  time_zone: 'Pacific Time (US & Canada)'
+  notify_on_changes: true
+  fulladmin: false
+
+configuration_manager:
+  email: 'test_2@airworthinesscert.com'
+  encrypted_password: <%= User.new.send(:password_digest, 'TestEmail2') %>
+  firstname: 'Configuration'
+  lastname: 'Manager'
+  title:    'Configuration Manager'
+  phone: '(800) 555-1212'
+  organization: 'test'
+  organizations: [ 'test' ]
+  role: ['Configuration Management']
+  time_zone: 'Pacific Time (US & Canada)'
+  notify_on_changes: true
+  fulladmin: false
+
+quality_assurance:
+  email: 'test_3@airworthinesscert.com'
+  encrypted_password: <%= User.new.send(:password_digest, 'TestEmail3') %>
+  firstname: 'Quality'
+  lastname: 'Assurance'
+  title:    'Quality Assurance'
+  phone: '(800) 555-1212'
+  organization: 'test'
+  organizations: [ 'test' ]
+  role: ['Quality Assurance']
+  time_zone: 'Pacific Time (US & Canada)'
+  notify_on_changes: true
+  fulladmin: false
+
+team_member:
+  email: 'test_4@airworthinesscert.com'
+  encrypted_password: <%= User.new.send(:password_digest, 'TestEmail4') %>
+  firstname: 'Team'
+  lastname: 'Member'
+  title:    'Team Member'
+  phone: '(800) 555-1212'
+  organization: 'test'
+  organizations: [ 'test' ]
+  role: ['Team Member']
+  time_zone: 'Pacific Time (US & Canada)'
+  notify_on_changes: true
+  fulladmin: false
+
+certification_representative:
+  email: 'test_5@airworthinesscert.com'
+  encrypted_password: <%= User.new.send(:password_digest, 'TestEmail5') %>
+  firstname: 'Certification'
+  lastname: 'Representative'
+  title:    'FAA DER'
+  phone: '(800) 555-1212'
+  organization: 'test'
+  organizations: [ 'test' ]
+  role: ['Certification Representative']
+  time_zone: 'Eastern Time (US & Canada)'
+  notify_on_changes: true
+  fulladmin: false
+
+view_only:
+  email: 'test_6@airworthinesscert.com'
+  encrypted_password: <%= User.new.send(:password_digest, 'TestEmail6') %>
+  firstname: 'View'
+  lastname: 'Only'
+  organization: 'test'
+  organizations: [ 'test' ]
+  role: ['View Only']
+  time_zone: 'Eastern Time (US & Canada)'
+  notify_on_changes: true
+  fulladmin: false
+
+restricted_view:
+  email: 'test_7@airworthinesscert.com'
+  encrypted_password: <%= User.new.send(:password_digest, 'TestEmail7') %>
+  firstname: 'Restricted'
+  lastname: 'View'
+  organization: 'test'
+  organizations: [ 'test' ]
+  role: ['Restricted View']
+  time_zone: 'Eastern Time (US & Canada)'
+  notify_on_changes: true
+  fulladmin: false
+
+full:
+  email: 'test_8@airworthinesscert.com'
+  encrypted_password: <%= User.new.send(:password_digest, 'TestEmail8') %>
+  firstname: 'Full'
+  lastname: 'Permissions'
+  organization: 'test'
+  organizations: [ 'test' ]
+  role: ['Project Manager', 'Configuration Management', 'Quality Assurance', 'Team Member', 'Certification Representative']
+  time_zone: 'Eastern Time (US & Canada)'
+  fulladmin: false

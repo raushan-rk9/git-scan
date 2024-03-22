@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+verification_method_review:
+  name:  'verification_method'
+  label: 'Review/inspection'
+  value: 'Review/inspection'
+
+verification_method_analysis:
+  name:  'verification_method'
+  label: 'Analysis/Simulation'
+  value: 'Analysis/Simulation'
+
+verification_method_test:
+  name:  'verification_method'
+  label: 'Test'
+  value: 'Test'

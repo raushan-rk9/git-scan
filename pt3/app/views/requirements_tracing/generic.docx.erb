@@ -1,0 +1,160 @@
+<style>
+table img
+{
+	width:     auto;
+	max-width: 100%;
+	height:    auto;
+}
+
+table th
+{
+  font-family: verdana !important;
+  font-size:   14px    !important;
+  line-height: 18px    !important;
+}
+
+table td
+{
+  font-family: verdana !important;
+  font-size:   14px    !important;
+  line-height: 18px    !important;
+}
+
+.nobreak
+{
+  widows:      10      !important;
+  orphans:     10      !important;
+}
+</style>
+
+<% if flash[:notice] %>
+  <div class="notification is-primary global-notification">
+    <p class="notice"><%= notice %></p>
+  </div>
+<% end %>
+
+<% if flash[:alert] %>
+  <div class="notification is-danger global-notification">
+    <p class="alert"><%= alert %></p>
+  </div>
+<% end %>
+
+<h1>Requirements Tracing</h1>
+<table style=" width: 100% !important; border: none !important;">
+  <tr>
+     <td class="td-centered" style="border: none !important;">
+      <h5 class="text-center">
+        <% if (controller.action_name == 'specific') || (controller.action_name == 'system_allocation') %>
+          <%= @headers.join(' to ') %>
+        <% end %>
+      </h5>
+    </td>    
+  </tr>
+  <tr>
+    <p>
+      <table class="table table-striped table-bordered table-hover">
+        <thead>
+          <tr>
+            <% @headers.each do |header| %>
+              <th scope="col"><%= header %></th>
+            <% end %>
+          </tr>
+        </thead>
+        <tbody>
+          <% last_row                  = nil %>
+          <% @matrix.each do |row| %>
+            <tr>
+              <% row.each_with_index do |column, index| %>
+                <td scope="col" %>
+                  <p class='nobreak'>
+                    <% next unless column.present? %>
+
+                    <% if column.kind_of?(String) %>
+                      <% title           = column %>
+                    <% elsif (column.class.name != 'SystemRequirement')    &&
+                             (column.class.name != 'HighLevelRequirement') &&
+                             (@item.present?)                              &&
+                             (column.item_id != @item.id) %>
+                      <% title           = Item.identifier_from_id(column.item_id) + ': ' + column.full_id.to_s.html_safe %>
+                    <% else %>
+                      <% title           = column.full_id.to_s.html_safe %>
+                    <% end %>
+
+                    <% url               = '' %>
+                    <% description       = '' %>
+                    <% color             = '' %>
+                    <% extra             = '' %>
+                    <% case(column.class.name) %>
+                       <% when 'SystemRequirement' %>
+                          <% url         = project_system_requirement_path(column.project_id, column) %>
+                          <% description = column.description %>
+                       <% when 'HighLevelRequirement' %>
+                          <% url         = item_high_level_requirement_path(column.item_id, column) %>                
+                          <% description = column.description %>
+                       <% when 'LowLevelRequirement' %>
+                          <% url         = item_low_level_requirement_path(column.item_id, column) %>                
+                          <% description = column.description %>
+                       <% when 'SourceCode' %>
+                          <% url         = item_source_code_path(column.item_id, column) %>                
+                          <% description = column.description %>
+                          <% extra       = column.file_name %>
+                       <% when 'TestCase' %>
+                          <% url         = item_test_case_path(column.item_id, column) %>                
+                          <% description = column.description %>
+                       <% when 'TestProcedure' %>
+                          <% url         = item_test_procedure_path(column.item_id, column) %>                
+                          <% description = column.description %>
+                    <% end %>
+
+                    <% unique            = !last_row.present? || (column != last_row[index]) %>
+
+                    <% if @no_links %>
+                        <% if unique %>
+                          <% color       = 'color: #0000CC !important;' %>
+                        <% else %>
+                          <% color       = 'color: #CCCCFF !important;' %>
+                        <% end %>
+
+                      <% url             = nil %>
+                    <% else %>
+                        <% if unique %>
+                          <% color       = 'color: #000000 !important;' %>
+                        <% else %>
+                          <% color       = 'color: #CCCCCC !important;' %>
+                        <% end %>
+                    <% end %>
+
+                    <% if url.present? %>
+                      <% if column.try(:soft_delete) %>
+                        <del>
+                          <%= link_to title, url, style: "#{color}"%>
+                          <%= raw description %>
+			  <% if extra.present? %>
+			    <br>
+			    <%= raw extra %>
+			  <% end %>
+                        </del>
+                      <% else %>
+                        <%= link_to title, url, style: "#{color}"%>
+                        <%= raw description %>
+			<% if extra.present? %>
+			  <br>
+			  <%= raw extra %>
+			<% end %>
+                      <% end %>
+                    <% else %>
+                      <div style='<%= color %>'>
+                        <%= raw title %>
+                      </div>
+                    <% end %>
+                  </p>
+                </p>
+              <% end %>
+            </tr>
+            <% last_row                = row %>
+          <% end if @matrix.present? %>
+        </tbody>
+      </table>
+    </td>
+  </tr>
+</table>

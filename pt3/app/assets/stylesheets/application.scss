@@ -1,0 +1,14 @@
+
+// Custom bootstrap variables must be set or imported *before* bootstrap.
+@import "bootstrap";
+@import "summernote-bs4";
+@import "summernote";
+@import "font-awesome-sprockets";
+@import "font-awesome";
+@import "material_icons";
+@import "jquery-tablesorter/theme.bootstrap_4";
+// Add all custom scss imports.
+@import "*";
+
+@import "datatables";
+@import 'cookies_eu';

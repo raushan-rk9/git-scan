@@ -1,0 +1,152 @@
+<%= simple_form_for(@project, validate: true, html: { class: 'form-horizontal' }) do |form| %>
+  <% if project.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(project.errors.count, "error") %> prohibited this Project from being saved:</h2>
+      <ul>
+      <% project.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= form.error_notification %>
+  <%= form.input  :identifier, required: true %>
+  <%= form.input  :name,       required: true %>
+  <%= form.input :system_requirements_prefix %>
+  <%= form.input :high_level_requirements_prefix, as: :hidden %>
+  <%= form.input :low_level_requirements_prefix, as: :hidden %>
+  <%= form.input :model_file_prefix, as: :hidden %>
+  <%= form.input :module_description_prefix, as: :hidden %>
+  <%= form.input :source_code_prefix, as: :hidden %>
+  <%= form.input :test_case_prefix, as: :hidden %>
+  <%= form.input :test_procedure_prefix, as: :hidden %>
+  <%=
+      form.input :project_managers,
+                 label: 'Project Managers',
+                 collection: User.organization_or_role(current_user.organization,
+                                                       'AirWorthinessCert Member'),
+                 label_method: :fullname,
+                 value_method: :email,
+                 input_html: { multiple: true },
+                 include_blank: true
+   %>
+  <%=
+      form.input :configuration_managers,
+                 label: 'Configuration Managers',
+                 collection: User.organization_or_role(current_user.organization,
+                                                       'AirWorthinessCert Member'),
+                 label_method: :fullname,
+                 value_method: :email,
+                 input_html: { multiple: true },
+                 include_blank: true
+   %>
+  <%=
+      form.input :quality_assurance,
+                 label: 'Quality Assurance Members',
+                 collection: User.organization_or_role(current_user.organization,
+                                                       'AirWorthinessCert Member'),
+                 label_method: :fullname,
+                 value_method: :email,
+                 input_html: { multiple: true },
+                 include_blank: true
+   %>
+  <%=
+      form.input :team_members,
+                 label: 'Team Members',
+                 collection: User.organization_or_role(current_user.organization,
+                                                       'AirWorthinessCert Member'),
+                 label_method: :fullname,
+                 value_method: :email,
+                 input_html: { multiple: true },
+                 include_blank: true
+   %>
+  <%=
+      form.input :airworthiness_reps,
+                 label: 'Certification Representatives',
+                 collection: User.organization_or_role(current_user.organization,
+                                                       'AirWorthinessCert Member'),
+                 label_method: :fullname,
+                 value_method: :email,
+                 input_html: { multiple: true },
+                 include_blank: true
+   %>
+  <%= form.input  :access, collection: Project::ACCESS_TYPES, include_blank: false %>
+  <%=
+      form.input :users,
+                 label:        'Permitted Users',
+                 collection:    User.organization_or_role(current_user.organization,
+                                                          'AirWorthinessCert Member'),
+                 label_method: :fullname,
+                 value_method: :email,
+                 disabled:     (@project.access != 'PROTECTED'),
+                 selected:     @selected_users,
+                 input_html:   { multiple: true }
+   %>
+  <% if controller.action_name == 'new' %>
+    <input id='update_project' name='update_project' value='Create Project' type="button" onclick='validate();' class="btn btn-default" />
+  <% else %>
+    <input id='update_project' name='update_project' value='Update Project' type="button" onclick='validate();' class="btn btn-default" />
+  <% end %>
+
+  <% if @project.id.present? %>
+    <%= link_to 'Show', project_path(@project), class: 'btn btn-default' %>
+  <% end %>
+
+  <% if controller.action_name == 'edit' %>
+    <%= link_to 'New Project', new_project_path, class: "btn btn-primary" %>
+  <% end %>
+
+  <%= link_to 'Back', 'javascript:null', class: "btn", onclick: 'validateBack(1)' %>
+
+  <% if @undo_path.present? && !session[:archives_visible].present? %>
+    <%= link_to 'Undo', @undo_path, class: 'btn btn-default', title: @undo_message %>
+  <% end %>
+
+  <% if @redo_path.present? && !session[:archives_visible].present? %>
+    <%= link_to 'Redo', @redo_path, class: 'btn btn-default', title: @redo_message %>
+  <% end %>
+<% end %>
+
+<script>
+  $("#project_access").change(function()
+  {
+    var access = document.getElementById("project_access").value;
+    var users  = document.getElementById("project_users");
+
+    if (access === "PROTECTED")
+      users.disabled = false;
+    else
+      users.disabled = true;
+  });
+
+  $(":input").keydown(function (event) {
+      if (event.keyCode == 112)
+        validate();
+      else if (event.keyCode == 113)
+        window.location.assign(window.location.href.replace(/\/\d+\/edit$/, ''));
+  }); 
+
+  function validate()
+  {
+    var form                 = document.forms[0];
+    var okay                 = validateForm();
+    var messageText          = "";
+
+    if (!okay)
+      return(okay);
+
+    if (okay)
+    {
+      form.submit();
+    }
+    else
+    {
+      message.value          = messageText;
+      message.style.display  = "none";
+
+      alert(messageText);
+    }
+
+    return(okay);
+  }
+</script>

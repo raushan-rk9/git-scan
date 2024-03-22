@@ -1,0 +1,254 @@
+<style>
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before {}
+</style>
+
+<% if @document.document_type == Constants::FOLDER_TYPE %>
+  <h1>
+    <% if @document.get_tree.present? %>
+      Documents/<%= @document.get_tree %>
+    <% else %>
+      Documents
+    <% end %>
+  </h1>
+
+  <table id="scrollableDataTable" class="table table-striped table-bordered table-sm" cellspacing="0"  width="100%">
+    <thead>
+      <tr>
+        <th class="th-sm"><%= t('document.docid') %></th>
+        <th class="th-sm">Name</th>
+        <th class="th-sm">Category</th>
+        <th class="th-sm"<%= t('document.revision') %></th></th>
+        <th class="th-sm"<%= t('document.draft_revision') %></th></th>
+        <th class="th-sm"><%= t('document.revdate') %></th>
+        <th class="th-sm"><%= t('document.version') %></th>
+        <th class="th-sm">Comments</th>
+        <th class="th-sm"></th>
+        <th class="th-sm"></th>
+        <th class="th-sm"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% Document.where(parent_id: @document.id).each do |document| %>
+        <tr>
+          <td>
+            <% if document.document_type == Constants::FOLDER_TYPE %>
+              <%= link_to item_document_path(@item, document) do %>
+                <%= material_icon.folder.md_24 %>
+                <%= document.docid %>
+              <% end %>
+            <% else %>
+              <%= link_to item_document_download_document_path(@item, document) do %>
+                <% if document.file_path =~ /^.*\.pdf$/i %>
+                  <%= material_icon.picture_as_pdf.md_24 %>
+                <% elsif document.file_path =~ /^.*\.(txt|doc|docx|odt)$/i %>
+                  <%= material_icon.description.md_24 %>
+                <% elsif document.file_path =~ /^.*\.(xls|xlsx|csv|ods)$/i %>
+                  <%= material_icon.apps.md_24 %>
+                <% elsif document.file_path =~ /^.*\.(jpg|jpeg|png|tiff|bmp|ico|svg)$/i %>
+                  <%= material_icon.insert_photo.md_24 %>
+                <% elsif document.file_path =~ /^.*\.(jpg|jpeg|png|tiff|bmp|ico|svg)$/i %>
+                  <%= material_icon.insert_photo.md_24 %>
+                <% elsif document.file_path =~ /^.*\.(vdx|vsd|vsdx)$/i %>
+                  <%= material_icon.usb.md_24.r180 %>
+                <% elsif document.file_path =~ /^.*\.(ppt|pptx)$/i %>
+                  <%= material_icon.slideshow.md_24 %>
+                <% elsif document.file_path =~ /^.*\.(mov|wmv|flv|avi|mp4)$/i %>
+                  <%= material_icon.movie.md_24 %>
+                <% elsif document.file_path =~ /^.*\.(mp3|wav|aiff|wma)$/i %>
+                  <%= material_icon.music_note.md_24 %>
+                <% elsif document.file_path =~ /^.*\.gif$/i %>
+                  <%= material_icon.gif.md_24 %>
+                <% elsif document.file_path =~ /^.*\.(zip||gz|7z|tar)$/i %>
+                  <%= material_icon.archive.md_24 %>
+                <% elsif document.file_path =~ /^.*\.html$/i %>
+                  <%= material_icon.http.md_24 %>
+                <% elsif document.file_path =~ /^.*\.([ch]|cpp|c++|bat|sh|pl|java|rb|js|php|yml|erb)$/i %>
+                  <%= material_icon.code.md_24 %>
+                <% else %>
+                  <%= material_icon.help.md_24 %>
+                <% end %>
+
+                <%= document.docid %>
+              <% end %>
+            <% end %>
+          </td>
+          <td><%= document.name %></td>
+          <td><%= document.category %></td>
+          <td><%= document.revision %></td>
+          <td><%= document.draft_revision %></td>
+          <td><%= document.revdate %></td>
+          <td><%= document.version %></td>
+          <td>
+            <%= link_to "Comments", document_document_comments_path(document, show_archived: true) %>
+          </td>
+          <td class="td-centered">
+            <% if policy(document).show? %>
+              <%= link_to item_document_path(@item, document) do %>
+                <%= material_icon.zoom_in.md_24 %><br>Show
+              <% end %>
+            <% else %>
+              &nbsp;
+            <% end %>
+          </td>
+        <td class="td-centered">
+          <% if policy(document).upload_document? %>
+            <%= link_to [:edit, @item, document] do %>
+              <%= material_icon.get_app.md_24.r180 %><br>Upload
+            <% end %>
+          <% else %>
+            &nbsp;
+          <% end %>
+          </td>
+          <td class="td-centered">
+            <% if policy(document).destroy? && document.archive_id.nil? %>
+              <%= link_to [@item, document], method: :delete, data: { confirm: 'Are you sure?' } do %>
+                <%= material_icon.delete.md_24 %><br>Delete
+              <% end %>
+            <% else %>
+              &nbsp;
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <ul class="list-group">
+    <li class="list-group-item active">
+      <h5>
+        <%= "#{t('document.docid') }: #{@document.docid}" %>
+      </h5>
+    </li>
+    <li class="list-group-item">
+      <p>
+          <strong>Name:</strong>
+          <%= @document.name %>
+        </p>
+        <p>
+          <strong>Control Category:</strong>
+
+          <% if Constants::ControlCategory.invert[@document.category].nil? && @document.category.present? %>
+            <td><%= @document.category %></td>
+          <% else %>
+            <td><%= Constants::ControlCategory.invert[@document.category] %></td>
+          <% end %>
+        </p>
+        <p>
+          <strong>Document Type:</strong>
+          <%= @document.document_type %>
+        </p>
+        <p>
+          <strong>Review Status:</strong>
+          <%= @document.review_status %>
+        </p>
+        <p>
+          <strong>Draft Version:</strong>
+          <%= @document.draft_revision %>
+        </p>
+        <p>
+          <strong>Revision:</strong>
+          <%= @document.revision %>
+        </p>
+        <p>
+          <strong>Revision Date:</strong>
+          <%= @document.revdate %>
+        </p>
+        <p>
+          <strong><%= t('versioning.versionid') %>:</strong>
+          <%= @document.version %>
+        </p>
+
+        <p>
+          <% if @parent_document.present? && @parent_document.parent_id.present? %>
+            <strong>Parent:</strong>
+            <%= @parent_document.name %>
+          <% end %>
+        </p>
+
+        <p>
+          <strong>Item:</strong>
+          <%= @document.item.name %>
+        </p>
+        <p>
+          <strong>Project:</strong>
+          <%= @document.project.name %>
+        </p>
+
+        <% if @document.review.present? %>
+          <p>
+            <strong>Review:</strong>
+            <%= @document.review.title %>
+          </p>
+        <% end %>
+
+        <p>
+          <strong>File Path:</strong>
+          <%= @document.file_path %>
+        </p>
+
+        <p>
+          <strong>Uploaded At: </strong>
+          <%= @document.upload_date %>
+        </p>
+    </li>
+  </ul>
+<% end %>
+
+<p>
+  <% if @document.name != Constants::ARCHIVED_DOCUMENTS %>
+    <% if @document.archive_id.nil? && !@document.revision.present? %>
+      <%= link_to 'Edit Document', edit_item_document_path(@item, @document),                 class: 'btn btn-default' %>
+    <% end %>
+
+    <% if @document.document_type == Constants::FOLDER_TYPE %>
+      <%= link_to 'New Document',  new_item_document_path(@item, :parent_id => @document.id), class: "btn btn-primary" %>
+    <% else %>
+      <%= link_to 'New Document',  new_item_document_path(@item),                             class: "btn btn-primary" %>
+    <% end %>
+
+    <% if @document.archive_id.nil? %>
+      <%= link_to 'Document History', item_document_document_history_path(@item, @document),  class: 'btn btn-default' %>
+    <% end %>
+  <% end %>
+
+  <%= link_to 'Back', go_back_path(1),  onclick: 'validateBack(1, this)', class: 'btn' %>
+
+  <% if @undo_path.present? && !session[:archives_visible].present? %>
+    <%= link_to 'Undo',        @undo_path,                                                  class: 'btn btn-primary' %>
+  <% end %>
+  <% if @redo_path.present? && !session[:archives_visible].present? %>
+    <%= link_to 'Redo',        @redo_path,                                                  class: 'btn btn-primary' %>
+  <% end %>
+</p>
+
+<script>
+  $( document ).ready(function() {
+    if (document.cookie.match(/scrollTop=(\d+)/))
+      $(window).scrollTop(document.cookie.match(/scrollTop=(\d+)/)[1]);
+
+    $('#scrollableDataTable').DataTable({
+    "sDom":           "Rlfrtip",
+    "scrollX":        true,
+    "scrollY":        "55vh",
+    "aLengthMenu":    [[10, 50, 100, -1], [25, 50, 100, "All"]],
+    "pageLength":     -1,
+    "scrollCollapse": true,
+    "paging":         false,
+    "ordering":       true,
+    "info":           false,
+    });
+  });
+
+  $(window).unload(function() {document.cookie = "scrollTop=" + $(window).scrollTop();});
+</script>

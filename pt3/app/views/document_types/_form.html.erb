@@ -1,0 +1,114 @@
+<%= simple_form_for(@document_type, html: { class: 'form-horizontal' }) do |f| %>
+  <%= f.error_notification %>
+  <input name='message' id='message' type='hidden' style='color: #FF0000' readonly />
+
+  <% if @action_item.present? && @action_item.errors.present? && @action_item.errors.messages.present? %>
+    <% @action_item.errors.messages.each do |field, messages| %>
+      <h4 style="color: red;">
+        <%= field.to_s.titleize %>:
+        <% messages.each do |message| %>
+          <%= message %>&nbsp;
+        <% end %>
+        <br>
+      </h4>
+    <% end %>
+  <% end %>
+
+  <div class="form-inputs">
+    <%= f.input :document_code, required: true %>
+    <%= f.input :description,   required: true %>
+    <%=
+        f.input :item_types,
+                collection: Constants::DisplayItemType.sort.map { |key,value| [value, key] },
+                input_html: { multiple: true },
+                include_blank: false
+     %>
+    <%=
+        f.input :dal_levels,
+                label: 'DALs',
+                collection: Constants::Review_Dals,
+                input_html: { multiple: true },
+                include_blank: true
+    %>
+    <%=
+        f.input :control_category,
+                label: 'Control Category',
+                collection: Constants::ControlCategory,
+                include_blank: true
+     %>
+  </div>
+
+  <div class="form-actions">
+    <% if controller.action_name == 'edit' %>
+      <input id='update_document_type' name='update_document_type' value='Update Document Type' type="button" onclick='validate();' class="btn btn-default" />
+    <% else %>
+      <input id='update_document_type' name='update_document_type' value='Create Document Type' type="button" onclick='validate();' class="btn btn-default" />
+    <% end %>
+
+    <% if controller.action_name == "edit" %>
+      <%= link_to 'Show', @document_type,  class: 'btn' %>
+    <% end %>
+
+    <%= link_to 'Back', 'javascript:null', class: "btn", onclick: 'validateBack(1)' %>
+
+    <% if @undo_path.present? && !session[:archives_visible].present? %>
+      <%= link_to 'Undo', @undo_path,      class: 'btn' %>
+    <% end %>
+
+    <% if @redo_path.present? && !session[:archives_visible].present? %>
+      <%= link_to 'Redo', @redo_path,      class: 'btn' %>
+    <% end %>
+  </div>
+<% end %>
+<script>
+  var model             = "document_type";
+  var table             = model  + 's';
+  var prefix            = model  + "_";
+  var parent            = "project";
+  var parent_table      = parent + 's';
+  var parent_prefix     = parent + "_";
+  var id_field          = "document_code";
+  var description_field = "description";
+
+  $(":input").keydown(function (event) {
+      if (event.keyCode == 112)
+        validate();
+      else if (event.keyCode == 113)
+        window.location.assign(window.location.href.replace(/\/\d+\/edit$/, ''));
+  }); 
+
+  function validate()
+  {
+    var idValue          = document.getElementById(prefix + id_field).value;
+    var descriptionValue = document.getElementById(prefix + description_field).value;
+    var form             = document.forms[0];
+    var okay             = true;
+    var messageText      = "";
+
+    if (idValue === '')
+    {
+      messageText   = "You must provide a Document Code.";
+      okay          = false;
+    }
+    else if (descriptionValue === '')
+    {
+      messageText   = "You must provide a Document Type Description.";
+      okay          = false;
+    }
+
+    if (okay)
+    {
+      form.submit();
+    }
+    else
+    {
+      message.value          = messageText;
+      message.style.display  = "none";
+
+      alert(messageText);
+    }
+
+    return(okay);
+  }
+</script>
+

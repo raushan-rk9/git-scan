@@ -1,0 +1,24 @@
+<br>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">File</th>
+      <th scope="col">Uploaded</th>
+      <th scope="col">Delete</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <tbody>
+<% var.each do |file| %>
+    <% if file.fileref.attached? %>
+      <tr>
+        <td><%= link_to file.fileref.filename, url_for(file.fileref) %></td>
+        <td><%= file.fileref.created_at %></td>
+        <td><%= link_to "Delete #{file.fileref.filename}", file, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+<% end %>
+
+  </tbody>
+</table>
+<br>

@@ -1,0 +1,101 @@
+
+<ul class="list-group">
+  <li class="list-group-item active">
+    <h5>System Requirement ID: <%= @system_requirement.fullreqid %></h5>
+  </li>
+  <li class="list-group-item">
+    <h6><u>Details:</u></h6>
+    <p>
+      <strong>Requirement Description:</strong>
+      <%= @system_requirement.description.to_s.html_safe %>
+
+      <% if @system_requirement.model_file_id.present? && @system_requirement.model_file.upload_file.attached? %>
+        <%= link_to image_tag(@system_requirement.model_file.upload_file, :size => '25%xauto'), item_model_file_display_path(@system_requirement.model_file.item_id, @system_requirement.model_file) + '?new_window=true', target: :_blank %>
+      <% elsif @system_requirement.document_id.present? && @system_requirement.document.file.attached? %>
+        <%= link_to image_tag(@system_requirement.document.file, :size => '25%xauto'), item_document_display_path(@system_requirement.document.item_id, @system_requirement.document) + '?new_window=true', target: :_blank %>
+      <% end %>
+    </p>
+
+    <p>
+      <strong>Requirement Category:</strong>
+      <%= @system_requirement.category %>
+    </p>
+
+    <p>
+      <strong>Requirement Verification Method:</strong>
+
+      <% if @system_requirement.verification_method.instance_of?(Array) %>
+        <%= @system_requirement.verification_method.delete_if{ |x| !x.present? }.join(',') %>
+      <% elsif @system_requirement.verification_method.instance_of?(String) %>
+        <%= @system_requirement.verification_method %>
+      <% end %>
+    </p>
+
+    <p>
+      <strong>Requirement Source:</strong>
+      <%= @system_requirement.source %>
+    </p>
+
+    <p>
+      <strong>Safety Related?</strong>
+      <%= @system_requirement.safety %>
+    </p>
+
+    <p>
+      <strong>Implementation:</strong>
+      <%= @system_requirement.implementation %>
+    </p>
+
+    <p>
+      <strong><%= t('versioning.versionid') %>:</strong>
+      <%= @system_requirement.version %>
+    </p>
+
+    <p>
+      <strong>Project:</strong>
+      <%= @project.name %>
+    </p>
+  </li>
+</ul>
+
+<br>
+
+<% unless session[:archives_visible].present? %>
+  <%= link_to 'Edit', edit_project_system_requirement_path(@project, @system_requirement), class: 'btn btn-default' %>
+  <%= link_to 'New', new_project_system_requirement_path(@project), class: "btn btn-primary", style: "color:white" %>
+<% end %>
+
+ <%= link_to 'Back', go_back_path(1),  onclick: 'validateBack(1, this)', class: 'btn btn-default' %>
+
+<% if @undo_path.present? && !session[:archives_visible].present? %>
+  <%= link_to 'Undo', @undo_path, class: 'btn btn-default', title: @undo_message %>
+<% end %>
+
+<% if @redo_path.present? && !session[:archives_visible].present? %>
+  <%= link_to 'Redo', @redo_path, class: 'btn btn-default', title: @redo_message %>
+<% end %>
+
+<%
+    if @system_requirement_ids.present?
+      current_index = @system_requirement_ids.find_index(@system_requirement.id)
+      previous_id   = @system_requirement_ids[current_index - 1] if current_index > 0
+      next_id       = @system_requirement_ids[current_index + 1] if current_index < (@system_requirement_ids.length - 1)
+    end
+ %>
+
+<% if previous_id.present? %>
+  <% if (params[:previous_mode] == 'editing') && policy(@system_requirement).edit? %>
+    <%= link_to('Previous', edit_project_system_requirement_path(@project, previous_id), class: 'btn btn-default') %>
+  <% else %>
+    <%= link_to('Previous', project_system_requirement_path(@project, previous_id),      class: 'btn btn-default') %>
+  <% end %>
+<% end %>
+
+<% if next_id.present? %>
+  <% if (params[:previous_mode] == 'editing') && policy(@system_requirement).edit? %>
+    <%= link_to('Next',     edit_project_system_requirement_path(@project, next_id),     class: 'btn btn-default') %>
+  <% else %>
+    <%= link_to('Next',     project_system_requirement_path(@project, next_id),          class: 'btn btn-default') %>
+  <% end %>
+<% end %>
+

@@ -1,0 +1,27 @@
+<ul class="list-group">
+  <li class="list-group-item active">
+    <h5>Log: <%= @log.id %></h5>
+  </li>
+  <li class="list-group-item">
+    <h6><u>Details:</u></h6>
+    <p>
+      <strong>Event Time:</strong>
+      <%= @log.error_time %><br>
+      <strong>Contents:</strong>
+      <%= @log.log_contents %><br>
+      <strong>Type:</strong>
+      <%= @log.log_type %><br>
+      <strong>Log ID:</strong>
+      <%= @log.log_id %><br>
+      <strong>Log SHA:</strong>
+      <%= @log.log_sha %><br>
+      <strong>Raw Line:</strong>
+      <%= @log.raw_line %><br>
+    </p>
+  </li>
+</ul>
+
+<br>
+<%= link_to 'Edit',     edit_log_path(@project, @log),  class: 'btn btn-default' %>
+<%= link_to 'New Log',  new_log,                        class: "btn btn-primary", style: "color:white" %>
+<%= link_to 'Back',     go_back_path(1),  onclick: 'validateBack(1, this)',                class: 'btn btn-default' %>

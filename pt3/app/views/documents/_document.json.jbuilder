@@ -1,0 +1,1 @@
+json.extract! document, :id, :docid, :name, :category, :revision, :revdate, :version, :item_id, :project_id, :doccomment_count, :created_at, :updated_at, :organization, :review_id, :document_type, :review_status, :draft_revision, :parent_id, :file_path, :file_type, :archive_id, :document_id, :upload_date

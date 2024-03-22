@@ -1,0 +1,78 @@
+<style>
+  /* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+</style>
+<div id=popupMopdel">
+  <form id="popup_form" novalidate="novalidate" enctype="multipart/form-data" action="<% new_popup_url%>" accept-charset="UTF-8" method="put">
+    <label for="summernote" class="inline-label">Edit</label>
+    <textarea id="summernote" name="editordata" value="<%= @contents %>"></textarea>
+    <input value='Save'  onclick='submitPopupForm();' class='btn' />
+    <input value='Close' onclick='closeWindow();'     class='btn' />
+  </form>
+</div>
+<script>
+
+function closeWindow()
+{
+  window.close();
+
+  return true;
+}
+
+function submitPopupForm()
+{
+  var url            = window.location.href;
+  var parentWindow   = window.opener;
+  var start          = url.indexOf('%27') + 3;
+  var end            = url.indexOf('%27', start);
+  var fieldName      = url.substring(start, end);
+  var parentDocument = parentWindow.document;
+  var field          = parentDocument.getElementById(fieldName);
+
+  field.innerHTML    = $('#summernote').summernote('code');
+
+  window.close();
+
+  return true;
+}
+
+$(document).ready(function()
+{
+  $('#summernote').summernote('code', '<%= @contents %>');
+});
+</script>

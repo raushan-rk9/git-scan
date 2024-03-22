@@ -1,0 +1,222 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+phac_001:
+  clitemid:              1
+  title:                 "Does the PHAC include a System Overview (including a system functional description, system failure conditions, system architecture, a description of the allocation of the functions to hardware items and software) and references to existing system documentation?"
+  description:           "Does the PHAC include a System Overview (including a system functional description, system failure conditions, system architecture, a description of the allocation of the functions to hardware items and software) and references to existing system documentation?"
+  note:                  ''
+  template_checklist_id: <%= TemplateChecklist.find_by(title: 'Plan for Hardware Aspects of Certification').try(:id) %>
+  reference:             '10.1.1-1'
+  minimumdal:            [ 'A', 'B', 'C', 'D' ]
+  supplements:           []
+  organization:          'test'
+  source:                'Airworthiness Certification Services'
+
+phac_002:
+  clitemid:              2
+  title:                 "Does the PHAC include a Hardware Overview (including hardware functions, hardware items, architecture, new technologies to be used, and any fail-safe, fault tolerant, redundancy and partitioning techniques to be used)?"
+  description:           "Does the PHAC include a Hardware Overview (including hardware functions, hardware items, architecture, new technologies to be used, and any fail-safe, fault tolerant, redundancy and partitioning techniques to be used)?"
+  note:                  ''
+  template_checklist_id: <%= TemplateChecklist.find_by(title: 'Plan for Hardware Aspects of Certification').try(:id) %>
+  reference:             '10.1.1-2'
+  minimumdal:            ['A', 'B', 'C', 'D']
+  organization:          'test'
+  source:                'Airworthiness Certification Services'
+
+phac_003:
+  clitemid:              3
+  title:                 "For each digital or mixed-signal custom device, does the PHAC identify the development assurance level, the simple or complex classification, and if a device is classified as simple, the justification based on the simple classification criteria.?"
+  description:           "For each digital or mixed-signal custom device, does the PHAC identify the development assurance level, the simple or complex classification, and if a device is classified as simple, the justification based on the simple classification criteria.?"
+  note:                  ''
+  template_checklist_id: <%= TemplateChecklist.find_by(title: 'Plan for Hardware Aspects of Certification').try(:id) %>
+  reference:             'AC20-152A  CD-1'
+  minimumdal:            ['A', 'B', 'C', 'D']
+  organization:          'test'
+  source:                'Airworthiness Certification Services'
+
+phac_004:
+  clitemid:              4
+  title:                 "For each simple device, does the PHAC or other appropriate plan include a definition of the device functions, a plan for complete verification of the device functions (through tests and analyses), and a plan for configuration management of the device?"
+  description:           "For each simple device, does the PHAC or other appropriate plan include a definition of the device functions, a plan for complete verification of the device functions (through tests and analyses), and a plan for configuration management of the device?"
+  note:                  ''
+  template_checklist_id: <%= TemplateChecklist.find_by(title: 'Plan for Hardware Aspects of Certification').try(:id) %>
+  reference:             'AC20-152A  CD-2'
+  minimumdal:            ['A', 'B', 'C', 'D']
+  organization:          'test'
+  source:                'Airworthiness Certification Services'
+
+phac_005:
+  clitemid:              5
+  title:                 "Does the PHAC include Certification Considerations (including certification basis, proposed means of compliance, and the design assurance level  of each function of the hardware item)?"
+  description:           "Does the PHAC include Certification Considerations (including certification basis, proposed means of compliance, and the design assurance level  of each function of the hardware item)?"
+  note:                  ''
+  template_checklist_id: <%= TemplateChecklist.find_by(title: 'Plan for Hardware Aspects of Certification').try(:id) %>
+  reference:             '10.1.1-3'
+  minimumdal:            ['A', 'B', 'C', 'D']
+  organization:          'test'
+  source:                'Airworthiness Certification Services'
+
+phac_006:
+  clitemid:              6
+  title:                 "Does the PHAC Certification Considerations provide justification for the hardware design assurance level assignment that is based on a safety assessment and its use within the airborne system, including a description of potential hardware failure conditions?"
+  description:           "Does the PHAC Certification Considerations provide justification for the hardware design assurance level assignment that is based on a safety assessment and its use within the airborne system, including a description of potential hardware failure conditions?"
+  note:                  ''
+  template_checklist_id: <%= TemplateChecklist.find_by(title: 'Plan for Hardware Aspects of Certification').try(:id) %>
+  reference:             '10.1.1-3'
+  minimumdal:            ['A', 'B', 'C', 'D']
+  organization:          'test'
+  source:                'Airworthiness Certification Services'
+
+phac_007:
+  clitemid:              7
+  title:                 "Does the PHAC describe the Hardware Design Life Cycle (including the procedures, methods and standards to be applied and processes and activities to be performed to meet the hardware design assurance objectives, as well as the activities, combinations and sequencing of activities, relationships between processes and activities, transition criteria, responsibilities, tool usage, and means for providing feedback and interaction among hardware processes and between hardware processes and the system and software processes)?"
+  description:           "Does the PHAC describe the Hardware Design Life Cycle (including the procedures, methods and standards to be applied and processes and activities to be performed to meet the hardware design assurance objectives, as well as the activities, combinations and sequencing of activities, relationships between processes and activities, transition criteria, responsibilities, tool usage, and means for providing feedback and interaction among hardware processes and between hardware processes and the system and software processes)?"
+  note:                  ''
+  template_checklist_id: <%= TemplateChecklist.find_by(title: 'Plan for Hardware Aspects of Certification').try(:id) %>
+  reference:             '10.1.1-4'
+  minimumdal:            ['A', 'B', 'C', 'D']
+  organization:          'test'
+  source:                'Airworthiness Certification Services'
+
+phac_008:
+  clitemid:              8
+  title:                 "Does the PHAC  Hardware Design Life Cycle reference applicable plans, policies, standards, procedures and deviations to those plans and standards for the program?"
+  description:           "Does the PHAC  Hardware Design Life Cycle reference applicable plans, policies, standards, procedures and deviations to those plans and standards for the program?"
+  note:                  ''
+  template_checklist_id: <%= TemplateChecklist.find_by(title: 'Plan for Hardware Aspects of Certification').try(:id) %>
+  reference:             '10.1.1-4'
+  minimumdal:            ['A', 'B', 'C', 'D']
+  organization:          'test'
+  source:                'Airworthiness Certification Services'
+
+phac_009:
+  clitemid:              9
+  title:                 "Does the PHAC describe the Hardware Design Life Cycle Data (which describes or references the data to be developed and submitted or available as evidence of compliance to the objectives of this plan)?,Does the PHAC describe the Hardware Design Life Cycle Data (which describes or references the data to be developed and submitted or available as evidence of compliance to the objectives of this plan)?"
+  description:           "Does the PHAC describe the Hardware Design Life Cycle Data (which describes or references the data to be developed and submitted or available as evidence of compliance to the objectives of this plan)?,Does the PHAC describe the Hardware Design Life Cycle Data (which describes or references the data to be developed and submitted or available as evidence of compliance to the objectives of this plan)?"
+  note:                  ''
+  template_checklist_id: <%= TemplateChecklist.find_by(title: 'Plan for Hardware Aspects of Certification').try(:id) %>
+  reference:             '10.1.1-5'
+  minimumdal:            ['A', 'B', 'C', 'D']
+  organization:          'test'
+  source:                'Airworthiness Certification Services'
+
+phac_010:
+  clitemid:              10
+  title:                 "Does the PHAC include Additional Considerations (including use of previously developed hardware, COTS usage, product service experience, tool assessment and qualification, along with additional requirements from other guidance, including applicable Issue Papers or CRIs)?"
+  description:           "Does the PHAC include Additional Considerations (including use of previously developed hardware, COTS usage, product service experience, tool assessment and qualification, along with additional requirements from other guidance, including applicable Issue Papers or CRIs)?"
+  note:                  ''
+  template_checklist_id: <%= TemplateChecklist.find_by(title: 'Plan for Hardware Aspects of Certification').try(:id) %>
+  reference:             '10.1.1-6'
+  minimumdal:            ['A', 'B', 'C', 'D']
+  organization:          'test'
+  source:                'Airworthiness Certification Services'
+
+phac_011:
+  clitemid:              11
+  title:                 "If COTS IP is to be used, does the PHAC detail the plan for compliance for this COTS IP as per AC20-152A? (See separate checklist for this topic)"
+  description:           "If COTS IP is to be used, does the PHAC detail the plan for compliance for this COTS IP as per AC20-152A? (See separate checklist for this topic)"
+  note:                  ''
+  template_checklist_id: <%= TemplateChecklist.find_by(title: 'Plan for Hardware Aspects of Certification').try(:id) %>
+  reference:             'AC20-152A  IP-1:6'
+  minimumdal:            [ 'A', 'B', 'C' ]
+  organization:          'test'
+  source:                'Airworthiness Certification Services'
+
+phac_012:
+  clitemid:              12
+  title:                 "If COTS devices are to be used, does the PHAC detail the plan for compliance for these devices as per AC20-152A? (See separate checklist for this topic)"
+  description:           "If COTS devices are to be used, does the PHAC detail the plan for compliance for these devices as per AC20-152A? (See separate checklist for this topic)"
+  note:                  ''
+  template_checklist_id: <%= TemplateChecklist.find_by(title: 'Plan for Hardware Aspects of Certification').try(:id) %>
+  reference:             'AC20-152A  COTS-1:8'
+  minimumdal:            [ 'A', 'B', 'C' ]
+  organization:          'test'
+  source:                'Airworthiness Certification Services'
+
+phac_013:
+  clitemid:              13
+  title:                 "If PDH is to be used, does the PHAC detail the plan for compliance for this as per AC20-152A? (See separate checklist for this topic)"
+  description:           "If PDH is to be used, does the PHAC detail the plan for compliance for this as per AC20-152A? (See separate checklist for this topic)"
+  note:                  ''
+  template_checklist_id: <%= TemplateChecklist.find_by(title: 'Plan for Hardware Aspects of Certification').try(:id) %>
+  reference:             'AC20-152A  CD-1:11'
+  minimumdal:            [ 'A', 'B', 'C' ]
+  organization:          'test'
+  source:                'Airworthiness Certification Services'
+
+phac_014:
+  clitemid:              14
+  title:                 "Does the PHAC include design assurance considerations for Level A or B functions as described in Appendix B?"
+  description:           "Does the PHAC include design assurance considerations for Level A or B functions as described in Appendix B?"
+  note:                  ''
+  template_checklist_id: <%= TemplateChecklist.find_by(title: 'Plan for Hardware Aspects of Certification').try(:id) %>
+  reference:             '10.1.1-6'
+  minimumdal:            [ 'A', 'B' ]
+  organization:          'test'
+  source:                'Airworthiness Certification Services'
+
+phac_015:
+  clitemid:              15
+  title:                 "Does the PHAC include Alternative Methods (if any are proposed)?"
+  description:           "Does the PHAC include Alternative Methods (if any are proposed)?"
+  note:                  ''
+  template_checklist_id: <%= TemplateChecklist.find_by(title: 'Plan for Hardware Aspects of Certification').try(:id) %>
+  reference:             '10.1.1-7'
+  minimumdal:            [ 'A', 'B', 'C', 'D' ]
+  organization:          'test'
+  source:                'Airworthiness Certification Services'
+
+phac_016:
+  clitemid:              16
+  title:                 "Does the PHAC include a Certification Schedule (including major program milestones and the dates when hardware design life cycle data will be submitted to the certification authority)?"
+  description:           "Does the PHAC include a Certification Schedule (including major program milestones and the dates when hardware design life cycle data will be submitted to the certification authority)?"
+  note:                  ''
+  template_checklist_id: <%= TemplateChecklist.find_by(title: 'Plan for Hardware Aspects of Certification').try(:id) %>
+  reference:             '10.1.1-8'
+  minimumdal:            [ 'A', 'B', 'C', 'D' ]
+  organization:          'test'
+  source:                'Airworthiness Certification Services'
+
+phac_017:
+  clitemid:              17
+  note:                  '10.1.1-8'
+  title:                 "Does the PHAC address supplier oversight?"
+  description:           "Does the PHAC address supplier oversight?"
+  template_checklist_id: <%= TemplateChecklist.find_by(title: 'Plan for Hardware Aspects of Certification').try(:id) %>
+  reference:             '4.2.9'
+  minimumdal:            [ 'A', 'B', 'C', 'D' ]
+  organization:          'test'
+  source:                'Airworthiness Certification Services'
+
+phac_018:
+  clitemid:              18
+  title:                 "Does the PHAC address how to address open problem reports?"
+  description:           "Does the PHAC address how to address open problem reports?"
+  note:                  ''
+  template_checklist_id: <%= TemplateChecklist.find_by(title: 'Plan for Hardware Aspects of Certification').try(:id) %>
+  reference:             'AC20-152A'
+  minimumdal:            [ 'A', 'B', 'C', 'D' ]
+  organization:          'test'
+  source:                'Airworthiness Certification Services'
+
+phac_019:
+  clitemid:              19
+  title:                 "Does the PHAC list the tools being used as part of the Life Cycle process and describe or reference the Tool Qualification Plan? (See TQP checklist for more information)"
+  description:           "Does the PHAC list the tools being used as part of the Life Cycle process and describe or reference the Tool Qualification Plan? (See TQP checklist for more information)"
+  note:                  ''
+  template_checklist_id: <%= TemplateChecklist.find_by(title: 'Plan for Hardware Aspects of Certification').try(:id) %>
+  reference:             '11.4; AC20-152A'
+  minimumdal:            [ 'A', 'B', 'C' ]
+  organization:          'test'
+  source:                'Airworthiness Certification Services'
+
+phac_020:
+  clitemid:              20
+  title:                 "Has the PHAC been subjected to appropriate change and configuration control (HC1)?"
+  description:           "Has the PHAC been subjected to appropriate change and configuration control (HC1)?"
+  note:                  ''
+  template_checklist_id: <%= TemplateChecklist.find_by(title: 'Plan for Hardware Aspects of Certification').try(:id) %>
+  reference:             'Table A-1'
+  minimumdal:            [ 'A', 'B', 'C', 'D' ]
+  organization:          'test'
+  source:                'Airworthiness Certification Services'

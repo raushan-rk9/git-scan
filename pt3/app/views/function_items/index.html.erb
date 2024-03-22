@@ -1,0 +1,103 @@
+<style>
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before {}
+
+table th
+{
+  font-family: verdana !important;
+  font-size:   14px    !important;
+  line-height: 18px    !important;
+}
+
+table td
+{
+  font-family: verdana !important;
+  font-size:   14px    !important;
+  line-height: 18px    !important;
+}
+</style>
+<h1><%= "Function Calls" %></h1>
+
+<form name="filter" id="filter" class="filter-form" action="<%= item_function_items_path(@item) %>"  method="put">
+  <div class="filter-form" >
+    Field:
+    &nbsp;
+    <select id="filter_field" name="filter_field" style="width: 25%;">
+      <option value="function_item_id">Function Item ID</option>
+      <option value="full_id">Full ID</option>
+      <option value="project_id">Project ID</option>
+      <option value="item_id">Item ID</option>
+      <option value="source_code_id">Source Code ID</option>
+      <option value="filename">Filename</option>
+      <option value="linenumber">Line Number</option>
+      <option value="calling_function">Calling Function</option>
+      <option value="calling_parameters">Calling Parameters</option>
+      <option value="called_by">Called By</option>
+      <option value="function">Function</option>
+      <option value="function_parameters">Function Parameters</option>
+    </select>
+    &nbsp;
+    Value:
+    &nbsp;
+    <input id="filter_value" name="filter_value" value='<%= session[:tp_filter_value] %>' type="text" style="width: 25%;">
+    &nbsp;
+    <input type="submit" value="Filter" style="width: 25%;" class="btn-sm" style="height: 50% !important;" >
+  </div>
+</form>
+
+<table id="scrollableDataTable" class="table table-striped table-bordered table-sm" cellspacing="0"  width="100%">
+  <thead>
+    <tr>
+      <th class="th-sm">Function Item ID</th>
+      <th class="th-sm">Full ID</th>
+      <th class="th-sm"><%= t('sourcecodes.codeid') %></th>
+      <th class="th-sm"><%= t('misc.filename') %></th>
+      <th class="th-sm">Line Number</th>
+      <th class="th-sm">Calling Function</th>
+      <th class="th-sm">Function</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @function_items.each do |function_item| %>
+      <tr>
+        <td>
+          <%= function_item.function_item_id %>
+        </td>
+        <td>
+          <%= function_item.full_id %>
+        </td>
+        <td>
+          <%= function_item.source_code_id %>
+        </td>
+        <td>
+          <%= function_item.filename %>
+        </td>
+        <td>
+          <%= function_item.line_number %>
+        </td>
+        <td>
+          <% if function_item.calling_function.present? %>
+            <%= function_item.calling_function %>
+            <%= function_item.calling_parameters %>
+          <% end %>
+        </td>
+        <td>
+          <% if function_item.function.present? %>
+            <%= function_item.function %>
+            <%= function_item.function_parameters %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Back', go_back_path(1),  onclick: 'validateBack(1, this)', class: 'btn' %>

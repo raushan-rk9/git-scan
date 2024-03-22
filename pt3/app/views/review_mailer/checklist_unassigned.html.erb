@@ -1,0 +1,111 @@
+Dear <%= @user.fullname %>:
+<p>
+One of your checklists has been removed. Please see below for the details.
+</p>
+<table style=" width: 100% !important; border: none !important;">
+  <thead>
+    <tr>
+      <th colspan=3 align="left">
+        <h4>
+          Review Detail:
+        </h4>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td width="10%">
+        &nbsp;
+      </td>
+      <td width="10%">
+        ID:
+      </td>
+      <td width="80%">
+        <%= @review.reviewid %>
+      </td>
+    </tr>
+    <tr>
+      <td width="10%">
+        &nbsp;
+      </td>
+      <td width="10%">
+        Title:
+      </td>
+      <td width="80%">
+        <%= raw @review.title %>
+      </td>
+    </tr>
+    <tr>
+      <td width="10%">
+        &nbsp;
+      </td>
+      <td width="10%">
+        Description:
+      </td>
+      <td width="80%">
+        <%= sanitize(@review.description) %>
+      </td>
+    </tr>
+    <tr>
+      <td width="10%">
+        &nbsp;
+      </td>
+      <td width="10%">
+        Type:
+      </td>
+      <td width="80%">
+        <%= @review.reviewtype %>
+      </td>
+    </tr>
+    <tr>
+      <td width="10%">
+        &nbsp;
+      </td>
+      <td width="10%">
+        Evaluation Date:
+      </td>
+      <td width="80%">
+        <%= @review.evaldate %>
+      </td>
+    </tr>
+    <tr>
+      <td width="10%">
+        &nbsp;
+      </td>
+      <td width="10%">
+        Evaluators:
+      </td>
+      <td width="80%">
+        <% if @review.evaluators.present? %>
+          <% if @review.evaluators.instance_of?(String) %>
+            <% @review.evaluators = [ @review.evaluators ] %>
+          <% end %>
+          <% first = true %>
+          <% @review.evaluators.each do |evaluator| %>
+            <% next unless evaluator.present? %>
+            <% unless first %>
+              ,&nbsp;
+            <% end %>
+            <%= User.fullname_from_email(evaluator) %>
+            <% first = false %>
+          <% end %>
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td width="10%">
+        &nbsp;
+      </td>
+      <td width="10%">
+        Review Link:
+      </td>
+      <td width="80%">
+        <%= link_to item_review_url(@review.item_id, @review, organization: User.current.organization), item_review_url(@review.item_id, @review, organization: User.current.organization) %>
+      </td>
+    </tr>
+  <tbody>
+</table>
+<p>
+PACT Automation<br>
+pact_cm@airworthinesscert.com
+</p>

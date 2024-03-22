@@ -1,0 +1,20 @@
+<% provide(:title, "Help") %>
+<h1>Help</h1>
+<style>
+h2 {
+text-indent: 2.0em;
+}
+</style>
+<p>
+        <ul>
+                <h2>
+                        <li>
+                                <%= link_to 'PACT Manual', 'PACT-Users-Guide.pdf', target: '_blank'   %>
+                        </li>
+                </h2>
+        </ul>
+</p>
+
+<p>
+<%= link_to 'Back', go_back_path(1),  onclick: 'validateBack(1, this)', class: 'btn' %>
+</p>

@@ -1,0 +1,24 @@
+<%= simple_form_for([@problem_report.project, @problem_report], { url: project_problem_report_send_email_url(@project, @problem_report), validate: true, class: 'form-horizontal' }) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :recipients, required: true %>
+    <%= f.input :cc_list %>
+    <%= f.input :comment, as: :summernote %>
+  </div>
+  <div class="form-actions">
+    <%= f.button :submit, "Send Email" %>
+    <%= link_to 'Back', 'javascript:null', class: "btn", onclick: 'validateBack(1)' %>
+  </div>
+<% end %>
+<script>
+$("#problem_report_recipients").change(function()
+{
+  var recipients_field = document.getElementById("select_test_case_all_test_cases")
+  var recipients       = recipients_field.value;
+
+  alert(recipients);
+});
+
+
+</script>

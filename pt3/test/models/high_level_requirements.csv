@@ -1,0 +1,3 @@
+1,The software shall be capable of determining location and airspeed via ARINC 429.,ARINC429,Target,false,false,false
+,The CSV import shall create new records.,Software,Analysis,true,true,true,1
+999,The CSV import shall create new records.,Software,Target,true,true,true,2

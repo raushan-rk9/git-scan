@@ -1,0 +1,30 @@
+
+<h1>Project Accesses</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Project</th>
+      <th>Access</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @project_accesses.each do |project_access| %>
+      <tr>
+        <td><%= project_access.user %></td>
+        <td><%= project_access.project %></td>
+        <td><%= project_access.access %></td>
+        <td><%= link_to 'Show', project_access %></td>
+        <td><%= link_to 'Edit', edit_project_access_path(project_access) %></td>
+        <td><%= link_to 'Destroy', project_access, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Project Access', new_project_access_path %>

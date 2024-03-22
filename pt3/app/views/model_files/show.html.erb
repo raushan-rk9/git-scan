@@ -1,0 +1,199 @@
+<ul class="list-group">
+  <li class="list-group-item active">
+    <h5>
+      <%= "#{t('misc.model_file') } ID: #{@model_file.model_id}" %>
+    </h5>
+  </li>
+  <li class="list-group-item">
+    <p>
+      <strong>Full ID:</strong>
+      <%= @model_file.full_id %>
+    </p>
+
+    <p>
+      <strong><%= t('misc.desc') %>:</strong>
+      <%= raw @model_file.description %>
+    </p>
+
+    <p>
+      <strong>File Path:</strong>
+      <%= @model_file.file_path %>
+    </p>
+
+    <p>
+      <strong>Uploaded At: </strong>
+      <%= @model_file.upload_date %>
+    </p>
+
+    <p>
+      <strong>File Type:</strong>
+      <%= @model_file.file_type %>
+    </p>
+
+    <p>
+      <strong><%= t('misc.url') %>:</strong>
+      <% if @model_file.url_type.present? && @model_file.url_link.present? %>
+        <% if @model_file.url_type == 'ATTACHMENT' && @model_file.upload_file.attached? %>
+          <%= link_to @model_file.upload_file.filename, url_for(@model_file.upload_file) + '?new_window=true', target: :_blank %>
+        <% else %>
+          <% description = @model_file.url_description %>
+
+          <% unless description.present? %>
+            <% description = @model_file.url_link %>
+          <% end %>
+
+          <% if @model_file.url_link =~ /^http[s]{0,1}:\/\/.+$/ %>
+            <%= link_to description, @model_file.url_link + '?new_window=true', target: :_blank %>
+          <% else %>
+            <%= description %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </p>
+
+    <p>
+      <strong>Derived:</strong>
+      <%= @model_file.derived %>
+    </p>
+
+    <p>
+      <strong>Derived Justification:</strong>
+      <%= @model_file.derived_justification %>
+    </p>
+
+    <p>
+      <strong>Linked <%= t('misc.system_requirements') %>:</strong><br>
+      <% @model_file.system_requirements.each do |sysreq| %>
+        <%= display_full_id(sysreq, @item) %><br>
+      <% end %>
+    </p>
+
+    <p>
+      <strong>Linked <%= Item.item_type_title(@item, :high_level, :plural) %>:</strong><br>
+      <% @model_file.high_level_requirements.each do |hlr| %>
+        <%= display_full_id(hlr, @item) %><br>
+      <% end %>
+    </p>
+
+    <p>
+      <strong>Linked <%= Item.item_type_title(@item, :low_level, :plural) %>:</strong><br>
+      <% @model_file.low_level_requirements.each do |llr| %>
+        <%= display_full_id(llr, @item) %><br>
+      <% end %>
+    </p>
+
+    <p>
+      <strong>Linked <%= t('misc.test_cases') %>:</strong><br>
+      <% @model_file.test_cases.each do |tc| %>
+        <%= display_full_id(tc, @item) %><br>
+      <% end %>
+    </p>
+
+    <p>
+      <strong><%= t('versioning.revision') %>:</strong>
+      <%= @model_file.revision %>
+    </p>
+
+    <p>
+      <strong><%= t('versioning.draft_revision') %>:</strong>
+      <%= @model_file.draft_version %>
+    </p>
+
+        <p>
+          <strong>Revision Date:</strong>
+          <%= @model_file.revision_date %>
+        </p>
+    <p>
+      <strong><%= t('versioning.versionid') %>:</strong>
+      <%= @model_file.version %>
+    </p>
+
+    <p>
+      <strong>Item:</strong>
+      <%= @model_file.item.name if @model_file.item.present? %>
+    </p>
+
+    <p>
+      <strong>Project:</strong>
+      <%= @model_file.project.name %>
+    </p>
+    </p>
+  </li>
+</ul>
+
+<%
+    if @model_file_ids.present?
+      current_index = @model_file_ids.find_index(@model_file.id)
+      previous_id   = @model_file_ids[current_index - 1] if current_index > 0
+      next_id       = @model_file_ids[current_index + 1] if current_index < (@model_file_ids.length - 1)
+    end
+
+    if @item.present?
+      model_file_list_url = item_model_files_path(@item)
+      model_file_new_url  = new_item_model_file_path(@item)
+      model_file_edit_url = edit_item_model_file_path(@item, @model_file)
+
+      if previous_id.present?
+        previous_url      = if (params[:previous_mode] == 'editing') &&
+                              policy(@model_file).edit?
+                              edit_item_model_file_path(@item, previous_id)
+                            else
+                              item_model_file_path(@item, previous_id)
+                            end
+      end
+
+      if next_id.present?
+        next_url          = if (params[:previous_mode] == 'editing') &&
+                              policy(@model_file).edit?
+                              edit_item_model_file_path(@item, next_id)
+                            else
+                              item_model_file_path(@item, next_id)
+                            end
+      end
+    else
+      model_file_list_url = project_model_files_path(@project)
+      model_file_new_url  = new_project_model_file_path(@project)
+      model_file_edit_url = edit_project_model_file_path(@project, @model_file)
+
+      if previous_id.present?
+        previous_url      = if (params[:previous_mode] == 'editing') &&
+                              policy(@model_file).edit?
+                              edit_project_model_file_path(@project, previous_id)
+                            else
+                              project_model_file_path(@project, previous_id)
+                            end
+      end
+
+      if next_id.present?
+        next_url           = if (params[:previous_mode] == 'editing') &&
+                              policy(@model_file).edit?
+                              edit_project_model_file_path(@project, next_id)
+                            else
+                              project_model_file_path(@project, next_id)
+                            end
+      end
+    end
+ %>
+
+<% unless session[:archives_visible].present? %>
+  <%= link_to 'Edit', model_file_edit_url,                       class: 'btn btn-default' %>
+  <%= link_to "New #{t('misc.model_file')}", model_file_new_url, class: "btn btn-primary" %>
+<% end %>
+
+<%= link_to 'Back', go_back_path(1),  onclick: 'validateBack(1, this)',                             class: 'btn' %>
+
+<% if @undo_path.present? && !session[:archives_visible].present? %>
+  <%= link_to 'Undo', @undo_path, class: 'btn btn-default', title: @undo_message %>
+<% end %>
+
+<% if @redo_path.present? && !session[:archives_visible].present? %>
+  <%= link_to 'Redo', @redo_path, class: 'btn btn-default', title: @redo_message %>
+<% end %>
+
+<% if previous_id.present? %>
+    <%= link_to('Previous', previous_url, class: 'btn btn-default') %>
+<% end %>
+
+<% if next_id.present? %>
+    <%= link_to('Next',     next_url,     class: 'btn btn-default') %>
+<% end %>

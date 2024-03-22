@@ -1,0 +1,76 @@
+<ul class="list-group">
+  <li class="list-group-item active">
+    <h5>Organization ID: <%= @licensee.identifier %></h5>
+  </li>
+  <li class="list-group-item">
+    <p>
+      <strong>Identifier:</strong>
+      <%= @licensee.identifier %>
+    </p>
+
+    <p>
+      <strong>Name:</strong>
+      <%= @licensee.name %>
+    </p>
+
+    <p>
+      <strong>Description:</strong>
+      <%= raw(@licensee.description) %>
+    </p>
+
+    <p>
+      <strong>Setup date:</strong>
+      <%= @licensee.setup_date %>
+    </p>
+
+    <p>
+      <strong>License date:</strong>
+      <%= @licensee.license_date %>
+    </p>
+
+    <p>
+      <strong>License type:</strong>
+      <%= @licensee.license_type %>
+    </p>
+
+    <p>
+      <strong>Renewal date:</strong>
+      <%= @licensee.renewal_date %>
+    </p>
+
+    <p>
+      <strong>Administrator:</strong>
+      <%= User.fullname_from_email(@licensee.administrator) %>
+    </p>
+
+    <p>
+      <strong>Contact Emails:</strong><br>
+      <% @licensee.contact_emails.each do |contact_email| %>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= contact_email %><br>
+      <% end %>
+    </p>
+
+    <p>
+      <strong>Contact information:</strong>
+      <%= raw(@licensee.contact_information) %>
+    </p>
+
+    <p>
+      <strong>Database:</strong>
+      <%= @licensee.database %>
+    </p>
+
+  </li>
+</ul>
+
+<%= link_to 'Edit',             edit_licensee_path(@licensee), class: 'btn'  %>
+<%= link_to 'New Organization', new_licensee_path,             class: "btn" %>
+<%= link_to 'Back',             go_back_path(1),  onclick: 'validateBack(1, this)',               class: 'btn' %>
+
+<% if @undo_path.present? && !session[:archives_visible].present? %>
+  <%= link_to 'Undo',           @undo_path,                    class: 'btn' %>
+<% end %>
+
+<% if @redo_path.present? && !session[:archives_visible].present? %>
+  <%= link_to 'Redo',           @redo_path,                    class: 'btn' %>
+<% end %>

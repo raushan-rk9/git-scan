@@ -1,0 +1,44 @@
+<% messages = [] %>
+
+<% flash.each do |type, msg| %>
+  <div>
+    <% message = msg.present? ? msg.gsub("\n", '<br>') : nil%>
+
+    <% case type.to_s.downcase %>
+      <% when 'fatal' %>
+         <% messages.push(message) %>
+
+         <div style="color: red; font-weight: bold; font-size: x-large;">
+           Fatal: <%= simple_format(message) %>
+         </div>
+      <% when 'error' %>
+         <% messages.push(message) %>
+
+         <div style="color: orange; font-weight: bold; font-size: x-large;">
+           Error: <%= simple_format(message) %>
+         </div>
+      <% when 'info' %>
+         <% messages.push(message) %>
+
+         <div style="color: green; font-weight: bold; font-size: x-large;">
+           Information: <%= simple_format(message) %>
+           </div>
+      <% when 'debug' %>
+         <% messages.push(message) %>
+
+         <div style="color: brown; font-weight: bold; font-size: x-large;">
+           Debug: <%= simple_format(message) %>
+        </div>
+    <% end if message.present? %>
+  </div>
+<% end %>
+
+<% session[:application_errors].each do |msg| %>
+     <% message = msg.present? ? msg.gsub("\n", '<br>') : nil%>
+
+     <% if message.present? && (!messages.present? || !messages.include?(message)) %>
+          Error: <%= simple_format(message) %>
+     <% end %>
+<% end if session[:application_errors].present? %>
+
+<% session[:application_errors] = nil %>

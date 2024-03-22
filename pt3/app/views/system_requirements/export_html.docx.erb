@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+  <head>
+    <title><%= full_title(yield(:title)) %></title>
+  </head>
+
+  <body>
+    <h3>System Requirements</h3><% @system_requirements.each do |system_requirement| %>
+      <table style="width:7.5in" border="2">
+        <% if system_requirement.soft_delete %>
+          <% next %>
+        <% end %>
+
+      <tr>
+        <td width="25%" style="vertical-align:top"><%= system_requirement.fullreqid %></td>
+
+        <td colspan="3" width="75%"><%= system_requirement.description.to_s.html_safe %><% if system_requirement.model_file_id.present? && system_requirement.model_file.upload_file.attached? %><%= link_to image_tag(system_requirement.model_file.upload_file, :size => '25%xauto'), item_model_file_display_path(system_requirement.model_file.item_id, system_requirement.model_file) + '?new_window=true', target: :_blank %><% elsif system_requirement.document_id.present? && system_requirement.document.file.attached? %><%= link_to image_tag(system_requirement.document.file, :size => '25%xauto'), item_document_display_path(system_requirement.document.item_id, system_requirement.document) + '?new_window=true', target: :_blank %><% end %></td>
+      </tr>
+
+      <tr>
+        <td width="25%" style="vertical-align:top">Requirement Source:</td>
+
+        <td width="25%" style="vertical-align:top"><%= system_requirement.source.to_s.html_safe %></td>
+
+        <td width="25%" style="vertical-align:top">Derived:</td>
+
+        <td width="25%" style="vertical-align:top"><% if system_requirement.derived %>Yes <% else %> No <% end %></td>
+      </tr>
+
+      <tr>
+        <td style="vertical-align:top">Verification Method:</td>
+
+        <td style="vertical-align:top">
+          <% if system_requirement.verification_method.instance_of?(Array) %>
+            <% system_requirement.verification_method.each do |method| %>
+              <% next unless method.present? %><%= method %><br>
+           <%end %>
+          <% elsif system_requirement.verification_method.instance_of?(String) %>
+            <%= system_requirement.verification_method %>
+          <% end %>
+        </td>
+
+        <td style="vertical-align:top">Derived Justification:</td>
+       <td style="vertical-align:top"><%= system_requirement.derived_justification.to_s.html_safe %></td>
+      </tr>
+
+      <tr>
+        <td style="vertical-align:top">Category:</td>
+
+        <td style="vertical-align:top"><%= system_requirement.category.to_s.html_safe %></td>
+
+        <td style="vertical-align:top">Safety Related:</td>
+
+        <td style="vertical-align:top"><% if system_requirement.safety %>Yes <% else %> No <% end %></td>
+      </tr>
+
+      <tr>
+        <td style="vertical-align:top">Implementation:</td>
+
+        <td colspan="3"><%= system_requirement.implementation.to_s.html_safe %></td>
+      </tr>
+    </table><br>
+    <% end if @system_requirements.present? %>
+  </body>
+</html>

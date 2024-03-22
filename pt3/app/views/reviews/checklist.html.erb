@@ -1,0 +1,136 @@
+<style>
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:before {}
+</style>
+
+<% if @preheaders.present? %>
+  <table width="100%" style='border:none; border-collapse:collapse;'>
+    <tbody>
+      <% @preheaders.each do |preheader| %>
+        <% case(preheader.length) %>
+          <% when 1 %>
+            <tr>
+              <td colspan=4 valign="baseline">
+                <h2>
+                  <b>
+                    <%= preheader[0] %>
+                  </b>
+                </h2>
+              </td>
+            </tr>
+          <% when 2 %>
+            <tr>
+              <td width='18%' valign="baseline">
+                <h6>
+                  <b>
+                    <%= preheader[0] %>
+                  </b>
+                </h6>
+              </td>
+              <td colspan=3 width='82%' valign="baseline">
+                <h6>
+                  <%= preheader[1] %>
+                </h6>
+              </td>
+            </tr>
+          <% when 4 %>
+            <tr>
+              <td width='18%' valign="baseline">
+                <h6>
+                  <b>
+                    <%= preheader[0] %>
+                  </b>
+                </h6>
+              </td>
+              <td width='62%' valign="baseline">
+                <h6>
+                  <%= preheader[1] %>
+                </h6>
+              </td>
+              <td width='10%' valign="baseline">
+                <h6>
+                  <b>
+                    <%= preheader[2] %>
+                  </b>
+                </h6>
+              </td>
+              <td width='10%' valign="baseline">
+                <h6>
+                  <%= preheader[3] %>
+                </h6>
+              </td>
+            </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+<table id="scrollableDataTable" class="table table-striped table-bordered table-sm" cellspacing="0"  width="100%">
+  <thead>
+    <tr>
+      <th class="th-sm" width="5%">#</th>
+      <th class="th-sm" width="35%">Checklist Item</th>
+      <th class="th-sm" width="5%">DO-178C or Other Guidance Reference</th>
+      <th class="th-sm" width="5%">DAL</th>
+      <th class="th-sm" width="5%">Supplients</th>
+      <th class="th-sm" width="5%">Compliance</th>
+      <th class="th-sm" width="20%">Remarks</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @items.each do |checklist_item| %>
+      <tr>
+        <td width="5%">
+          <%= checklist_item[:clitemid] %>
+        </td>
+        <td width="45%">
+          <%= checklist_item[:description] %>
+        </td>
+        <td width="5%">
+          <%= checklist_item[:reference] %>
+        </td>
+        <td width="5%">
+          <%= checklist_item[:minimumdal] %>
+        </td>
+        <td width="10%">
+          <%= raw(checklist_item[:supplements].join('<br>')) %>
+        </td>
+        <td width="5%">
+          <%= checklist_item[:status] %>
+        </td>
+        <td width="25%">
+          <%= checklist_item[:note] %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+
+<% unless @no_links %>
+  <%= link_to 'Export', review_export_checklist_path(@review) + '?new_window=true', target: :_blank, class: "btn d-print-none"  %>
+  <%= link_to 'Back',   go_back_path(1),  onclick: 'validateBack(1, this)', class: 'btn' %>
+<% end %>
+
+<script>
+  $( document ).ready(function() {
+    $('#scrollableDataTable').DataTable({
+    "sDom":           "Rlfrtip",
+    "scrollX":        true,
+    "scrollY":        "55vh",
+    "aLengthMenu":    [[10, 50, 100, -1], [25, 50, 100, "All"]],
+    "pageLength":     -1,
+    "scrollCollapse": true,
+    "paging":         false,
+    "ordering":       true,
+    "info":           false,
+    });
+  });
+</script>

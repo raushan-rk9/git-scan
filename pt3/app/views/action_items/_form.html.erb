@@ -1,0 +1,121 @@
+<%= simple_form_for( [@review, @action_item], validate: true, html: { class: 'form-horizontal' }) do |f| %>
+  <%= f.error_notification %>
+  <% if @action_item.present? && @action_item.errors.present? && @action_item.errors.messages.present? %>
+    <% @action_item.errors.messages.each do |field, messages| %>
+      <h4 style="color: red;">
+        <%= field.to_s.titleize %>:
+        <% messages.each do |message| %>
+          <%= message %>&nbsp;
+        <% end %>
+        <br>
+      </h4>
+    <% end %>
+  <% end %>
+
+  <div class="form-inputs">
+    <%= f.input :actionitemid, :input_html => { :readonly => !current_user.fulladmin }, required: true  %>
+    <%= f.input :description, as: :summernote, required: true  %>
+
+    <% if @action_item.openedby.present? %>
+      <%=
+          f.input :openedby,
+                  label:        'Opened By',
+                  collection:    User.organization_or_role(current_user.organization,
+                                                           'AirWorthinessCert Member'),
+                  label_method: :fullname,
+                  value_method: :email,
+                  selected:      @action_item.openedby
+       %>
+    <% else %>
+      <%=
+          f.input :openedby,
+                  label:        'Opened By',
+                  collection:    User.organization_or_role(current_user.organization,
+                                                           'AirWorthinessCert Member'),
+                  label_method: :fullname,
+                  value_method: :email,
+                  selected:     @current_user.email
+       %>
+    <% end %>
+
+    <% if @action_item.assignedto.present? %>
+      <%=
+          f.input :assignedto,
+                  label:        'Assigned To',
+                  collection:    User.organization_or_role(current_user.organization,
+                                                           'AirWorthinessCert Member'),
+                  label_method: :fullname,
+                  value_method: :email,
+                  selected:      @action_item.assignedto
+       %>
+    <% else %>
+      <%=
+          f.input :assignedto,
+                  label:        'Assigned To',
+                  collection:    User.organization_or_role(current_user.organization,
+                                                           'AirWorthinessCert Member'),
+                  label_method: :fullname,
+                  value_method: :email,
+                  selected:     @current_user.email
+       %>
+    <% end %>
+
+    <%= f.input :status, collection: Constants::PR_Status, include_blank: false %>
+    <%= f.input :note, label: 'Notes', as: :summernote %>
+
+    <% if current_user.fulladmin && @review.item_id.present? %>
+      <%= f.association :review, collection: Review.where(item_id: @review.item_id) %>
+    <% end %>
+  </div>
+
+  <div class="form-actions">
+    <input id='update_action_item' name='update_action_item' value='Save Action Item' type="button" onclick='validate();' class="btn btn-default" />
+
+    <% if @action_item.id.present? %>
+      <%= link_to 'Show', [@review, @action_item],         class: 'btn btn-default' %>
+    <% end %>
+
+    <%= link_to 'Back', 'javascript:null', class: "btn", onclick: 'validateBack(1)' %>
+
+    <% if @undo_path.present? && !session[:archives_visible].present? %>
+      <%= link_to 'Undo', @undo_path, class: 'btn btn-default', title: @undo_message %>
+    <% end %>
+
+    <% if @redo_path.present? && !session[:archives_visible].present? %>
+      <%= link_to 'Redo', @redo_path, class: 'btn btn-default', title: @redo_message %>
+    <% end %>
+
+  </div>
+<% end %>
+<script>
+  $(":input").keydown(function (event) {
+      if (event.keyCode == 112)
+        validate();
+      else if (event.keyCode == 113)
+        window.location.assign(window.location.href.replace(/\/\d+\/edit$/, ''));
+  }); 
+
+  function validate()
+  {
+    var form                 = document.forms[0];
+    var okay                 = validateForm();
+    var messageText          = "";
+
+    if (!okay)
+      return(okay);
+
+    if (okay)
+    {
+      form.submit();
+    }
+    else
+    {
+      message.value          = messageText;
+      message.style.display  = "none";
+
+      alert(messageText);
+    }
+
+    return(okay);
+  }
+</script>

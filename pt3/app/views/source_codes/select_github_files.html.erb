@@ -1,0 +1,114 @@
+<style> 
+ </style>
+
+<h1>Select Files</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th class="all"><input :select_all, { type="checkbox", class="largerCheckbox", id="select_all", value="ALL"}>&nbsp;</th>
+      <th scope="col", style='height: 100px; vertical-align:middle'>Filename</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @selected_files.each do |file| %>
+      <tr>
+        <% if file[:selected] %>
+          <td><input id="source_file_#{file[:index]}" name="source_file_#{file[:index]}" type="checkbox" class="largerCheckbox" checked value="<%= file[:filename] + '|' + file[:url] %>" /></td>
+        <% else %>
+          <td><input id="source_file_#{file[:index]}" name="source_file_#{file[:index]}" type="checkbox" class="largerCheckbox" value="<%= file[:filename] + '|' + file[:url] %>"/></td>
+        <% end %>
+        <td>
+          <% if file[:filename] =~ /^.*\.pdf$/i %>
+            <%= material_icon.picture_as_pdf.md_24 %>
+          <% elsif file[:filename] =~ /^.*\.(txt|doc|docx|odt)$/i %>
+            <%= material_icon.description.md_24 %>
+          <% elsif file[:filename] =~ /^.*\.(xls|xlsx|csv|ods)$/i %>
+            <%= material_icon.apps.md_24 %>
+          <% elsif file[:filename] =~ /^.*\.(jpg|jpeg|png|tiff|bmp|ico|svg)$/i %>
+            <%= material_icon.insert_photo.md_24 %>
+          <% elsif file[:filename] =~ /^.*\.(jpg|jpeg|png|tiff|bmp|ico|svg)$/i %>
+            <%= material_icon.insert_photo.md_24 %>
+          <% elsif file[:filename] =~ /^.*\.(vdx|vsd|vsdx)$/i %>
+            <%= material_icon.usb.md_24.r180 %>
+          <% elsif file[:filename] =~ /^.*\.(ppt|pptx)$/i %>
+            <%= material_icon.slideshow.md_24 %>
+          <% elsif file[:filename] =~ /^.*\.(mov|wmv|flv|avi|mp4)$/i %>
+            <%= material_icon.movie.md_24 %>
+          <% elsif file[:filename] =~ /^.*\.(mp3|wav|aiff|wma)$/i %>
+            <%= material_icon.music_note.md_24 %>
+          <% elsif file[:filename] =~ /^.*\.gif$/i %>
+            <%= material_icon.gif.md_24 %>
+          <% elsif file[:filename] =~ /^.*\.(zip||gz|7z|tar)$/i %>
+            <%= material_icon.archive.md_24 %>
+          <% elsif file[:filename] =~ /^.*\.html$/i %>
+            <%= material_icon.http.md_24 %>
+          <% elsif file[:filename] =~ /^.*\.([ch]|cpp|c++|bat|sh|pl|java|rb|js|php|yml|erb)$/i %>
+            <%= material_icon.code.md_24 %>
+          <% else %>
+            <%= material_icon.help.md_24 %>
+          <% end %>
+          &nbsp;
+          <%= file[:filename] %></td>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+<form id="edit_source_code_<%= @source_code_id %>" novalidate="novalidate" enctype="multipart/form-data" action="<%= @selected_url %>" accept-charset="UTF-8" method="post">
+<input name='source_code[selected_files]' id='source_code_selected_files' type='hidden' />
+<input type='submit' value='Done' onclick='submit_files();' class='btn btn-primary' />
+<%= link_to 'Back', go_back_path(1),  onclick: 'validateBack(1, this)', class: 'btn' %>
+
+<% if @undo_path.present? && !session[:archives_visible].present? %>
+  <%= link_to 'Undo', @undo_path, class: 'btn btn-default', title: @undo_message %>
+<% end %>
+
+<% if @redo_path.present? && !session[:archives_visible].present? %>
+  <%= link_to 'Redo', @redo_path, class: 'btn btn-default', title: @redo_message %>
+<% end %>
+</form>
+<br>
+
+<script>
+function submit_files()
+{
+  var selectedField = document.getElementById('source_code_selected_files');
+  var selected      = "";
+
+  $("input[type=checkbox]").each(function(){
+    if ($(this).prop('checked'))
+    {
+      var value = $(this).prop('value');
+
+      if (value !== "ALL") {
+        if (selected !== "")
+          selected += "," + value;
+        else
+          selected = value;
+      }
+    }
+  });
+
+  selectedField.value = selected;
+
+  return(true);
+}
+
+$(document).ready(function()
+{
+  $("th.all").change(function()
+  {
+    var checked = false;
+
+    if (document.getElementById("select_all").checked)
+      checked = true;
+    else
+      checked = false;
+
+    $("input[type=checkbox]").prop('checked', checked);
+  });
+});
+</script>

@@ -1,0 +1,16 @@
+<style> 
+ </style>
+
+<h1><%= t('misc.source_code') %> Analysis</h1>
+
+<form name="entry_point_selection" id="entry_point_selection" class="form-horizontal" method="post" action="<%= item_source_codes_analysis_path(@item) %>">
+<p>
+    Entry Point:
+    &nbsp;
+    <input id="entry_point" name="entry_point" value='main' type="text" style="width: 25%;">
+    &nbsp;
+
+</p>
+   <input type='submit' value='Generate Report' class='btn' />
+   <%= link_to 'Back', go_back_path(1),  onclick: 'validateBack(1, this)', class: 'btn' %>
+</form>

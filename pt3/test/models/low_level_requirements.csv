@@ -1,0 +1,3 @@
+1,This is the first actual low-level test requirement.,false
+,The CSV import shall create new records.,true,1
+999,The CSV import shall create new records.,false,2

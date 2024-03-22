@@ -1,0 +1,84 @@
+<ul class="list-group">
+  <li class="list-group-item active">
+    <h5>
+      <%= "Checklist Item ID: #{@checklist_item.clitemid}" %>
+    </h5>
+  </li>
+  <li class="list-group-item">
+    <p>
+      <strong>Description:</strong>
+      <%= @checklist_item.description %>
+    </p>
+    
+    <p>
+      <strong>Reference:</strong>
+      <%= @checklist_item.reference %>
+    </p>
+    
+    <p>
+      <strong>Minimum DAL:</strong>
+      <%= @checklist_item.minimumdal %>
+    </p>
+    
+    <p>
+      <strong>Supplements:</strong>
+      <%= @checklist_item.supplements %>
+    </p>
+    
+    <p>
+      <strong>Status:</strong>
+      <%= @checklist_item.status %>
+    </p>
+    
+    <p>
+      <strong>Evaluator:</strong>
+      <%= User.fullname_from_email(@checklist_item.evaluator) %>
+    </p>
+    
+    <p>
+      <strong>Evaluation Date:</strong>
+      <%= @checklist_item.evaluation_date %>
+    </p>
+    
+    <p>
+      <strong>Notes:</strong>
+      <%= @checklist_item.note %>
+    </p>
+    
+    <p>
+      <strong>Review:</strong>
+      <% if @checklist_item.review %>
+        <%= @checklist_item.review.title %>
+      <% else %>
+        None Associated
+      <% end %>
+    </p>
+    
+    <p>
+      <strong>Document:</strong>
+      <% if @checklist_item.document %>
+        <%= @checklist_item.document.name %>
+      <% else %>
+        None Associated
+      <% end %>
+    </p>
+    
+    <p>
+      <strong>Project:</strong>
+      <%= @checklist_item.review.project.name %>
+    </p>
+  </li>
+</ul>
+    
+<%= link_to 'Edit', edit_review_checklist_item_path(@review, @checklist_item), class: 'btn btn-default'  %>
+<%= link_to 'New Checklist Item',  new_review_checklist_item_path(@review),    class: 'btn btn-default'  %>
+<%= link_to 'Back', go_back_path(1),  onclick: 'validateBack(1, this)',                                           class: 'btn btn-default' %>
+
+<% if @undo_path.present? && !session[:archives_visible].present? %>
+  <%= link_to 'Undo', @undo_path, class: 'btn btn-default', title: @undo_message %>
+<% end %>
+
+<% if @redo_path.present? && !session[:archives_visible].present? %>
+  <%= link_to 'Redo', @redo_path, class: 'btn btn-default', title: @redo_message %>
+<% end %>
+

@@ -1,0 +1,11 @@
+clitemid,title,description,note,template_checklist_id,reference,minimumdal,supplements,status
+1,"Does the HDS include rules, procedures, methods, guidance and criteria for developing and specifying the hardware design?","Does the HDS include rules, procedures, methods, guidance and criteria for developing and specifying the hardware design?",,80,10.2.2,"[""A"", ""B"", ""C""]",[],
+2,Does the HDS include hardware design representation methods and notations?,Does the HDS include hardware design representation methods and notations?,,80,10.2.2.1,"[""A"", ""B"", ""C""]",[],
+3,Does the HDS include design specification and naming conventions?,Does the HDS include design specification and naming conventions?,,80,10.2.2.2,"[""A"", ""B"", ""C""]",[],
+4,Does the HDS include guidance on design methods?,Does the HDS include guidance on design methods?,,80,10.2.2.3,"[""A"", ""B"", ""C""]",[],
+5,Does the HDS include guidance on the use of hardware design tools?,Does the HDS include guidance on the use of hardware design tools?,,80,10.2.2.4,"[""A"", ""B"", ""C""]",[],
+6,Does the HDS include guidance for electronic component selection?,Does the HDS include guidance for electronic component selection?,,80,10.2.2.5,"[""A"", ""B"", ""C""]",[],
+7,Does the HDS include guidance for assessing design alternatives?,Does the HDS include guidance for assessing design alternatives?,,80,10.2.2.6,"[""A"", ""B"", ""C""]",[],
+8,Does the HDS include guidance for assessing the fail-safe and fault-tolerance design constructs?,Does the HDS include guidance for assessing the fail-safe and fault-tolerance design constructs?,,80,10.2.2.7,"[""A"", ""B"", ""C""]",[],
+9,Does the HDS include a description of the means for providing feedback to the requirements process and for clarifying requirements?,Does the HDS include a description of the means for providing feedback to the requirements process and for clarifying requirements?,,80,10.2.2.8,"[""A"", ""B"", ""C""]",[],
+10,Has the HDS been subjected to appropriate change and configuration control (HC2)?,Has the HDS been subjected to appropriate change and configuration control (HC2)?,,80,Table A-1; AC20-152A ,"[""A"", ""B"", ""C""]",[],

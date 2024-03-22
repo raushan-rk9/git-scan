@@ -1,0 +1,2 @@
+module TemplateDocumentsHelper
+end

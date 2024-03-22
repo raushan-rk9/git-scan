@@ -1,0 +1,661 @@
+<%= simple_form_for( [@problem_report.project, @problem_report], validate: true, html: { class: 'form-horizontal' }) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <% if current_user.fulladmin %>
+      <%= f.association :project, collection: Project.where(organization: current_user.organization) %>
+      <%= f.input :prid, required: true, :input_html => { :readonly => false } %>
+    <% else %>
+      <%= f.input :prid, required: true, :input_html => { :readonly => true } %>
+    <% end %>
+
+    <%= f.input :title, required: true %>
+    <%= f.association :item, label: 'Problem Report Applies to', collection: Item.where(organization: current_user.organization, project_id: @project.id) %>
+
+    <div id='artifacts_div' style='padding-left: 50px; width: 100%; display: none'>
+      <label for='artifact_type'>Artifact Type</label>
+      <select id='artifact_type' class="form-control select optional" style='width: 100%'>
+        <option id='document_artifacts' value='documents'>Documents</option>
+        <option id='source_code_artifacts' value='source_codes'>Source Code</option>
+        <option id='test_procedure_artifacts' value='test_procedures'>Test Procedures</option>
+        <option id='other_artifacts' value='other'>Other</option>
+      </select>
+      <br>
+      <div id='other_information' style='width: 100%; display: none'>
+        <label id='other_artifacts_label' for='other_artifacts_text', style: 'display: none' >Other Artifacts</label>
+        <input id="other_artifacts_text" class="form-control select optional">
+      </div>
+      <div id="artifact_selection" style='width: 100%; display: none'>
+        <select id='artifacts' class="form-control select optional" style='width: 100%;' multiple=true>
+        </select>
+        <button type="button" class='btn' onClick="add_artifacts();" >Add</button>
+        <br>
+        <br>
+        <label for='selected_artifacts'>Selected Artifacts</label>
+        <select id='selected_artifacts' class="form-control select optional" multiple=true>
+        </select>
+        <button type="button" class='btn' onClick="remove_artifacts();" >Remove</button>
+        <button type="button" class='btn' onClick="clear_all_selected_artifacts();" >Clear All</button>
+      </div>
+      <br>
+      <br>
+    </div>
+
+    <%= f.input :dateopened, as: :datetime, html5: true, :input_html => { :readonly => true } %>
+
+    <% if @problem_report.openedby.present? %>
+      <%=
+          f.input :openedby,
+                  label:        'Opened By',
+                  collection:    User.organization_or_role(current_user.organization,
+                                                           'AirWorthinessCert Member'),
+                  label_method: :fullname,
+                  value_method: :email,
+                  selected:      @problem_report.openedby
+       %>
+    <% else %>
+      <%=
+          f.input :openedby,
+                  label:        'Opened By',
+                  collection:    User.organization_or_role(current_user.organization,
+                                                           'AirWorthinessCert Member'),
+                  label_method: :fullname,
+                  value_method: :email,
+                  selected:     @current_user.email
+       %>
+    <% end %>
+
+    <% if @problem_report.assignedto.present? %>
+      <%=
+          f.input :assignedto,
+                  label:        'Assigned To',
+                  collection:    User.organization_or_role(current_user.organization,
+                                                           'AirWorthinessCert Member'),
+                  label_method: :fullname,
+                  value_method: :email,
+                  selected:      @problem_report.assignedto
+       %>
+    <% else %>
+      <%=
+          f.input :assignedto,
+                  label:        'Assigned To',
+                  collection:    User.organization_or_role(current_user.organization,
+                                                           'AirWorthinessCert Member'),
+                  label_method: :fullname,
+                  value_method: :email,
+                  selected:     @current_user.email
+       %>
+    <% end %>
+
+    <% if current_user.fulladmin %>
+      <%= f.input :status, collection: Constants::PR_Status, include_blank: true  %>
+    <% elsif @problem_report.status.present? %>
+      <% case @problem_report.status %>
+        <% when 'Open' %>
+          <%= f.input :status, collection: Constants::PR_Status_Open, include_blank: false  %>
+        <% when 'Assigned' %>
+          <%= f.input :status, collection: Constants::PR_Status_Assigned, include_blank: false  %>
+        <% when 'Authorized' %>
+          <%= f.input :status, collection: Constants::PR_Status_Authorized, include_blank: false  %>
+        <% when 'Implemented' %>
+          <%= f.input :status, collection: Constants::PR_Status_Implemented, include_blank: false  %>
+        <% when 'Verified' %>
+          <%= f.input :status, collection: Constants::PR_Status_Verified, include_blank: false  %>
+        <% when 'Closed' %>
+          <%= f.input :status, collection: Constants::PR_Status_Closed, include_blank: false  %>
+        <% else %>
+          <%= f.input :status, collection: Constants::PR_Status, include_blank: false  %>
+      <% end %>
+    <% else %>
+      <%= f.input :status, collection: Constants::PR_Status_Empty, include_blank: false  %>
+    <% end %>
+    <%= f.input :datemodified, as: :datetime, html5: true, :input_html => { :readonly => true } %>
+    <%= f.input :product %>
+    <%= f.input :criticality, collection: Constants::PR_Criticality, include_blank: true  %>
+    <%= f.input :source , collection: Constants::PR_Source, include_blank: false  %>
+    <%= f.input :discipline_assigned , collection: Constants::PR_DisiciplineAssigned, include_blank: false %>
+
+    <%= f.input :target_date, as: :datetime, html5: true %>
+    <%= f.input :close_date, as: :datetime, html5: true, :input_html => { :readonly => true } %>
+
+    <%
+       if !current_user.fulladmin                    &&
+          ((@problem_report.status == 'In-Work')     ||
+           (@problem_report.status == 'Implemented') ||
+           (@problem_report.status == 'Verified')    ||
+           (@problem_report.status == 'Closed'))
+     %>
+      <%= f.input :description, as: :summernote, :input_html => { :readonly => true } %>
+    <% else %>
+      <%= f.input :description, as: :summernote, :input_html => { :readonly => false } %>
+    <% end %>
+
+    <%= f.input :problemfoundin %>
+    <%= f.input :correctiveaction, as: :hidden, :input_html => { :readonly => (controller.action_name == "new") } %>
+    <%= f.input :fixed_in, :input_html => { :readonly => (controller.action_name == "new") } %>
+    <%= f.input :verification, as: :hidden, :input_html => { :readonly => (controller.action_name  == "new") } %>
+    <%= f.input :feedback, as: :summernote, label: 'Corrective Action', :input_html => { :readonly => (controller.action_name == "new") } %>
+    <%= f.input :notes, label: 'Verification Comments', as: :summernote %>
+    <%= f.input :meeting_id %>
+    <%= f.input :safetyrelated %>
+    <%= f.input :referenced_artifacts, as: :hidden %>
+
+    <% if controller.action_name == 'edit' && @problem_report.present? %>
+      <p>
+        <strong>Files:</strong>
+        <br>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">File</th>
+              <th scope="col">Uploaded</th>
+              <th colspan="3"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @problem_report.problem_report_attachment.each do |prattach| %>
+              <% if prattach.link_type.present? && prattach.link_link.present? %>
+                <tr>
+                  <td>
+                    <% if prattach.link_type == 'ATTACHMENT' && prattach.file.attached? %>
+                      <%= link_to prattach.file.filename, url_for(prattach.file) + '?new_window=true', target: :_blank %>
+                    <% else %>
+                      <% description = prattach.link_description %>
+  
+                      <% unless description.present? %>
+                        <% description = prattach.link_link %>
+                      <% end %>
+
+                      <% if prattach.link_link =~ /^http[s]{0,1}:\/\/.+$/ %>
+                        <%= link_to description, prattach.link_link + '?new_window=true', target: :_blank %>
+                      <% else %>
+                        <%= description %>
+                      <% end %>
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= prattach.upload_date %>
+                  </td>
+                </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+        <br>
+      </p>
+  
+      <% if controller.action_name == 'edit' && @problem_report.present? %>
+        <p>
+          <%= link_to 'Add File', new_problem_report_problem_report_attachment_path(@problem_report), class: "btn btn-primary", style: "color:white" %>
+          <%= link_to 'Manage Files', problem_report_problem_report_attachments_path(@problem_report), class: "btn btn-primary", style: "color:white" %>
+        </p>
+      <% else %>
+        <button type="button" class='btn btn-primary' onClick="$('#problem_report_attachment_file').show();" >Add File</button>
+        <br>
+        <%= f.file_field :attachment_file, as: :hidden %>
+      <% end %>
+    <% else %>
+      <p>
+        <button type="button" class='btn btn-primary' onClick="$('#problem_report_attachment_file').show();" >Add File</button>
+        <br>
+        <%= f.file_field :attachment_file, style: 'display: none;' %>
+      </p>
+    <% end %>
+  </div>
+
+  <div class="form-actions">
+    <% if controller.action_name == 'new' %>
+      <input id='update_problem_report' name='update_problem_report' value='Create Problem Report' type="button" onclick='validate();' class="btn btn-default" />
+    <% else %>
+      <input id='update_problem_report' name='update_problem_report' value='Update Problem Report' type="button" onclick='validate();' class="btn btn-default" />
+    <% end %>
+
+    <% if @problem_report.id.present? %>
+      <%= link_to 'Show', project_problem_report_path(@project, @problem_report), class: 'btn btn-default'  %>
+    <% end %>
+
+    <% unless controller.action_name == "new" %>
+      <%= link_to 'New Problem Report',   new_project_problem_report_path(@project), class: "btn" %>
+      <%= link_to 'Email Problem Report', project_problem_report_email_problem_report_path(@project, @problem_report), class: "btn" %>
+    <% end %>
+
+    <%= link_to 'Back', 'javascript:null', class: "btn", onclick: 'goBack(1)' %>
+
+    <% if @undo_path.present? && !session[:archives_visible].present? %>
+      <%= link_to 'Undo', @undo_path, class: 'btn btn-default', title: @undo_message %>
+    <% end %>
+
+    <% if @redo_path.present? && !session[:archives_visible].present? %>
+      <%= link_to 'Redo', @redo_path, class: 'btn btn-default', title: @redo_message %>
+    <% end %>
+  </div>
+<% end %>
+<script>
+  var model                        = "problem_report";
+  var parent                       = "project";
+  var table                        = model  + 's';
+  var parent_table                 = parent + 's';
+  var prefix                       = model  + "_";
+  var parent_prefix                = parent + "_";
+  var status                       = model + "_status";
+  var dateopened                   = model + "_dateopened";
+  var datemodified                 = model + "_datemodified";
+  var close_date                   = model + "_close_date";
+  var item                         = model + "_item_id";
+  var referenced_artifacts_field   = model + "_referenced_artifacts";
+  var referenced_artifacts_select  = "#" + referenced_artifacts_field;
+  var status_select                = "#" + status;
+  var item_select                  = "#" + item;
+  var artifacts_select             = "#artifacts";
+  var selected_artifacts_select    = "#selected_artifacts";
+  var selected_artifacts_options   = "#selected_artifacts option";
+  var artifact_type_select         = "#artifact_type";
+  var artifacts_div_select         = "#artifacts_div";
+  var artifacts_selection_select   = "#artifact_selection";
+  var other_information_select     = "#other_information";
+  var other_artifacts_select       = "#other_artifacts_text";
+  var selected_artifacts_id_select = "#selected_artifacts [value^=";
+  var form_fields                  = [
+                                        model + '_prid',
+                                        model + '_title',
+                                        model + '_item_id',
+                                        model + '_openedby',
+                                        model + '_assignedto',
+                                        model + '_status',
+                                        model + '_product',
+                                        model + '_criticality',
+                                        model + '_source',
+                                        model + '_discipline_assigned',
+                                        model + '_target_date',
+                                        model + '_close_date',
+                                        model + '_description',
+                                        model + '_problemfoundin',
+                                        model + '_fixed_in',
+                                        model + '_feedback',
+                                        model + '_verification',
+                                        model + '_notes',
+                                        model + '_meeting_id',
+                                        model + '_safetyrelated'
+                                      ];
+
+  $(document).ready(function() {
+    var referenced_artifacts = JSON.parse($('#problem_report_referenced_artifacts').val().replace(/=>/g, ':'));
+    var documents            = referenced_artifacts.documents;
+    var source_codes         = referenced_artifacts.source_codes;
+    var test_procedures      = referenced_artifacts.test_procedures;
+    var others               = referenced_artifacts.other;
+    var url                  = window.location.href;
+    var projectsIndex        = url.indexOf('/projects');
+    var appliesTo            = $('#problem_report_item_id');
+    var items                = [];
+
+    setupPersistData(form_fields);
+    getPersistData(form_fields);
+
+    $(appliesTo).each(function()
+    {
+      items[$(this).val()] = $(this).text().replace("\n", '');
+    });
+
+    if (others && others.length > 0)
+    {
+      var other_text = '';
+
+      for (var l = 0; l < others.length; l++ )
+        other_text += others[l];
+
+      $(other_artifacts_select).val(other_text);
+      $(artifacts_div_select).show();
+      $(other_information_select).show();
+      $(artifact_type_select).val('other');
+      artifact_type_changed();
+    }
+
+    if (documents && documents.length > 0)
+    {
+      var base_document_url = url.substring(0, projectsIndex )  + "\/documents\/";
+
+      for (var i = 0; i < documents.length; i++ )
+      {
+        $.ajax(
+                 {
+                    type:        "GET",
+                    url:         base_document_url + documents[i],
+                    dataType:    'json',
+                    contentType: 'text/html',
+                    async:       false,
+                    error:       ajaxError,
+                    success:     function(data)
+                                 {
+                                    var artifact = items[data["item_id"]];
+
+                                    $(selected_artifacts_select).append(new Option(artifact +  ' - ' + data.name + ': ' + data.docid, 'documents-' + data.id));
+                                 }
+                 }
+          );
+
+        $(artifacts_div_select).show();
+        $(artifacts_selection_select).show();
+        $(artifact_type_select).val('documents');
+        artifact_type_changed();
+      }
+    }
+
+    if (source_codes && source_codes.length > 0)
+    {
+      var base_source_code_url = url.substring(0, projectsIndex ) + "\/items\/" + $(item_select).val() + "\/source_codes\/";
+
+      for (var j = 0; j < source_codes.length; j++ )
+      {
+        $.ajax(
+                 {
+                    type:        "GET",
+                    url:         base_source_code_url +  source_codes[j],
+                    dataType:    'json',
+                    contentType: 'text/html',
+                    async:       false,
+                    error:       ajaxError,
+                    success:     function(data)
+                                 {
+                                    var artifact = items[data["item_id"]];
+
+                                    $(selected_artifacts_select).append(new Option(artifact + ' - ' + data.file_name, 'source_codes-' + data.id));
+                                 }
+                 }
+          );
+        $(artifacts_div_select).show();
+        $(artifacts_selection_select).show();
+        $(artifact_type_select).val('source_codes');
+        artifact_type_changed();
+      }
+    }
+
+    if (test_procedures && test_procedures.length > 0)
+    {
+      var base_test_procedure_url = url.substring(0, projectsIndex ) + "\/items\/" + $(item_select).val() + "\/test_procedures\/";
+
+      for (var k = 0; k < test_procedures.length; k++ )
+      {
+        $.ajax(
+                 {
+                    type:        "GET",
+                    url:         base_test_procedure_url +  test_procedures[k],
+                    dataType:    'json',
+                    contentType: 'text/html',
+                    async:       false,
+                    error:       ajaxError,
+                    success:     function(data)
+                                 {
+                                    var artifact = items[data["item_id"]];
+
+                                    $(selected_artifacts_select).append(new Option(artifact + ' - ' + data.file_name, 'test_procedures-' + data.id));
+                                 }
+                 }
+          );
+
+        $(artifacts_div_select).show();
+        $(artifacts_selection_select).show();
+        $(artifact_type_select).val('test_procedures');
+        artifact_type_changed();
+      }
+    }
+  });
+
+  function ajaxError(xhr, textStatus, errorThrown)
+  {
+    if (xhr.responseText &&
+       (xhr.responseText !== ''))
+    {
+      var newDoc = document.open('text/html',
+                                 "replace");
+  
+      newDoc.write(xhr.responseText);
+      newDoc.close();
+    }
+    else
+    {
+      alert("Error Occured. " + textStatus + ": " +
+            errorThrown);
+    }
+  }
+
+  function clear_all_selected_artifacts()
+  {
+    $(selected_artifacts_select).empty();
+  }
+
+  function item_changed()
+  {
+    $(artifacts_select).empty();
+//    clear_all_selected_artifacts();
+
+    if ($(item_select).val() === "")
+    {
+      $(artifacts_div_select).hide();
+    }
+    else
+    {
+      artifact_type_changed();
+      $(artifacts_div_select).show();
+    }
+  }
+
+  $(item_select).change(function()
+  {
+    item_changed();
+  });
+
+  function artifact_type_changed()
+  {
+    var url              = window.location.href;
+    var projectsIndex    = url.indexOf('/projects');
+    var artifactType     = $(artifact_type_select).val();
+    var appliesTo        = $('#problem_report_item_id');
+    var items            = [];
+
+    if ($(item_select).val() === "")
+      return;
+
+     $(appliesTo).each(function()
+    {
+      items[$(this).val()] = $(this).text().replace("\n", '');
+    });
+
+    if (artifactType == "other")
+    {
+      $(artifacts_selection_select).hide();
+      $(other_information_select).show();
+    }
+    else
+    {
+      $(other_information_select).hide();
+      $(artifacts_selection_select).show();
+      $(artifacts_select).empty();
+
+      url = url.substring(0, projectsIndex )  + "\/items\/" + $(item_select).val() + "\/" + artifactType + ".json";
+
+      $.ajax(
+               {
+                 type:        "GET",
+                 url:         url,
+                 dataType:    'json',
+                 contentType: 'text/html',
+                 async:       false,
+                 error:       ajaxError,
+                 success:     function(data)
+                              {
+                                for (var i = 0; i < data.length; i++)
+                                {
+                                  var item     = data[i];
+                                  var artifact = items[item.item_id];
+
+                                  if ((artifactType == 'source_codes') ||
+                                      (artifactType == 'test_procedures'))
+                                  {
+                                    var title  = item.file_name;
+                                    title      = title.replace(/<p>/gi, "");
+                                    title      = title.replace(/<\/p>/gi, "");
+
+                                    if (/.*<br>.*/gi.test(title))
+                                    {
+                                      var filenames = title.split(/<br>/i);
+                                    
+                                      for (var j = 0; j < filenames.length; j++)
+                                        $(artifacts_select).append(new Option(artifact + ' - ' + filenames[j], item.id));
+                                    }
+                                    else
+                                    {
+                                      $(artifacts_select).append(new Option(artifact + ' - ' + title, item.id));
+                                    }
+                                  }
+                                  else if (artifactType == 'documents')
+                                  {
+                                    if (item.document_type != "Folder")
+                                      $(artifacts_select).append(new Option(artifact + ' - ' + item.docid, item.id));
+                                  }
+                                }
+                              }
+              }
+          );
+    }
+  }
+
+  $(artifact_type_select).change(function()
+  {
+    artifact_type_changed();
+  });
+
+  function add_artifacts()
+  {
+    var artifactType  = $(artifact_type_select).val();
+
+    $(artifacts_select).children("option:selected").each(function( artifact ) {
+      $(selected_artifacts_select).append(new Option(this.text,
+                                                     artifactType + '-' +
+                                                     this.value));
+    });
+  }
+
+  function remove_artifacts()
+  {
+    $(selected_artifacts_select).children("option:selected").remove();
+  }
+
+  function status_changed()
+  {
+    var status_field        = document.getElementById(status);
+    var dateopened_field    = document.getElementById(dateopened);
+    var date_modified_field = document.getElementById(datemodified);
+    var close_date_field    = document.getElementById(close_date);
+    var current_date        = new Date();
+    var year                = current_date.getFullYear();
+    var month               = current_date.getMonth() + 1;
+    var day                 = current_date.getDate();
+    var current_date_string = year;
+
+    if (month > 9)
+      current_date_string += "-" + month;
+    else
+      current_date_string += "-0" + month;
+    
+    if (day > 9)
+      current_date_string += "-" + day;
+    else
+      current_date_string += "-0" + day;
+
+    if (status_field.value == "Open")
+    {
+      dateopened_field.value = current_date_string;
+    }
+    else
+    {
+      if (status_field.value == "Closed")
+      {
+        close_date_field.readonly = false;
+        close_date_field.value    = date_modified_field.value;
+        close_date_field.readonly = true;
+      }
+    }
+  }
+
+  $(status_select).change(function()
+  {
+    status_changed();
+  });
+
+  $(":input").keydown(function (event) {
+      if (event.keyCode == 112)
+        validate();
+      else if (event.keyCode == 113)
+        window.location.assign(window.location.href.replace(/\/\d+\/edit$/, ''));
+  }); 
+
+  setupChangeNotification();
+
+  function goBack(count)
+  {
+    clearPersistData(form_fields);
+    validateBack(count);
+  }
+
+  function validate()
+  {
+    var referencedArtifacts                 = {};
+    var okay                                = validateForm();
+    var form                                = document.forms[0];
+
+    if (!okay)
+      return(okay);
+
+    if ($(selected_artifacts_options).length > 0)
+    {
+      var selectedDocuments                 = $(selected_artifacts_id_select +
+                                               'documents]');
+      var selectedSourceCodes               = $(selected_artifacts_id_select +
+                                               'source_code]');
+      var selectedTestProcedures            = $(selected_artifacts_id_select +
+                                               'test_procedures]');
+
+      if (selectedDocuments.length > 0)
+      {
+        referencedArtifacts.documents       = [];
+
+        selectedDocuments.each(function()
+        {
+          referencedArtifacts.documents.push($(this).val().split('-')[1]);
+        });
+      }
+
+      if (selectedSourceCodes.length > 0)
+      {
+        referencedArtifacts.source_codes    = [];
+
+        selectedSourceCodes.each(function()
+        {
+          referencedArtifacts.source_codes.push($(this).val().split('-')[1]);
+        });
+      }
+
+      if (selectedTestProcedures.length > 0)
+      {
+        referencedArtifacts.test_procedures = [];
+
+        selectedTestProcedures.each(function()
+        {
+          referencedArtifacts.test_procedures.push($(this).val().split('-')[1]);
+        });
+      }
+    }
+
+    if ($(other_artifacts_select).val() !== "")
+    {
+      referencedArtifacts.other = [ $(other_artifacts_select).val() ];
+    }
+
+    $(referenced_artifacts_select).val(JSON.stringify(referencedArtifacts));
+    $(referenced_artifacts_select).show();
+
+    clearPersistData(form_fields);
+    form.submit();
+  }
+</script>

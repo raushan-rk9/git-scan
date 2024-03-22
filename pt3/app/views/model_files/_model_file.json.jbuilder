@@ -1,0 +1,2 @@
+json.extract! model_file, :id, :model_id, :full_id, :description, :file_path, :file_type, :url_type, :url_link, :url_description, :soft_delete, :derived, :derived_justification, :system_requirement_associations, :high_level_associations, :low_level_associations, :test_case_associations, :version, :revision, :draft_version, :revision_date, :project_id, :item_id, :archive_id, :organization, :created_at, :updated_at
+json.url model_file_url(model_file, format: :json)

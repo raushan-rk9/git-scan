@@ -1,0 +1,92 @@
+  user_images:
+    - email:                  'admin@faaconsultants.com'
+      filename:               'avatar.png'
+      path:                   'test/fixtures/files/avatar.png'
+      content_type:           'image/png'
+      field:                  'profile_picture'
+    - email:                  'admin@faaconsultants.com'
+      filename:               'signature.jpg'
+      path:                   'test/fixtures/files/signature.jpg'
+      content_type:           'image/jpeg'
+      field:                  'signature_file'
+
+  model_file_images:
+    - model_file_full_id:     'MF-001'
+      filename:               'Screen Shot 2020-03-31 at 2.15.15 PM.png'
+      path:                   'test/fixtures/files/Screen Shot 2020-03-31 at 2.15.15 PM.png'
+      content_type:           'image/png'
+
+  test_procedure_files:
+    - full_id:                'TP-001'
+      item_id:                'HARDWARE_ITEM'
+      filename:               'overpressure.py'
+      path:                   'test/fixtures/files/overpressure.py'
+      content_type:           'application/x-python-code'
+    - full_id:                'TP-002'
+      item_id:                'HARDWARE_ITEM'
+      filename:               'underpressure.py'
+      path:                   'test/fixtures/files/underpressure.py'
+      content_type:           'application/x-python-code'
+    - full_id:                'TP-001'
+      item_id:                'SOFTWARE_ITEM'
+      filename:               'overpressure.py'
+      path:                   'test/fixtures/files/overpressure.py'
+      content_type:           'application/x-python-code'
+    - full_id:                'TP-002'
+      item_id:                'SOFTWARE_ITEM'
+      filename:               'underpressure.py'
+      path:                   'test/fixtures/files/underpressure.py'
+      content_type:           'application/x-python-code'
+
+  source_code_files:
+    - full_id:                'SC-001'
+      filename:               'alert_overpressure.c'
+      path:                   'test/fixtures/files/alert_overpressure.c'
+      content_type:           'text/x-c'
+    - full_id:                'SC-002'
+      filename:               'alert_underpressure.c'
+      path:                   'test/fixtures/files/alert_underpressure.c'
+      content_type:           'text/x-c'
+
+  problem_report_attachment_files:
+    - prid:                   2
+      filename:               'alert_overpressure.c'
+      path:                   'test/fixtures/files/alert_overpressure.c'
+      content_type:           'text/x-c'
+
+  document_files:
+    - docid:                  'PHAC'
+      filename:               'PHAC.doc'
+      path:                   'test/fixtures/files/PHAC.doc'
+      content_type:           'application/msword'
+    - docid:                  'PSAC'
+      filename:               'PSAC.doc'
+      path:                   'test/fixtures/files/PSAC.doc'
+      content_type:           'application/msword'
+    - docid:                  'flowchart'
+      filename:               'flowchart.png'
+      path:                   'test/fixtures/files/flowchart.png'
+      content_type:           'image/png'
+
+  link_records:
+    - source_table:           ModelFile
+      source_find_field:      :full_id
+      source_find_value:      'MF-001'
+      destination_table:      SystemRequirement
+      destination_find_field: :full_id
+      destination_find_value: 'SYS-001'
+      destination_field:      :model_file_id
+    - source_table:           SystemRequirement
+      source_find_field:      :full_id
+      source_find_value:      'SYS-001'
+      destination_table:      ModelFile
+      destination_find_field: :full_id
+      destination_find_value: 'MF-001'
+      destination_field:      :system_requirement_associations
+
+  review_attachment_files:
+    - review_id:              2
+      filename:               'PHAC.DOC'
+      path:                   'test/fixtures/files/PHAC.DOC'
+      content_type:           'application/msword'
+

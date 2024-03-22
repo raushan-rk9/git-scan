@@ -1,0 +1,70 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+<% item_id        = Item.find_by(identifier: 'SOFTWARE_ITEM').try(:id) %>
+<% source_code_id = SourceCode.find_by(item_id: item_id, full_id: 'SC-001').try(:id) %>
+
+function_item_001:
+  function_item_id:    1
+  full_id:             <%= source_code_id %>:A
+  project_id:          <%= Project.find_by(identifier: 'TEST').try(:id) %>
+  source_code_id:      <%= source_code_id %>
+  filename:            '/Users/paul/pact/test/c_code/uninstrumented_coverage.c'
+  line_number:         20
+  calling_function:    ''
+  calling_parameters:  ''
+  called_by:           nil
+  function:            'function_call_1'
+  function_parameters: '()'
+
+function_item_002:
+  function_item_id:    2
+  full_id:             <%= source_code_id %>:B
+  project_id:          <%= Project.find_by(identifier: 'TEST').try(:id) %>
+  source_code_id:      <%= source_code_id %>
+  filename:            '/Users/paul/pact/test/c_code/uninstrumented_coverage.c'
+  line_number:         25
+  calling_function:    ''
+  calling_parameters:  ''
+  called_by:           nil
+  function:            'function_call_2'
+  function_parameters: '()'
+
+function_item_003:
+  function_item_id:    3
+  full_id:             <%= source_code_id %>:C
+  project_id:          <%= Project.find_by(identifier: 'TEST').try(:id) %>
+  source_code_id:      <%= source_code_id %>
+  filename:            '/Users/paul/pact/test/c_code/uninstrumented_coverage.c'
+  line_number:         30
+  calling_function:    'function_call_1'
+  calling_parameters:  ''
+  called_by:           nil
+  function:            'function_call_3'
+  function_parameters: '()'
+
+function_item_004:
+  function_item_id:    4
+  full_id:             <%= source_code_id %>:D
+  project_id:          <%= Project.find_by(identifier: 'TEST').try(:id) %>
+  source_code_id:      <%= source_code_id %>
+  filename:            '/Users/paul/pact/test/c_code/uninstrumented_coverage.c'
+  line_number:         36
+  calling_function:    ''
+  calling_parameters:  ''
+  called_by:           nil
+  function:            'main'
+  function_parameters: '(int argc, char *argv[])'
+
+function_item_005:
+  function_item_id:    5
+  full_id:             <%= source_code_id %>:E
+  project_id:          <%= Project.find_by(identifier: 'TEST').try(:id) %>
+  source_code_id:      <%= source_code_id %>
+  filename:            '/Users/paul/pact/test/c_code/uninstrumented_coverage.c'
+  line_number:         115
+  calling_function:    'main'
+  calling_parameters:  '(int argc, char *argv[])'
+  called_by:           nil
+  function:            'function_call_1'
+  function_parameters: '()'
+

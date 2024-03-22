@@ -1,0 +1,186 @@
+<head>
+  <title><%= full_title(yield(:title)) %></title>
+</head>
+
+<style>
+  .column_1 {
+    width:          225px !important;
+    vertical-align: top
+  }
+
+  .column_2 {
+    width:          350px !important;
+    vertical-align: top
+  }
+
+  .column_3 {
+    width:          225px !important;
+    vertical-align: top
+  }
+
+  .column_4 {
+    vertical-align: top
+  }
+</style>
+
+<h3><%= t('misc.model_file') %></h3>
+
+<% @model_files.each do |model_file| %>
+  <table style="width: 100%" border="2">
+    <% if model_file.soft_delete %>
+      <% next %>
+    <% end %>
+    <tr>
+      <td class="column_1">
+        Full ID:
+      </td>
+      <td class="column_2">
+        <%= model_file.full_id %>
+      </td>
+      <td class="column_3">
+        Description:
+      </td>
+      <td class="column_4">
+        <%= raw model_file.description %>
+      </td>
+    </tr>
+    <tr>
+      <td class="column_1">
+        File Type:
+      </td>
+      <td  class="column_2">
+        <%= model_file.file_type %>
+      </td>
+      <td class="column_3">
+        File Path:
+      </td>
+      <td class="column_4">
+        <%= model_file.file_path %>
+      </td>
+    </tr>
+    <tr>
+      <td class="column_1">
+        Attachment Type:
+      </td>
+      <td class="column_2">
+        <%= Constants::AttachmentType_hash.invert[model_file.url_type] %>
+      </td>
+      <td class="column_3">
+        URL:
+      </td>
+      <td class="column_4">
+        <% if model_file.url_type == 'EXTERNAL' %>
+          <%= model_file.url_link %>
+        <% else %>
+          <%= model_file.url_description %>
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td class="column_1">
+        Revision:
+      </td>
+      <td  class="column_2">
+        <%= model_file.revision %>
+      </td>
+      <td class="column_3">
+        Draft Revision:
+      </td>
+      <td class="column_4">
+        <%= model_file.draft_version %>
+      </td>
+    </tr>
+    <tr>
+      <td class="column_1">
+        Revision Date:
+      </td>
+      <td  class="column_2">
+        <%= model_file.revision_date %>
+      </td>
+      <td class="column_3">
+        Version:
+      </td>
+      <td class="column_4">
+        <%= model_file.version %>
+      </td>
+    </tr>
+    <tr>
+      <td class="column_1">
+        Covers <%= t('misc.system_requirements') %>:
+      </td>
+      <td class="column_2">
+        <% if model_file.system_requirement_associations.present? %>
+          <% system_requirements = model_file.system_requirement_associations.split(',') %>
+          <% system_requirements.each do |requirement| %>
+            <% next unless requirement.present? %>
+            <% if requirement =~ /^\d+$/ %>
+              <% system_requirement = SystemRequirement.find(requirement) %>
+              <%= system_requirement.full_id %>
+            <% else %>
+              <%= requirement %>
+            <% end %>
+            <br>
+          <%end %>
+        <% end %>
+      </td>
+      <td class="column_3">
+        Covers <%= Item.item_type_title(@item, :high_level, :plural) %>:
+      </td>
+      <td class="column_4">
+        <% if model_file.high_level_requirement_associations.present? %>
+          <% high_level_requirements = model_file.high_level_requirement_associations.split(',') %>
+          <% high_level_requirements.each do |requirement| %>
+            <% next unless requirement.present? %>
+            <% if requirement =~ /^\d+$/ %>
+              <% high_level_requirement = HighLevelRequirement.find(requirement) %>
+              <%= high_level_requirement.full_id %>
+            <% else %>
+              <%= requirement %>
+            <% end %>
+            <br>
+          <%end %>
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td class="column_1">
+        Covers <%= Item.item_type_title(@item, :low_level, :plural) %>:
+      </td>
+      <td class="column_2">
+        <% if model_file.low_level_requirement_associations.present? %>
+          <% low_level_requirements = model_file.low_level_requirement_associations.split(',') %>
+          <% low_level_requirements.each do |requirement| %>
+            <% next unless requirement.present? %>
+            <% if requirement =~ /^\d+$/ %>
+              <% low_level_requirement = LowLevelRequirement.find(requirement) %>
+              <%= low_level_requirement.full_id %>
+            <% else %>
+              <%= requirement %>
+            <% end %>
+            <br>
+          <%end %>
+        <% end %>
+      </td>
+      <td class="column_3">
+        Covers <%= t('misc.test_cases') %>:
+      </td>
+      <td class="column_4">
+        <% if model_file.test_case_associations.present? %>
+          <% test_cases = model_file.test_case_associations.split(',') %>
+          <% test_cases.each do |test_case| %>
+            <% next unless test_case.present? %>
+            <% if test_case =~ /^\d+$/ %>
+              <% test_case = ::TestCase.find(test_case) %>
+              <%= test_case.full_id %>
+            <% else %>
+              <%= test_case %>
+            <% end %>
+            <br>
+          <%end %>
+        <% end %>
+      </td>
+    </tr>
+  </table>
+  <br>
+<% end if @model_files.present? %>
+

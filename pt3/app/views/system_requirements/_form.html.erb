@@ -1,0 +1,181 @@
+<%= simple_form_for( [@system_requirement.project, @system_requirement], validate: true, html: { class: 'form-horizontal' }) do |form| %>
+    <% if system_requirement.errors.any? %>
+      <div id='error_explanation'>
+        <h2><%= pluralize(system_requirement.errors.count, 'error') %> prohibited this system_requirement from being saved:</h2>
+        <ul>
+        <% system_requirement.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <input name='message' id='message' type='hidden' style='color: #FF0000' readonly />
+
+    <%= form.input :reqid,               required: true, label: 'Requirement Number', :input_html => { :readonly => !current_user.fulladmin } %>
+    <%= form.input :full_id,             required: true, label: 'Requirement ID', as: :string %>
+    <%= form.input :description,         required: true, as: :summernote %>
+    <%= form.input :category,            as: :string %>
+    <%= form.input :verification_method, collection: Constant.where(name: 'verification_method'), :label_method => :label, :value_method => :value, include_blank: true, input_html: { multiple: true } %>
+    <%= form.input :source %>
+    <%= form.input :safety,              as: :boolean, class: 'largerCheckbox', :inline_label => true %>
+    <%= form.input :derived %>
+    <%= form.input :derived_justification %>
+    <%= form.input :implementation %>
+    <%= form.input :model_file_id,       collection: @pact_files, include_blank: true, label: t('misc.model_file') %> 
+
+    <div id='file_div' style='display: none'>
+      <%= form.input :item_id, label: 'Hardware/Software Item to put file in', collection: Item.where(organization: current_user.organization, project_id: @project.id), include_blank: false %>
+      <%= form.file_field :upload_file, accept: "image/x-png,image/png,image/gif,image/jpeg,image/tiff", onchange: "file_validation('system_requirement_upload_file');" %>
+    </div>
+
+    <%= form.input :version,             as: :hidden %>
+    <%= form.input :full_id_prefix,      as: :hidden, input_html: { value: @project.system_requirements_prefix }  %>
+
+    <% if current_user.fulladmin %>
+      <%= form.association :project, collection: Project.where(organization: current_user.organization) %>
+    <% end %>
+
+    <input id='update_system_requirement' name='update_system_requirement' value='Save System Requirement' type='button' onclick='validate();' class='btn btn-default' />
+    <% if @system_requirement.id.present? %>
+      <%= link_to 'Show', project_system_requirement_path(@project, @system_requirement), class: 'btn btn-default' %>
+    <% end %>
+    
+    <% if controller.action_name == 'edit' %>
+      <%= link_to 'New', new_project_system_requirement_path(@project), class: 'btn btn-primary', style: 'color:white' %>
+    <% end %>
+
+    <%= link_to 'Back', 'javascript:null', class: "btn", onclick: 'validateBack(1)' %>
+
+    <% if @undo_path.present? && !session[:archives_visible].present? %>
+      <%= link_to 'Undo', @undo_path, class: 'btn btn-default', title: @undo_message %>
+    <% end %>
+    <% if @redo_path.present? && !session[:archives_visible].present? %>
+      <%= link_to 'Redo', @redo_path, class: 'btn btn-default', title: @redo_message %>
+    <% end %>
+
+    <%
+        if @system_requirement_ids.present?
+          current_index = @system_requirement_ids.find_index(@system_requirement.id)
+          previous_id   = @system_requirement_ids[current_index - 1] if current_index > 0
+          next_id       = @system_requirement_ids[current_index + 1] if current_index < (@system_requirement_ids.length - 1)
+        end
+     %>
+
+    <% if previous_id.present? %>
+      <% if policy(@system_requirement).edit? %>
+        <%= link_to('Previous', edit_project_system_requirement_path(@project, previous_id), class: 'btn btn-default') %>
+      <% else %>
+        <%= link_to('Previous', project_system_requirement_path(@project, previous_id),      class: 'btn btn-default') %>
+      <% end %>
+    <% end %>
+
+    <% if next_id.present? %>
+      <% if policy(@system_requirement).edit? %>
+        <%= link_to('Next',     edit_project_system_requirement_path(@project, next_id),     class: 'btn btn-default') %>
+      <% else %>
+        <%= link_to('Next',     project_system_requirement_path(@project, next_id),          class: 'btn btn-default') %>
+      <% end %>
+    <% end %>
+  <% end %>
+<script>
+var model            = '';
+var prefix           = '';
+
+function numeric_id_index_changed()
+{
+  var full_id_prefix = document.getElementById('system_requirement_full_id_prefix').value;
+  var number         = document.getElementById('system_requirement_reqid').value;
+  var fullId         = document.getElementById('system_requirement_full_id');
+  var numberString   = '';
+  
+  if (number < 10)
+    numberString = '000' + number;
+  else if  (number < 100)
+    numberString = '00' + number;
+  else if  (number < 1000)
+    numberString = '0' + number;
+  else
+    numberString = '' + number;
+
+  <% if controller.action_name == 'new' %>
+    fullId.value = full_id_prefix + '-' + numberString;
+  <% else %>
+    if (fullId.value === '')
+      fullId.value = full_id_prefix + '-' + numberString;
+  <% end %>
+}
+
+model              = 'system_requirement';
+prefix             = model  + '_';
+
+<% if controller.action_name == 'new' %>
+  numeric_id_index_changed();
+<% end %>
+
+$('#system_requirement_reqid').change(function()
+{
+  numeric_id_index_changed();
+});
+
+$('#system_requirement_model_file_id').change(function()
+{
+  if ($(this).val() == -1)
+    $('#file_div').show();
+  else
+    $('#file_div').hide();
+});
+
+$(":input").keydown(function (event) {
+    if (event.keyCode == 112)
+      validate();
+    else if (event.keyCode == 113)
+      window.location.assign(window.location.href.replace(/\/\d+\/edit$/, ''));
+}); 
+
+setupChangeNotification();
+
+function validate()
+{
+  var model_file_id        = document.getElementById(prefix + 'model_file_id');
+  var upload_file          = document.getElementById(prefix + 'upload_file');
+  var derivedJustification = document.getElementById(prefix + 'derived_justification');
+  var derived              = document.getElementById(prefix + 'derived');
+  var form                 = document.forms[0];
+  var okay                 = validateForm();
+  var messageText          = '';
+
+  if (!okay)
+    return(false);
+
+  if (okay && (model_file_id.value == -1) && (upload_file.value === ''))
+  {
+      messageText          = 'If you specify a model file as an upload then you must provide a file to upload.';
+      okay                 = false;
+  }
+
+  if (okay && derived.checked)
+  {
+    if (derivedJustification.value.length === 0)
+    {
+      messageText          = 'If a ' + model.replace(/_/g, ' ') + ' is derived then you must provide a justification.';
+      okay                 = false;
+    }
+  }
+
+  if (okay)
+  {
+    form.submit();
+  }
+  else
+  {
+    message.value          = messageText;
+    message.style.display  = 'none';
+
+    alert(messageText);
+  }
+
+  return(okay);
+}
+
+</script>

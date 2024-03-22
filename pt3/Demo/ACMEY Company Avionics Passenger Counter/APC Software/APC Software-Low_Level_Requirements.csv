@@ -1,0 +1,4 @@
+id,reqid,full_id,description,derived,version,item_id,project_id,high_level_requirement_associations,derived_justification,created_at,updated_at,organization,category,verification_method,safety,archive_id,soft_delete,document_id,model_file_id
+275,1,APC_PIC_SW-LLR-0001,LLR #1,false,1,APC_PIC_SW,ACMEY Company Avionics Passenger Counter,"ACP_SW-HLR-0001,APC_SW-HLR-0004","",2020-06-25 12:28PM PDT,2020-06-25 12:28PM PDT,demo,Counter Logic,",Test",false,,"",
+276,2,APC_PIC_SW-LLR-0002,LLR #2,false,1,APC_PIC_SW,ACMEY Company Avionics Passenger Counter,"ACP_SW-HLR-0001,ACP_SW-HLR-0002","",2020-06-25 12:29PM PDT,2020-06-25 12:29PM PDT,demo,Fault Detection,",Test",true,,"",
+277,3,APC_PIC_SW-LLR-0003,LLR #3,true,1,APC_PIC_SW,ACMEY Company Avionics Passenger Counter,ACP_SW-HLR-0003,Boot implementation appropriate for PIC processor.,2020-06-25 12:30PM PDT,2020-06-25 12:30PM PDT,demo,Boot,",Test",false,,"",
