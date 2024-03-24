@@ -1,2 +1,0 @@
-json.extract! problem_report, :id, :prid, :dateopened, :status, :openedby, :title, :product, :criticality, :source, :discipline_assigned, :assignedto, :target_date, :close_date, :description, :problemfoundin, :correctiveaction, :fixed_in, :verification, :feedback, :notes, :meeting_id, :safetyrelated, :datemodified, :item_id, :project_id, :created_at, :updated_at
-json.url problem_report_url(problem_report, format: :json)

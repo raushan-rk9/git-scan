@@ -1,3 +1,0 @@
-id,reqid,full_id,description,category,verification_method,safety,derived,version,item_id,project_id,high_level_requirement_associations,derived_justification,created_at,updated_at,organization,archive_id,soft_delete,document_id,model_file_id,archive_revision,archive_version
-580443992,1,LLR-001,The System SHALL alert on over pressure.,,0,SOFTWARE_ITEM,Test,HLR-001,,2020-09-11 02:33PM PDT,2020-09-11 02:33PM PDT,test,Safety,Test,true,,"",MF-001,a,1.01
-999395044,2,LLR-002,The System SHALL alert on under pressure.,,0,SOFTWARE_ITEM,Test,HLR-002,,2020-09-11 02:33PM PDT,2020-09-11 02:33PM PDT,test,Safety,Test,true,,"",MF-001,a,1.01

@@ -1,3 +1,0 @@
-id,reqid,full_id,description,category,verification_method,source,safety,implementation,version,derived,derived_justification,project_id,created_at,updated_at,organization,archive_id,soft_delete,document_id,model_file_id,a,1.01
-724442998,1,SYS-001,The System SHALL maintain proper pump pressure.,Client Requirements,true,Hardware,0,Test,2020-09-16 01:21PM PDT,2020-09-16 01:21PM PDT,test,Safety,Test,,,,,"",MF-001,a,1.01
-841436874,2,SYS-002,The System SHALL provide an external interface to monitor pump pressure.,Client Requirements,true,Hardware,0,Test,2020-09-16 01:21PM PDT,2020-09-16 01:21PM PDT,test,Safety,Test,,,,,"",MF-001,a,1.01

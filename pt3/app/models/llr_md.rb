@@ -1,2 +1,0 @@
-class LlrMd < ApplicationRecord
-end

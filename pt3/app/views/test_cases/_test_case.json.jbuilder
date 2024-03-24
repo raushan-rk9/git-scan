@@ -1,1 +1,0 @@
-json.extract! test_case, :id, :caseid, :full_id, :description, :procedure, :category, :robustness, :derived, :testmethod, :version, :item_id, :project_id, :high_level_requirement_associations, :low_level_requirement_associations, :derived_justification, :created_at, :updated_at

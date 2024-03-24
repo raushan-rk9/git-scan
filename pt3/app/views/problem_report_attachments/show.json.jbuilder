@@ -1,1 +1,0 @@
-json.partial! "problem_report_attachments/problem_report_attachment", problem_report_attachment: @problem_report_attachment

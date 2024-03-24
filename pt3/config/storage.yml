@@ -1,7 +1,0 @@
-local:
-  service: Disk
-  root: /var/folders
-
-test:
-  service: Disk
-  root: /tmp
